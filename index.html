@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#EDEFEB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1215" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="La Traka">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<title>Plan La Traka 100K</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Sofia+Sans+Extra+Condensed:wght@700;800&family=Sofia+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --ground: #EDEFEB;
+  --surface: #FAFBF8;
+  --sunken: #E2E6E0;
+  --band: #E5E8E3;
+  --line: #D2D8D1;
+  --ink: #161B1F;
+  --ink-2: #48524D;
+  --ink-3: #737C76;
+  --accent: #C27A0E;
+  --accent-ink: #8A5300;
+  --accent-soft: #F1DFBC;
+  --on-ink: #FAFBF8;
+  --run: #C27A0E;
+  --gym: #5B4F99;
+  --swim: #1D6E8E;
+  --bike: #3C7B50;
+  --rest: #8B928C;
+  --ok: #2F7D4F;
+  --part: #B7791F;
+  --no: #B4433A;
+  --on-ok: #FFFFFF;
+  --on-part: #161B1F;
+  --on-no: #FFFFFF;
+  --focus: #1D6E8E;
+  --display: "Sofia Sans Extra Condensed", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --body: "Sofia Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0F1215; --surface: #171B1F; --sunken: #0B0D10; --band: #13171A; --line: #2A3036;
+    --ink: #ECEAE3; --ink-2: #B5BBB6; --ink-3: #858C87;
+    --accent: #F2AA3C; --accent-ink: #F5B95C; --accent-soft: #3A2C14; --on-ink: #0F1215;
+    --run: #F2AA3C; --gym: #A99DEB; --swim: #5CB8D9; --bike: #7BC792; --rest: #7E8680;
+    --ok: #6CC592; --part: #F2AA3C; --no: #EE7B70; --on-ok: #0F1215; --on-part: #0F1215; --on-no: #0F1215; --focus: #5CB8D9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0F1215; --surface: #171B1F; --sunken: #0B0D10; --band: #13171A; --line: #2A3036;
+  --ink: #ECEAE3; --ink-2: #B5BBB6; --ink-3: #858C87;
+  --accent: #F2AA3C; --accent-ink: #F5B95C; --accent-soft: #3A2C14; --on-ink: #0F1215;
+  --run: #F2AA3C; --gym: #A99DEB; --swim: #5CB8D9; --bike: #7BC792; --rest: #7E8680;
+  --ok: #6CC592; --part: #F2AA3C; --no: #EE7B70; --on-ok: #0F1215; --on-part: #0F1215; --on-no: #0F1215; --focus: #5CB8D9;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.45;
+  padding-inline: 16px;
+  padding-block: 14px 48px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+@supports (padding: env(safe-area-inset-top)) {
+  body { padding-block: calc(14px + env(safe-area-inset-top)) calc(48px + env(safe-area-inset-bottom)); }
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; touch-action: manipulation; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+
+.app { max-width: 520px; margin-inline: auto; display: grid; gap: 22px; }
+
+/* Cabecera */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.bib { display: grid; gap: 1px; }
+.bib-name { font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: .03em; text-transform: uppercase; line-height: 1; }
+.bib-sub { font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: .04em; }
+.count { display: flex; align-items: center; gap: 8px; }
+.count-n { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: .85; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
+.count-l { font-size: 12px; line-height: 1.15; color: var(--ink-2); }
+
+/* Semana */
+.week { display: grid; gap: 10px; }
+.week-bar { display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; gap: 8px; }
+.nav-btn { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--ink-2); }
+.nav-btn:hover { background: var(--sunken); }
+.nav-btn:disabled { opacity: .3; cursor: default; background: none; }
+.nav-btn svg { width: 18px; height: 18px; }
+.week-title { text-align: center; line-height: 1.25; }
+.week-title strong { font-weight: 700; }
+.week-title .sub { display: block; font-size: 13px; color: var(--ink-3); }
+.chip-d { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: var(--ink); color: var(--on-ink); vertical-align: 1px; }
+.strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.dbtn { display: grid; justify-items: center; gap: 3px; padding-block: 7px 8px; border-radius: 10px; position: relative; }
+.dbtn .dl { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: .05em; }
+.dbtn .dn { font-family: var(--display); font-weight: 800; font-size: 22px; line-height: 1; font-variant-numeric: tabular-nums; }
+.dbtn .marks { display: flex; gap: 2px; height: 4px; }
+.dbtn .marks i { width: 7px; height: 4px; border-radius: 2px; background: var(--c); }
+.dbtn.is-today .dn { color: var(--accent-ink); }
+.dbtn.is-sel { background: var(--ink); color: var(--on-ink); }
+.dbtn.is-sel .dl, .dbtn.is-sel .dn { color: inherit; }
+.dbtn.is-sel .dl { opacity: .7; }
+.dbtn .chk { position: absolute; top: 4px; right: 5px; width: 12px; height: 12px; color: var(--ok); }
+.dbtn.is-sel .chk { color: var(--accent); }
+.dbtn .pdot { position: absolute; top: 6px; left: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--lv); }
+
+/* Día */
+.day { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px 16px; display: grid; gap: 14px; }
+.day-head { display: grid; gap: 4px; }
+.day-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rel { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 7px; border-radius: 4px; background: var(--sunken); color: var(--ink-2); }
+.rel.is-today { background: var(--accent); color: #161B1F; }
+.link { font-size: 13px; font-weight: 600; color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; padding: 4px 2px; }
+.date { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(42px, 13vw, 60px); line-height: .9; text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; }
+.date .num { color: var(--accent-ink); }
+
+.sessions { list-style: none; margin: 0; padding: 0; display: grid; }
+.s { display: grid; grid-template-columns: 74px 1fr; gap: 0 12px; position: relative; padding-block: 12px; }
+.s + .s { border-top: 1px dashed var(--line); }
+.s-time { font-family: var(--mono); font-size: 13px; font-weight: 700; padding-top: 3px; display: flex; align-items: flex-start; gap: 7px; }
+.s-time::before { content: ""; flex: none; width: 9px; height: 9px; margin-top: 4px; border-radius: 2px; background: var(--c); }
+.s-time span { display: grid; gap: 1px; min-width: 0; }
+.s-time small { font-size: 10px; font-weight: 500; color: var(--ink-3); }
+.s-time.is-word, .s-time.is-flex { font-size: 11px; padding-top: 4px; }
+.s-time.is-flex { color: var(--ink-3); font-weight: 500; }
+.s-body { display: grid; gap: 2px; min-width: 0; padding-right: 34px; }
+.s-kind { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ck); }
+.s-main { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 8.6vw, 34px); line-height: 1; letter-spacing: .01em; overflow-wrap: anywhere; }
+.s-main .u { font-size: .55em; margin-left: 3px; color: var(--ink-2); letter-spacing: .02em; }
+.s-text { margin: 4px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.4; }
+.work { margin-top: 10px; background: var(--ground); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px 10px; display: grid; gap: 3px; }
+.work p { margin: 0; white-space: pre-line; font-size: 15px; line-height: 1.5; color: var(--ink); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tag { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); background: var(--ground); }
+.tag.opt { border-style: dashed; background: transparent; }
+.tag.zone { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ck); border-color: currentColor; background: transparent; }
+.s-note { margin: 8px 0 0; font-size: 13px; line-height: 1.4; color: var(--ink-3); }
+.s-note b { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin-right: 6px; }
+.s-edit { position: absolute; top: 4px; right: -8px; width: 42px; height: 42px; display: grid; place-items: center; color: var(--ink-3); border-radius: 50%; }
+.s-edit:hover { background: var(--sunken); color: var(--ink); }
+.s-edit svg { width: 17px; height: 17px; }
+.s-empty { padding-block: 14px; color: var(--ink-3); }
+.s--race .s-main { color: var(--accent-ink); }
+.s--rest .s-main { color: var(--ink-3); }
+
+.k-run { --c: var(--run); --ck: var(--accent-ink); }
+.k-gym { --c: var(--gym); --ck: var(--gym); }
+.k-swim { --c: var(--swim); --ck: var(--swim); }
+.k-bike { --c: var(--bike); --ck: var(--bike); }
+.k-rest { --c: var(--rest); --ck: var(--ink-3); }
+.k-race { --c: var(--accent); --ck: var(--accent-ink); }
+.k-other { --c: var(--ink-3); --ck: var(--ink-2); }
+
+.day-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap; }
+.add { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 999px; border: 1px dashed var(--ink-3); font-size: 14px; font-weight: 600; }
+.add:hover { background: var(--sunken); }
+.add svg { width: 14px; height: 14px; }
+.edited { font-size: 13px; color: var(--ink-3); }
+
+.log { border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 14px; }
+.log-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.log-lbl { font-size: 14px; font-weight: 600; }
+.log-val { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+.seg { display: inline-grid; grid-template-columns: repeat(3, auto); background: var(--sunken); border-radius: 10px; padding: 3px; gap: 2px; }
+.seg button { padding: 7px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .12); }
+.seg button[data-v="Sí"][aria-pressed="true"] { color: var(--ok); }
+.seg button[data-v="Parcial"][aria-pressed="true"] { color: var(--part); }
+.seg button[data-v="No"][aria-pressed="true"] { color: var(--no); }
+.pain { display: grid; gap: 6px; }
+.pain-scale { display: grid; grid-template-columns: repeat(11, 1fr); gap: 3px; }
+.pain-scale button { height: 36px; border-radius: 6px; background: var(--sunken); font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--ink-2); box-shadow: inset 0 -3px 0 var(--lv); font-variant-numeric: tabular-nums; }
+.pain-scale button[aria-pressed="true"] { background: var(--lv); color: var(--on); box-shadow: none; }
+.lv-g { --lv: var(--ok); --on: var(--on-ok); }
+.lv-a { --lv: var(--part); --on: var(--on-part); }
+.lv-r { --lv: var(--no); --on: var(--on-no); }
+.sema { margin: 0; display: grid; grid-template-columns: 12px 1fr; gap: 3px 10px; background: var(--sunken); border-radius: 10px; padding: 10px 12px; font-size: 14px; line-height: 1.45; }
+.sema i { width: 12px; height: 12px; border-radius: 50%; background: var(--lv); margin-top: 4px; grid-row: span 2; }
+.sema b { font-weight: 700; }
+.notes { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--ground); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; resize: vertical; min-height: 44px; }
+.notes::placeholder, .field input::placeholder, .field textarea::placeholder { color: var(--ink-3); }
+
+/* Fase */
+.wnote { display: grid; gap: 6px; padding-inline: 2px; }
+.wnote p { margin: 0; font-size: 16px; line-height: 1.5; max-width: 62ch; }
+.wnote .descarga { font-size: 14px; color: var(--ink-2); }
+.wnote .descarga b { color: var(--ink); }
+
+/* Perfil */
+.profile { display: grid; gap: 8px; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding-inline: 2px; }
+.sec-head h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 26px; text-transform: uppercase; letter-spacing: .02em; line-height: 1; }
+.pf { width: 100%; height: auto; display: block; }
+.pf-band { fill: var(--band); }
+.pf-grid { stroke: var(--line); stroke-width: 1; }
+.pf-base { stroke: var(--ink-3); stroke-width: 1; }
+.pf-area { fill: var(--accent-soft); }
+.pf-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.pf-dot { fill: var(--surface); stroke: var(--accent); stroke-width: 1.25; }
+.pf-ylab { fill: var(--ink-3); font-family: var(--mono); font-size: 8.5px; }
+.pf-wk { fill: var(--ink-3); font-family: var(--mono); font-size: 9px; text-anchor: middle; }
+.pf-wk.is-sel { fill: var(--ink); font-weight: 700; }
+.pf-phase { fill: var(--ink-2); font-family: var(--display); font-weight: 700; font-size: 10px; letter-spacing: .05em; text-anchor: middle; }
+.pf-d { fill: var(--ink-2); font-family: var(--mono); font-size: 7.5px; font-weight: 700; text-anchor: middle; }
+.pf-selband { fill: var(--sunken); }
+.pf-now { stroke: var(--ink); stroke-width: 1.25; stroke-dasharray: 2 2; }
+.pf-nowdot { fill: var(--ink); }
+.pf-pill { fill: var(--ink); }
+.pf-pilltxt { fill: var(--on-ink); font-family: var(--mono); font-size: 8.5px; font-weight: 700; text-anchor: middle; }
+.pf-peak { fill: var(--accent-ink); font-family: var(--mono); font-size: 8.5px; font-weight: 700; text-anchor: middle; }
+.pf-flag { fill: var(--ink); }
+.pf-pole { stroke: var(--ink); stroke-width: 1.25; }
+.pf-race { fill: var(--ink-2); font-family: var(--mono); font-size: 8px; text-anchor: end; }
+.pf-hit { fill: transparent; cursor: pointer; }
+.pf-hit:focus-visible { outline: none; fill: var(--sunken); opacity: .6; }
+.stats { display: flex; flex-wrap: wrap; gap: 6px 18px; padding-inline: 2px; font-size: 14px; color: var(--ink-2); }
+.stats b { font-family: var(--mono); color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Guías */
+.keys { border-top: 1px solid var(--line); }
+.keys + .keys { border-top: 1px solid var(--line); }
+.keys summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; font-family: var(--display); font-weight: 800; font-size: 22px; text-transform: uppercase; letter-spacing: .02em; line-height: 1; }
+.keys summary small { display: block; font-family: var(--body); font-weight: 400; font-size: 13px; text-transform: none; letter-spacing: 0; color: var(--ink-3); margin-top: 3px; }
+.keys summary::-webkit-details-marker { display: none; }
+.keys summary svg { flex: none; width: 18px; height: 18px; transition: transform .2s; color: var(--ink-3); }
+.keys[open] summary svg { transform: rotate(180deg); }
+.keys-body { display: grid; gap: 12px; padding-bottom: 16px; }
+.keys-body p { margin: 0; max-width: 62ch; }
+.keys-body h3 { margin: 8px 0 0; font-family: var(--display); font-weight: 800; font-size: 19px; text-transform: uppercase; letter-spacing: .02em; line-height: 1.05; }
+.keys-body ul, .keys-body ol { margin: 0; padding-left: 18px; display: grid; gap: 10px; }
+.keys-body li { max-width: 62ch; color: var(--ink-2); }
+.keys-body li::marker { color: var(--accent); }
+.closing { color: var(--ink-3); font-size: 14px; }
+.sem-row { display: grid; grid-template-columns: 12px 1fr; gap: 10px; padding-block: 10px; border-top: 1px solid var(--line); }
+.sem-row i { width: 12px; height: 12px; border-radius: 50%; background: var(--lv); margin-top: 5px; }
+.sem-row div { display: grid; gap: 4px; }
+.sem-row p { color: var(--ink-2); font-size: 15px; }
+.zone { display: grid; grid-template-columns: 40px 1fr; gap: 10px; padding-block: 10px; border-top: 1px solid var(--line); }
+.zone-z { font-family: var(--display); font-weight: 800; font-size: 30px; line-height: 1; color: var(--accent-ink); }
+.zone div { display: grid; gap: 3px; }
+.zone .meta { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+.zone p { font-size: 15px; color: var(--ink-2); }
+.facts { margin: 0; display: grid; }
+.facts div { display: grid; gap: 2px; padding-block: 9px; border-top: 1px solid var(--line); }
+.facts dd { margin: 0; color: var(--ink-2); }
+.phases li strong { color: var(--ink); }
+.phases .wk { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-left: 6px; }
+
+/* Datos */
+.data { display: grid; gap: 10px; padding-inline: 2px; }
+.data p { margin: 0; font-size: 14px; color: var(--ink-2); max-width: 62ch; }
+.data-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { padding: 11px 18px; border-radius: 999px; background: var(--ink); color: var(--on-ink); font-weight: 700; font-size: 15px; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn.danger { background: transparent; color: var(--no); padding-inline: 6px; margin-left: auto; font-weight: 600; }
+.btn.danger.armed { background: var(--no); color: var(--on-no); padding-inline: 14px; }
+.data-meta { font-family: var(--mono); font-size: 11px !important; color: var(--ink-3) !important; }
+
+footer { font-size: 12px; color: var(--ink-3); display: grid; gap: 2px; padding-inline: 2px; }
+
+/* Editor */
+dialog.sheet { width: min(520px, calc(100vw - 20px)); max-height: calc(100dvh - 24px); margin: auto; padding: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); color: var(--ink); overflow: auto; overscroll-behavior: contain; }
+dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
+.ed { display: grid; gap: 14px; padding: 18px 16px 16px; }
+.ed-head { display: grid; gap: 2px; }
+.ed-head h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 30px; text-transform: uppercase; line-height: 1; }
+.field { display: grid; gap: 5px; min-width: 0; }
+.field input, .field textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--ground); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.field textarea { resize: vertical; line-height: 1.45; }
+.field .hint { font-size: 12px; color: var(--ink-3); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.kinds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.kinds legend { padding: 0; margin-bottom: 5px; }
+.kinds label { position: relative; display: flex; align-items: center; gap: 7px; padding: 10px; border-radius: 10px; background: var(--sunken); font-size: 14px; font-weight: 600; cursor: pointer; }
+.kinds label::before { content: ""; flex: none; width: 9px; height: 9px; border-radius: 2px; background: var(--c); }
+.kinds input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.kinds label:has(input:checked) { background: var(--ink); color: var(--on-ink); }
+.kinds label:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ed-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-top: 2px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--on-ink); padding: 10px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; z-index: 20; box-shadow: 0 4px 16px rgb(0 0 0 / .2); white-space: nowrap; }
+
+.anim { animation: rise .18s ease-out; }
+@keyframes rise { from { opacity: .4; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .anim { animation: none; } .keys summary svg { transition: none; } }
+@media (max-width: 360px) { .s { grid-template-columns: 66px 1fr; } .seg button { padding: 7px 10px; } .kinds { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="bib">
+      <span class="bib-name">La Traka · 100 km</span>
+      <span class="bib-sub">Lun 12 abr 2027 · Girona · gravel</span>
+    </div>
+    <div class="count" aria-live="polite">
+      <span class="count-n" id="countN">–</span>
+      <span class="count-l" id="countL">días para<br>la salida</span>
+    </div>
+  </header>
+
+  <nav class="week" aria-label="Semana">
+    <div class="week-bar">
+      <button class="nav-btn" id="prevWeek" aria-label="Semana anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
+      <div class="week-title" id="weekTitle"></div>
+      <button class="nav-btn" id="nextWeek" aria-label="Semana siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4 6 6-6 6"/></svg></button>
+    </div>
+    <div class="strip" id="strip"></div>
+  </nav>
+
+  <section class="day" id="day">
+    <div class="day-head">
+      <div class="day-meta"><span class="rel" id="rel">Hoy</span><span class="eyebrow" id="dayWeek"></span><button class="link" id="backToday" hidden>Volver a hoy</button></div>
+      <h1 class="date" id="date"></h1>
+    </div>
+    <ul class="sessions" id="sessions" aria-live="polite"></ul>
+    <div class="day-actions">
+      <button type="button" class="add" id="addSession"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 2v10M2 7h10"/></svg>Añadir sesión</button>
+      <span class="edited" id="edited" hidden>Día editado · <button type="button" class="link" id="restore">Volver al plan</button></span>
+    </div>
+    <div class="log">
+      <div class="log-row">
+        <span class="log-lbl">¿Hecho?</span>
+        <div class="seg" role="group" aria-label="Sesión hecha" id="seg">
+          <button type="button" id="hSi" data-v="Sí" aria-pressed="false">Sí</button>
+          <button type="button" id="hParcial" data-v="Parcial" aria-pressed="false">Parcial</button>
+          <button type="button" id="hNo" data-v="No" aria-pressed="false">No</button>
+        </div>
+      </div>
+      <div class="pain">
+        <div class="log-row"><span class="log-lbl">Dolor de rodilla</span><span class="log-val" id="rodillaVal"></span></div>
+        <div class="pain-scale" role="group" aria-label="Dolor de rodilla de 0 a 10" id="rodilla"></div>
+      </div>
+      <div class="pain">
+        <div class="log-row"><span class="log-lbl">Dolor de tibial</span><span class="log-val" id="tibialVal"></span></div>
+        <div class="pain-scale" role="group" aria-label="Dolor de tibial de 0 a 10" id="tibial"></div>
+      </div>
+      <p class="sema" id="sema" hidden></p>
+      <label class="eyebrow" for="notes">Notas del día</label>
+      <textarea class="notes" id="notes" rows="1" placeholder="Sensaciones, rodillo o exterior…"></textarea>
+    </div>
+  </section>
+
+  <section class="wnote" id="phaseNote">
+    <span class="eyebrow" id="phaseLbl"></span>
+    <p id="phaseObj"></p>
+    <p class="descarga" id="descarga" hidden></p>
+  </section>
+
+  <section class="profile">
+    <div class="sec-head">
+      <h2>Perfil del plan</h2>
+      <span class="eyebrow">Horas por semana · D = descarga</span>
+    </div>
+    <svg class="pf" id="pf" viewBox="0 0 360 176" role="img" aria-label="Horas de entrenamiento por semana de las 30 semanas del plan"></svg>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <div>
+    <details class="keys">
+      <summary><span>Prevención y señales<small>Semáforo de dolor y reglas para no recaer</small></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7.5 5 5 5-5"/></svg></summary>
+      <div class="keys-body" id="prev"></div>
+    </details>
+    <details class="keys">
+      <summary><span>Zonas de bici<small>Z1–Z5, RPE, talk test y cadencia</small></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7.5 5 5 5-5"/></svg></summary>
+      <div class="keys-body" id="zonas"></div>
+    </details>
+    <details class="keys">
+      <summary><span>Punto de partida y fases<small>Tu situación y las 6 fases del plan</small></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7.5 5 5 5-5"/></svg></summary>
+      <div class="keys-body" id="perfil"></div>
+    </details>
+  </div>
+
+  <section class="data">
+    <div class="sec-head"><h2>Tus datos</h2></div>
+    <p>Tus sesiones editadas y tu registro se guardan solo en este móvil. Guarda una copia de vez en cuando (en Archivos, tu correo o WhatsApp) para no perderlos si cambias de móvil o borras los datos de Safari.</p>
+    <div class="data-actions">
+      <button type="button" class="btn" id="exportBtn">Guardar copia</button>
+      <button type="button" class="btn ghost" id="importBtn">Recuperar copia</button>
+      <input type="file" id="importFile" accept=".json,application/json" hidden>
+    </div>
+    <p class="data-meta" id="dataMeta"></p>
+  </section>
+
+  <footer>
+    <span>Fuente: Plan_Entrenamiento_La_Traka_100km.xlsx</span>
+    <span>Desliza el día a los lados para cambiar · toca el lápiz para editar una sesión</span>
+  </footer>
+</div>
+
+<dialog class="sheet" id="editor" aria-labelledby="edHeading">
+  <form class="ed" id="edForm" method="dialog">
+    <div class="ed-head">
+      <span class="eyebrow" id="edDate"></span>
+      <h2 id="edHeading">Editar sesión</h2>
+    </div>
+    <fieldset class="kinds">
+      <legend class="eyebrow">Tipo</legend>
+      <label class="k-bike"><input type="radio" name="edKind" id="ekBike" value="bike">Bici</label>
+      <label class="k-run"><input type="radio" name="edKind" id="ekRun" value="run">Carrera</label>
+      <label class="k-swim"><input type="radio" name="edKind" id="ekSwim" value="swim">Natación</label>
+      <label class="k-gym"><input type="radio" name="edKind" id="ekGym" value="gym">Fuerza</label>
+      <label class="k-rest"><input type="radio" name="edKind" id="ekRest" value="rest">Descanso</label>
+      <label class="k-other"><input type="radio" name="edKind" id="ekOther" value="other">Otro</label>
+      <label class="k-race" id="ekRaceLbl" hidden><input type="radio" name="edKind" id="ekRace" value="race">Carrera D</label>
+    </fieldset>
+    <div class="field">
+      <label class="eyebrow" for="edTitle">Nombre</label>
+      <input id="edTitle" type="text" autocomplete="off" placeholder="Salida larga, series, técnica…">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label class="eyebrow" for="edTime">Hora</label>
+        <input id="edTime" type="text" autocomplete="off" placeholder="20:00">
+      </div>
+      <div class="field">
+        <label class="eyebrow" for="edDur">Duración</label>
+        <input id="edDur" type="text" autocomplete="off" placeholder="2h30 · 45 min · 2.000 m">
+      </div>
+    </div>
+    <div class="field">
+      <label class="eyebrow" for="edZone">Intensidad</label>
+      <input id="edZone" type="text" autocomplete="off" placeholder="Z2 + Z3">
+    </div>
+    <div class="field">
+      <label class="eyebrow" for="edWork">Entreno concreto</label>
+      <textarea id="edWork" rows="5" placeholder="Calentamiento 15' Z1&#10;3 × 10' Z3, rec. 5' Z1&#10;Vuelta a la calma 10'"></textarea>
+      <span class="hint">Escríbelo como quieras: series, ejercicios de fuerza, ruta… Se ve destacado en el día.</span>
+    </div>
+    <div class="field">
+      <label class="eyebrow" for="edText">Descripción del plan</label>
+      <textarea id="edText" rows="3"></textarea>
+    </div>
+    <div class="ed-actions">
+      <button type="submit" class="btn" id="edSave">Guardar</button>
+      <button type="button" class="btn ghost" id="edCancel">Cancelar</button>
+      <button type="button" class="btn danger" id="edDelete">Eliminar</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+const PLAN = {"days":[{"date":"2026-09-14","w":1,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"20-25'","z":"Z1–Z2","t":"20-25 min suave (Z1-Z2), terreno llano. Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.15},{"date":"2026-09-15","w":1,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-09-16","w":1,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-09-17","w":1,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-09-18","w":1,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-09-19","w":1,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"45'","z":"Z1–Z2","t":"Salida suave, 45 min, en Z1-Z2. Solo para activar piernas antes de la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":0.75},{"date":"2026-09-20","w":1,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h15","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 1 h 15 min. Terreno llano o rodante, ritmo cómodo y conversacional. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":1.25},{"date":"2026-09-21","w":2,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"20-25'","z":"Z1–Z2","t":"20-25 min suave (Z1-Z2), terreno llano. Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.15},{"date":"2026-09-22","w":2,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-09-23","w":2,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-09-24","w":2,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-09-25","w":2,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-09-26","w":2,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"45'","z":"Z1–Z2","t":"Salida suave, 45 min, en Z1-Z2. Solo para activar piernas antes de la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":0.75},{"date":"2026-09-27","w":2,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h30","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 1 h 30 min. Terreno llano o rodante, ritmo cómodo y conversacional. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2026-09-28","w":3,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"20-25'","z":"Z1–Z2","t":"20-25 min suave (Z1-Z2), terreno llano. Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.15},{"date":"2026-09-29","w":3,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-09-30","w":3,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-10-01","w":3,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-10-02","w":3,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-10-03","w":3,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h","z":"Z1–Z2","t":"Salida suave, 1 h, en Z1-Z2. Solo para activar piernas antes de la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1},{"date":"2026-10-04","w":3,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h45","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 1 h 45 min. Terreno llano o rodante, ritmo cómodo y conversacional. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":1.75},{"date":"2026-10-05","w":4,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"20-25'","z":"Z1–Z2","t":"20-25 min suave (Z1-Z2), terreno llano. Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.15},{"date":"2026-10-06","w":4,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-10-07","w":4,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-10-08","w":4,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-10-09","w":4,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-10-10","w":4,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"30'","z":"Z1–Z2","t":"Salida suave, 30 min, en Z1-Z2. Solo para activar piernas antes de la tirada larga del domingo. Semana de descarga: prioriza sensaciones sobre el plan. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":0.5},{"date":"2026-10-11","w":4,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h15","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 1 h 15 min. Terreno llano o rodante, ritmo cómodo y conversacional. Semana de descarga: si el cuerpo pide menos, recorta sin remordimientos. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":1.25},{"date":"2026-10-12","w":5,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"20-25'","z":"Z1–Z2","t":"20-25 min suave (Z1-Z2), terreno llano. Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.15},{"date":"2026-10-13","w":5,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-10-14","w":5,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-10-15","w":5,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-10-16","w":5,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-10-17","w":5,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h","z":"Z1–Z2","t":"Salida suave, 1 h, en Z1-Z2. Solo para activar piernas antes de la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1},{"date":"2026-10-18","w":5,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h45","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 1 h 45 min. Terreno llano o rodante, ritmo cómodo y conversacional. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":1.75},{"date":"2026-10-19","w":6,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"20-25'","z":"Z1–Z2","t":"20-25 min suave (Z1-Z2), terreno llano. Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.15},{"date":"2026-10-20","w":6,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-10-21","w":6,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-10-22","w":6,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-10-23","w":6,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-10-24","w":6,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h","z":"Z1–Z2","t":"Salida suave, 1 h, en Z1-Z2. Solo para activar piernas antes de la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1},{"date":"2026-10-25","w":6,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 2 h. Terreno llano o rodante, ritmo cómodo y conversacional. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":2},{"date":"2026-10-26","w":7,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min suave (Z2). Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2026-10-27","w":7,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-10-28","w":7,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-10-29","w":7,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-10-30","w":7,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-10-31","w":7,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h","z":"Z2","t":"Salida en Z2, 1 h, ritmo tranquilo. Deja piernas frescas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1},{"date":"2026-11-01","w":7,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 2 h. Empieza a incluir algo de desnivel suave y algún tramo de camino/gravel. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":2},{"date":"2026-11-02","w":8,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min suave (Z2). Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2026-11-03","w":8,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-11-04","w":8,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-11-05","w":8,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-11-06","w":8,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-11-07","w":8,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h15","z":"Z2","t":"Salida en Z2, 1 h 15 min, ritmo tranquilo. Deja piernas frescas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.25},{"date":"2026-11-08","w":8,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h15","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 2 h 15 min. Empieza a incluir algo de desnivel suave y algún tramo de camino/gravel. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":2.25},{"date":"2026-11-09","w":9,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min suave (Z2). Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2026-11-10","w":9,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-11-11","w":9,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-11-12","w":9,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-11-13","w":9,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-11-14","w":9,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h15","z":"Z2","t":"Salida en Z2, 1 h 15 min, ritmo tranquilo. Deja piernas frescas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.25},{"date":"2026-11-15","w":9,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h30","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 2 h 30 min. Empieza a incluir algo de desnivel suave y algún tramo de camino/gravel. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":2.5},{"date":"2026-11-16","w":10,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min suave (Z2). Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2026-11-17","w":10,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-11-18","w":10,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-11-19","w":10,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-11-20","w":10,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-11-21","w":10,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"45'","z":"Z2","t":"Salida en Z2, 45 min, ritmo tranquilo. Deja piernas frescas para la tirada larga del domingo. Semana de descarga: prioriza sensaciones sobre el plan. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":0.75},{"date":"2026-11-22","w":10,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h30","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 1 h 30 min. Empieza a incluir algo de desnivel suave y algún tramo de camino/gravel. Semana de descarga: si el cuerpo pide menos, recorta sin remordimientos. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":1.5},{"date":"2026-11-23","w":11,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min suave (Z2). Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2026-11-24","w":11,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-11-25","w":11,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-11-26","w":11,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-11-27","w":11,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-11-28","w":11,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida en Z2, 1 h 30 min, ritmo tranquilo. Deja piernas frescas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2026-11-29","w":11,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h45","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 2 h 45 min. Empieza a incluir algo de desnivel suave y algún tramo de camino/gravel. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":2.75},{"date":"2026-11-30","w":12,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min suave (Z2). Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2026-12-01","w":12,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-12-02","w":12,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-12-03","w":12,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-12-04","w":12,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-12-05","w":12,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida en Z2, 1 h 30 min, ritmo tranquilo. Deja piernas frescas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2026-12-06","w":12,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"3h","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 3 h. Empieza a incluir algo de desnivel suave y algún tramo de camino/gravel. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":3},{"date":"2026-12-07","w":13,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min suave (Z2). Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2026-12-08","w":13,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-12-09","w":13,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-12-10","w":13,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-12-11","w":13,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-12-12","w":13,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h","z":"Z2","t":"Salida en Z2, 1 h, ritmo tranquilo. Deja piernas frescas para la tirada larga del domingo. Semana de descarga: prioriza sensaciones sobre el plan. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1},{"date":"2026-12-13","w":13,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h45","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 1 h 45 min. Empieza a incluir algo de desnivel suave y algún tramo de camino/gravel. Semana de descarga: si el cuerpo pide menos, recorta sin remordimientos. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":1.75},{"date":"2026-12-14","w":14,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min suave (Z2). Atenta al tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2026-12-15","w":14,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-12-16","w":14,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-12-17","w":14,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-12-18","w":14,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-12-19","w":14,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida en Z2, 1 h 30 min, ritmo tranquilo. Deja piernas frescas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2026-12-20","w":14,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"3h15","z":"Z2","t":"Salida larga en Z2 (RPE 4-5), 3 h 15 min. Empieza a incluir algo de desnivel suave y algún tramo de camino/gravel. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":3.25},{"date":"2026-12-21","w":15,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"15-20'","z":null,"t":"15-20 min suave o descanso activo (fiestas).","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":["Opcional"]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.05},{"date":"2026-12-22","w":15,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-12-23","w":15,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-12-24","w":15,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2026-12-25","w":15,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2026-12-26","w":15,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"30'","z":null,"t":"Salida corta y suave, 30 min, o descanso si lo necesitas. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo","Opcional"]}],"hrs":0.5},{"date":"2026-12-27","w":15,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h15","z":"Z1–Z2","t":"Salida en Z1-Z2, 1 h 15 min. Semana de fiestas: si no llegas al tiempo previsto, no pasa nada. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":1.25},{"date":"2026-12-28","w":16,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"15-20'","z":null,"t":"15-20 min suave o descanso activo (fiestas).","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":["Opcional"]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.05},{"date":"2026-12-29","w":16,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2026-12-30","w":16,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2026-12-31","w":16,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2027-01-01","w":16,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-01-02","w":16,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"45'","z":null,"t":"Salida corta y suave, 45 min, o descanso si lo necesitas. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo","Opcional"]}],"hrs":0.75},{"date":"2027-01-03","w":16,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"1h30","z":"Z1–Z2","t":"Salida en Z1-Z2, 1 h 30 min. Semana de fiestas: si no llegas al tiempo previsto, no pasa nada. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-01-04","w":17,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min (Z2), sin cambios de ritmo, para no cargar el tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2027-01-05","w":17,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2027-01-06","w":17,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-01-07","w":17,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2027-01-08","w":17,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-01-09","w":17,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h15","z":"Z2","t":"Salida corta, 1 h 15 min, en Z2 sin apretar. Guarda piernas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.25},{"date":"2027-01-10","w":17,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h30","z":"Z2 + Z3","t":"Salida larga en Z2 con 2-3 bloques de 8-10 min en Z3, 2 h 30 min. Terreno específico: busca camino de gravel y desnivel similar al de Girona. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":2.5},{"date":"2027-01-11","w":18,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min (Z2), sin cambios de ritmo, para no cargar el tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2027-01-12","w":18,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2027-01-13","w":18,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-01-14","w":18,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2027-01-15","w":18,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-01-16","w":18,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 sin apretar. Guarda piernas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-01-17","w":18,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h45","z":"Z2 + Z3","t":"Salida larga en Z2 con 2-3 bloques de 8-10 min en Z3, 2 h 45 min. Terreno específico: busca camino de gravel y desnivel similar al de Girona. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":2.75},{"date":"2027-01-18","w":19,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min (Z2), sin cambios de ritmo, para no cargar el tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2027-01-19","w":19,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2027-01-20","w":19,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-01-21","w":19,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2027-01-22","w":19,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-01-23","w":19,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 sin apretar. Guarda piernas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-01-24","w":19,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"3h","z":"Z2 + Z3","t":"Salida larga en Z2 con 2-3 bloques de 8-10 min en Z3, 3 h. Terreno específico: busca camino de gravel y desnivel similar al de Girona. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":3},{"date":"2027-01-25","w":20,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min (Z2), sin cambios de ritmo, para no cargar el tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2027-01-26","w":20,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2027-01-27","w":20,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-01-28","w":20,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2027-01-29","w":20,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-01-30","w":20,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h","z":"Z2","t":"Salida corta, 1 h, en Z2 sin apretar. Guarda piernas para la tirada larga del domingo. Semana de descarga: prioriza sensaciones sobre el plan. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1},{"date":"2027-01-31","w":20,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h","z":"Z2 + Z3","t":"Salida larga en Z2 con 2-3 bloques de 8-10 min en Z3, 2 h. Terreno específico: busca camino de gravel y desnivel similar al de Girona. Semana de descarga: si el cuerpo pide menos, recorta sin remordimientos. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":2},{"date":"2027-02-01","w":21,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min (Z2), sin cambios de ritmo, para no cargar el tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2027-02-02","w":21,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2027-02-03","w":21,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-02-04","w":21,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2027-02-05","w":21,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-02-06","w":21,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 sin apretar. Guarda piernas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-02-07","w":21,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"3h15","z":"Z2 + Z3","t":"Salida larga en Z2 con 2-3 bloques de 8-10 min en Z3, 3 h 15 min. Terreno específico: busca camino de gravel y desnivel similar al de Girona. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":3.25},{"date":"2027-02-08","w":22,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min (Z2), sin cambios de ritmo, para no cargar el tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2027-02-09","w":22,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2027-02-10","w":22,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-02-11","w":22,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2027-02-12","w":22,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-02-13","w":22,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 sin apretar. Guarda piernas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-02-14","w":22,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"3h30","z":"Z2 + Z3","t":"Salida larga en Z2 con 2-3 bloques de 8-10 min en Z3, 3 h 30 min. Terreno específico: busca camino de gravel y desnivel similar al de Girona. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":3.5},{"date":"2027-02-15","w":23,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"25-30'","z":"Z2","t":"25-30 min (Z2), sin cambios de ritmo, para no cargar el tibial.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":1.2},{"date":"2027-02-16","w":23,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":1},{"date":"2027-02-17","w":23,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-02-18","w":23,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~1h","z":null,"t":"Sesión con tu entrenador. Coméntale el antecedente de condromalacia (ya sin dolor) y la sobrecarga reciente en el tibial por compensación.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":1},{"date":"2027-02-19","w":23,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-02-20","w":23,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 sin apretar. Guarda piernas para la tirada larga del domingo. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-02-21","w":23,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"3h45","z":"Z2 + Z3","t":"Salida larga en Z2 con 2-3 bloques de 8-10 min en Z3, 3 h 45 min. Terreno específico: busca camino de gravel y desnivel similar al de Girona. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Gravel + desnivel"]}],"hrs":3.75},{"date":"2027-02-22","w":24,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"15-20'","z":null,"t":"POR DEFECTO, NO CORRER: vienes de la tirada más larga de la semana. Solo 15-20 min muy suaves si las piernas y el tibial están perfectos.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":["Opcional"]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":0.95},{"date":"2027-02-23","w":24,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":0.75},{"date":"2027-02-24","w":24,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-02-25","w":24,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":0.75},{"date":"2027-02-26","w":24,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-02-27","w":24,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 solo para activar. El grueso de la semana llega el domingo, con la tirada larga y la fatiga acumulada del fin de semana. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-02-28","w":24,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"4h","z":"Z2 + Z3","t":"Tirada larga específica, 4 h, en Z2 con tramos en Z3 en las subidas. Practica aquí tu nutrición e hidratación de carrera. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Nutrición"]}],"hrs":4},{"date":"2027-03-01","w":25,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"15-20'","z":null,"t":"POR DEFECTO, NO CORRER: vienes de la tirada más larga de la semana. Solo 15-20 min muy suaves si las piernas y el tibial están perfectos.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":["Opcional"]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":0.95},{"date":"2027-03-02","w":25,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":0.75},{"date":"2027-03-03","w":25,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-03-04","w":25,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":0.75},{"date":"2027-03-05","w":25,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-03-06","w":25,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 solo para activar. El grueso de la semana llega el domingo, con la tirada larga y la fatiga acumulada del fin de semana. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-03-07","w":25,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"4h15","z":"Z2 + Z3","t":"Tirada larga específica, 4 h 15 min, en Z2 con tramos en Z3 en las subidas. Practica aquí tu nutrición e hidratación de carrera. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Nutrición"]}],"hrs":4.25},{"date":"2027-03-08","w":26,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"15-20'","z":null,"t":"POR DEFECTO, NO CORRER: vienes de la tirada más larga de la semana. Solo 15-20 min muy suaves si las piernas y el tibial están perfectos.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":["Opcional"]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":0.95},{"date":"2027-03-09","w":26,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":0.75},{"date":"2027-03-10","w":26,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-03-11","w":26,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":0.75},{"date":"2027-03-12","w":26,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-03-13","w":26,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h15","z":"Z2","t":"Salida corta, 1 h 15 min, en Z2 solo para activar. El grueso de la semana llega el domingo, con la tirada larga y la fatiga acumulada del fin de semana. Semana de descarga: prioriza sensaciones sobre el plan. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.25},{"date":"2027-03-14","w":26,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h30","z":"Z2 + Z3","t":"Tirada larga específica, 2 h 30 min, en Z2 con tramos en Z3 en las subidas. Practica aquí tu nutrición e hidratación de carrera. Semana de descarga: si el cuerpo pide menos, recorta sin remordimientos. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Nutrición"]}],"hrs":2.5},{"date":"2027-03-15","w":27,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"15-20'","z":null,"t":"POR DEFECTO, NO CORRER: vienes de la tirada más larga de la semana. Solo 15-20 min muy suaves si las piernas y el tibial están perfectos.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":["Opcional"]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":0.95},{"date":"2027-03-16","w":27,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":0.75},{"date":"2027-03-17","w":27,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-03-18","w":27,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":0.75},{"date":"2027-03-19","w":27,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-03-20","w":27,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 solo para activar. El grueso de la semana llega el domingo, con la tirada larga y la fatiga acumulada del fin de semana. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-03-21","w":27,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"4h30","z":"Z2 + Z3","t":"Tirada larga específica, 4 h 30 min, en Z2 con tramos en Z3 en las subidas. Practica aquí tu nutrición e hidratación de carrera. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Nutrición"]}],"hrs":4.5},{"date":"2027-03-22","w":28,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"15-20'","z":null,"t":"POR DEFECTO, NO CORRER: vienes de la tirada más larga de la semana. Solo 15-20 min muy suaves si las piernas y el tibial están perfectos.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":["Opcional"]},{"k":"swim","title":"Natación","h":"Seguido","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":null,"tags":[]}],"hrs":0.95},{"date":"2027-03-23","w":28,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":0.75},{"date":"2027-03-24","w":28,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"2.000-2.200 m","z":null,"t":"2.000-2.200 m con cambios de ritmo (tu sesión habitual).","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.75},{"date":"2027-03-25","w":28,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~45'","z":null,"t":"Sesión con tu entrenador. Avísale de la tirada larga del domingo para que ajuste la carga de piernas esta semana.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":0.75},{"date":"2027-03-26","w":28,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-03-27","w":28,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h30","z":"Z2","t":"Salida corta, 1 h 30 min, en Z2 solo para activar. El grueso de la semana llega el domingo, con la tirada larga y la fatiga acumulada del fin de semana. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.5},{"date":"2027-03-28","w":28,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"3h30","z":"Z2 + Z3","t":"Tirada larga específica, 3 h 30 min, en Z2 con tramos en Z3 en las subidas. Practica aquí tu nutrición e hidratación de carrera. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo","Nutrición"]}],"hrs":3.5},{"date":"2027-03-29","w":29,"dow":"Lunes","b":[{"k":"run","title":"Carrera a pie","h":"20:00–22:30","d":"15'","z":null,"t":"15 min muy suave (solo semana 29).","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"Seguido","d":"1.500-1.800 m","z":null,"t":"1.500-1.800 m suave, sin apretar los cambios de ritmo.","n":null,"tags":[]}],"hrs":0.85},{"date":"2027-03-30","w":29,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~30'","z":null,"t":"Sesión con tu entrenador, carga reducida: el objetivo es llegar fresca a la carrera, no ganar fuerza.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":0.5},{"date":"2027-03-31","w":29,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"1.500-1.800 m","z":null,"t":"1.500-1.800 m suave, sin apretar los cambios de ritmo.","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":[]}],"hrs":0.6},{"date":"2027-04-01","w":29,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~30'","z":null,"t":"Sesión con tu entrenador, carga reducida: el objetivo es llegar fresca a la carrera, no ganar fuerza.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":0.5},{"date":"2027-04-02","w":29,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso. Es el único día realmente libre de la semana y hace falta para asimilar la carga. Solo si llegas con buenas sensaciones: 20-30 min muy suaves (Z1) o movilidad — exterior o rodillo, tú eliges.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":["Opcional: 20-30' Z1"]}],"hrs":0.25},{"date":"2027-04-03","w":29,"dow":"Sábado","b":[{"k":"bike","title":"Salida complementaria","h":null,"d":"1h15","z":"Z1","t":"Salida muy suave, 1 h 15 min, en Z1, solo para mantener el gesto. Tú eliges: exterior o rodillo.","n":"Guarda piernas para la salida larga del domingo.","tags":["Exterior o rodillo"]}],"hrs":1.25},{"date":"2027-04-04","w":29,"dow":"Domingo","b":[{"k":"bike","title":"Salida larga","h":null,"d":"2h30","z":"Z2","t":"Salida en Z2 de 2 h 30 min, con 3-4 progresiones cortas (1 min) a ritmo de carrera. Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":2.5},{"date":"2027-04-05","w":30,"dow":"Lunes","b":[{"k":"rest","title":"Sin carrera a pie","h":null,"d":null,"z":null,"t":"Descanso. No correr esta semana.","n":"El domingo tienes la salida larga: si notas las piernas cargadas o el tibial se resiente, cambia la carrera por bici muy suave o descansa.","tags":[]},{"k":"swim","title":"Natación","h":"20:00–22:30","d":"1.000-1.200 m","z":null,"t":"1.000-1.200 m muy suave o descanso, para llegar fresca.","n":null,"tags":["Opcional"]}],"hrs":0.25},{"date":"2027-04-06","w":30,"dow":"Martes","b":[{"k":"gym","title":"Fuerza · Sesión A","h":"20:00","d":"~30'","z":null,"t":"Sesión con tu entrenador, carga reducida: el objetivo es llegar fresca a la carrera, no ganar fuerza.","n":"Comparte con tu entrenador cualquier molestia en rodilla o tibial para que ajuste la sesión.","tags":[]}],"hrs":0.5},{"date":"2027-04-07","w":30,"dow":"Miércoles","b":[{"k":"swim","title":"Natación","h":"19:00–20:00","d":"1.000-1.200 m","z":null,"t":"1.000-1.200 m muy suave o descanso, para llegar fresca.","n":"Bajo impacto: perfecta mientras terminas de resolver el tema del tibial.","tags":["Opcional"]}],"hrs":0.25},{"date":"2027-04-08","w":30,"dow":"Jueves","b":[{"k":"gym","title":"Fuerza · Sesión B","h":"20:00","d":"~30'","z":null,"t":"Sesión con tu entrenador, carga reducida: el objetivo es llegar fresca a la carrera, no ganar fuerza.","n":"Progresión y ejercicios los marca tu entrenador; aquí solo el contexto de rodilla/tibial.","tags":[]}],"hrs":0.5},{"date":"2027-04-09","w":30,"dow":"Viernes","b":[{"k":"rest","title":"Descanso","h":null,"d":null,"z":null,"t":"Descanso completo. Prepara maleta, nutrición y material para el lunes.","n":"Por defecto es descanso. Solo lo activas si las sensaciones son buenas; nunca lo conviertas en una sesión exigente.","tags":[]}],"hrs":0},{"date":"2027-04-10","w":30,"dow":"Sábado","b":[{"k":"rest","title":"Descanso total","h":null,"d":null,"z":null,"t":"Descanso total. Prepara maleta, nutrición y material para la carrera del lunes.","n":null,"tags":[]}],"hrs":0.4},{"date":"2027-04-11","w":30,"dow":"Domingo","b":[{"k":"bike","title":"Shakeout","h":null,"d":"45'","z":"Z1","t":"Rodaje muy suave (shakeout) de 45 min en Z1. Aprovecha para revisar la bici (frenos, presión de neumáticos, cambio). Tú eliges: exterior o rodillo.","n":"Cadencia alta (>85 rpm) ayuda a proteger la rodilla. Si el tibial molesta al pedalear, revisa calas/calzado con tu fisio.","tags":["Exterior o rodillo"]}],"hrs":0.75},{"date":"2027-04-12","w":31,"dow":"Lunes","b":[{"k":"race","title":"La Traka · 100 km","h":"Salida oficial","d":null,"z":null,"t":"Llegada con tiempo, desayuno probado en entrenamientos, material revisado la noche anterior. Ritmo controlado en el primer tercio, nutrición cada 30-45 min desde el km 0.","n":"Si aparece dolor de rodilla o tibial en carrera, baja el ritmo y evita forzar; no merece la pena arriesgar.","tags":[]}],"hrs":0}],"weeks":[{"n":1,"fase":"Fase 1 - Adaptación","ini":"2026-09-14","fin":"2026-09-20","h":6.15,"bici":2.0,"descarga":false},{"n":2,"fase":"Fase 1 - Adaptación","ini":"2026-09-21","fin":"2026-09-27","h":6.4,"bici":2.25,"descarga":false},{"n":3,"fase":"Fase 1 - Adaptación","ini":"2026-09-28","fin":"2026-10-04","h":6.9,"bici":2.75,"descarga":false},{"n":4,"fase":"Fase 1 - Adaptación","ini":"2026-10-05","fin":"2026-10-11","h":5.9,"bici":1.75,"descarga":true},{"n":5,"fase":"Fase 1 - Adaptación","ini":"2026-10-12","fin":"2026-10-18","h":6.9,"bici":2.75,"descarga":false},{"n":6,"fase":"Fase 1 - Adaptación","ini":"2026-10-19","fin":"2026-10-25","h":7.15,"bici":3,"descarga":false},{"n":7,"fase":"Fase 2 - Base / Volumen","ini":"2026-10-26","fin":"2026-11-01","h":7.2,"bici":3,"descarga":false},{"n":8,"fase":"Fase 2 - Base / Volumen","ini":"2026-11-02","fin":"2026-11-08","h":7.7,"bici":3.5,"descarga":false},{"n":9,"fase":"Fase 2 - Base / Volumen","ini":"2026-11-09","fin":"2026-11-15","h":7.95,"bici":3.75,"descarga":false},{"n":10,"fase":"Fase 2 - Base / Volumen","ini":"2026-11-16","fin":"2026-11-22","h":6.45,"bici":2.25,"descarga":true},{"n":11,"fase":"Fase 2 - Base / Volumen","ini":"2026-11-23","fin":"2026-11-29","h":8.45,"bici":4.25,"descarga":false},{"n":12,"fase":"Fase 2 - Base / Volumen","ini":"2026-11-30","fin":"2026-12-06","h":8.7,"bici":4.5,"descarga":false},{"n":13,"fase":"Fase 2 - Base / Volumen","ini":"2026-12-07","fin":"2026-12-13","h":6.95,"bici":2.75,"descarga":true},{"n":14,"fase":"Fase 2 - Base / Volumen","ini":"2026-12-14","fin":"2026-12-20","h":8.95,"bici":4.75,"descarga":false},{"n":15,"fase":"Fase 3 - Navidad / Mantenimiento","ini":"2026-12-21","fin":"2026-12-27","h":5.8,"bici":1.75,"descarga":false},{"n":16,"fase":"Fase 3 - Navidad / Mantenimiento","ini":"2026-12-28","fin":"2027-01-03","h":6.3,"bici":2.25,"descarga":false},{"n":17,"fase":"Fase 4 - Específica / Build","ini":"2027-01-04","fin":"2027-01-10","h":7.95,"bici":3.75,"descarga":false},{"n":18,"fase":"Fase 4 - Específica / Build","ini":"2027-01-11","fin":"2027-01-17","h":8.45,"bici":4.25,"descarga":false},{"n":19,"fase":"Fase 4 - Específica / Build","ini":"2027-01-18","fin":"2027-01-24","h":8.7,"bici":4.5,"descarga":false},{"n":20,"fase":"Fase 4 - Específica / Build","ini":"2027-01-25","fin":"2027-01-31","h":7.2,"bici":3,"descarga":true},{"n":21,"fase":"Fase 4 - Específica / Build","ini":"2027-02-01","fin":"2027-02-07","h":8.95,"bici":4.75,"descarga":false},{"n":22,"fase":"Fase 4 - Específica / Build","ini":"2027-02-08","fin":"2027-02-14","h":9.2,"bici":5.0,"descarga":false},{"n":23,"fase":"Fase 4 - Específica / Build","ini":"2027-02-15","fin":"2027-02-21","h":9.45,"bici":5.25,"descarga":false},{"n":24,"fase":"Fase 5 - Pico específico","ini":"2027-02-22","fin":"2027-02-28","h":8.95,"bici":5.5,"descarga":false},{"n":25,"fase":"Fase 5 - Pico específico","ini":"2027-03-01","fin":"2027-03-07","h":9.2,"bici":5.75,"descarga":false},{"n":26,"fase":"Fase 5 - Pico específico","ini":"2027-03-08","fin":"2027-03-14","h":7.2,"bici":3.75,"descarga":true},{"n":27,"fase":"Fase 5 - Pico específico","ini":"2027-03-15","fin":"2027-03-21","h":9.45,"bici":6.0,"descarga":false},{"n":28,"fase":"Fase 5 - Pico específico","ini":"2027-03-22","fin":"2027-03-28","h":8.45,"bici":5.0,"descarga":false},{"n":29,"fase":"Fase 6 - Puesta a punto (taper)","ini":"2027-03-29","fin":"2027-04-04","h":6.45,"bici":3.75,"descarga":false},{"n":30,"fase":"Fase 6 - Puesta a punto (taper)","ini":"2027-04-05","fin":"2027-04-11","h":2.65,"bici":1.15,"descarga":false},{"n":31,"fase":"Día de la carrera","ini":"2027-04-12","fin":"2027-04-12","h":0,"bici":0,"descarga":false}],"phases":[{"name":"Adaptación","full":"Fase 1 - Adaptación","a":1,"b":6,"obj":"Adaptar tejidos y recuperar el hábito de entrenar en las tres disciplinas."},{"name":"Base / Volumen","full":"Fase 2 - Base / Volumen","a":7,"b":14,"obj":"Aumentar progresivamente el volumen aeróbico, sobre todo en bici."},{"name":"Navidad / Mantenimiento","full":"Fase 3 - Navidad / Mantenimiento","a":15,"b":16,"obj":"Mantener la forma con cargas bajas y flexibles durante las fiestas."},{"name":"Específica / Build","full":"Fase 4 - Específica / Build","a":17,"b":23,"obj":"Series de intensidad en bici y tiradas largas con desnivel y terreno específico."},{"name":"Pico específico","full":"Fase 5 - Pico específico","a":24,"b":28,"obj":"Máximo volumen específico: fines de semana encadenados, nutrición e hidratación de carrera."},{"name":"Puesta a punto (taper)","full":"Fase 6 - Puesta a punto (taper)","a":29,"b":30,"obj":"Reducir la carga para llegar fresca y sin fatiga a la salida de La Traka."}],"perfil":{"Objetivo":"Completar La Traka 100 km (gravel), Girona","Nivel actual en bici":"Intermedio (rueda con cierta regularidad). Tiene rodillo.","Rodilla":"Antecedente de condromalacia rotuliana, ahora sin dolor y con el ok del fisio para correr.","Tibial":"Molestia reciente por compensación, en proceso de solución. Por eso no se fuerza la carrera a pie.","Natación":"Ya integrada en su rutina: 2.000-2.200 m por sesión con cambios de ritmo.","Fuerza":"La lleva su entrenador personal. Aquí solo se recuerda el contexto (rodilla/tibial), sin prescribir ejercicios.","Días fijos y horario":"Lunes 20:00-22:30 (carrera+natación) · Martes y jueves 20:00 (fuerza) · Miércoles 19:00-20:00 (natación)","Viernes / sábado / domingo":"Horario flexible. En cada sesión de bici puedes elegir salir a la carretera/gravel o hacerla en el rodillo."},"zonas":[{"z":"Z1","nombre":"Recuperación","rpe":"1-2","fc":"50-60%","siente":"Hablas sin ningún esfuerzo, casi no notas que pedaleas","plan":"Rodajes muy suaves del taper, el shakeout previo a la carrera y el viernes de descanso activo"},{"z":"Z2","nombre":"Fondo / base","rpe":"3-4","fc":"60-70%","siente":"Conversación fluida, respiración cómoda; podrías mantenerlo horas","plan":"Tu zona principal: la mayoría de las salidas de bici del plan van aquí"},{"z":"Z3","nombre":"Tempo","rpe":"5-6","fc":"70-80%","siente":"Notas el esfuerzo, respiras más fuerte, solo frases cortas","plan":"Algunos tramos dentro de las salidas largas, sobre todo en las fases Específica y Pico"},{"z":"Z4","nombre":"Umbral","rpe":"7-8","fc":"80-90%","siente":"Esfuerzo duro y sostenido; cuesta decir más de 2-3 palabras seguidas","plan":"Bloques de umbral en las tiradas largas de las fases Específica y Pico"},{"z":"Z5","nombre":"Anaeróbico / VO2max","rpe":"9-10","fc":"90-100%","siente":"Esfuerzo máximo, no puedes hablar; dura de segundos a pocos minutos","plan":"No aparece de forma sistemática en tu plan; solo si tu entrenador lo decide puntualmente"}],"zonasTxt":["Cómo estimar tu FC máx (orientativo): 220 - tu edad (27) ≈ 193 ppm. Es una fórmula genérica con bastante margen de error (±10-15 ppm); si algún día te haces una prueba de esfuerzo o un test de campo, sustituye este dato por el real.","Método principal en tu plan: RPE + talk test. Con el tiempo, la sensación de cada zona se afina sola, sin necesidad de aparatos.","Cadencia (rpm): es un eje distinto al de las zonas. La zona te dice CUÁNTO esfuerzo metes; la cadencia te dice CÓMO lo reparte tu cuerpo entre corazón/pulmones y músculo/articulación. Puedes estar en Z2 pedaleando suave y rápido (más cardio, menos carga en la rodilla) o en Z2 'a manivela' con desarrollo largo y cadencia baja (más fuerza muscular, más carga en la rodilla): para ti, siempre la primera opción.","Objetivo de cadencia: 85-95 rpm en llano; en subidas, la más alta que puedas sostener sin 'perder tren' (evita bajar de 70 rpm forzando desarrollo). Si quieres trabajarla de forma específica, puedes meter algún bloque de series de cadencia dentro de un rodaje en Z2 (por ejemplo 4x1 min subiendo hasta 100-110 rpm, con 2 min suave entre series) — coméntaselo a tu entrenador si quiere coordinarlo con la fuerza."],"zonasIntro":"Las zonas dicen a qué intensidad va cada sesión. No necesitas potenciómetro ni pulsómetro: con RPE (esfuerzo percibido) y el 'talk test' (cuánto puedes hablar) te vale de sobra.","prevCierre":"Este plan es una guía de entrenamiento, no una indicación médica. Tu fisio y tu entrenador conocen tu caso: ante cualquier duda o síntoma que no encaje aquí, su criterio manda sobre este Excel.","prevIntro":"Esta hoja es la más importante del archivo. El plan solo funciona si lo aplicas con estas reglas encima.","semaforo":[{"lv":"Verde","rango":"0-2","sig":"Molestia mínima o nada. No aumenta durante la sesión y al día siguiente estás igual o mejor.","acc":"Sigue el plan tal cual."},{"lv":"Ámbar","rango":"3-4","sig":"Molestia que notas pero no te cambia la forma de pedalear o correr. Desaparece en menos de 24 h.","acc":"Mantén el plan pero sin subir carga esa semana: repite el volumen de la semana anterior, quita la intensidad (nada de Z3-Z4) y elimina la carrera a pie. Si en 7-10 días no baja a verde, habla con tu fisio."},{"lv":"Rojo","rango":"5 o más","sig":"Dolor que aumenta durante el ejercicio, te cambia el gesto, o sigue ahí pasadas 24-48 h. También cuenta cualquier dolor al bajar escaleras (rodilla) o al apoyar el pie al caminar (tibial).","acc":"Para esa sesión. Nada de carrera a pie ni intensidad. Mantén solo natación si no duele. Consulta con tu fisio antes de volver: es la señal clásica de recaída y aquí no se negocia."}],"prevSections":[{"h":"Semáforo de dolor (rodilla y tibial)","p":[],"items":[]},{"h":"Reglas de progresión (no saltárselas)","p":[],"items":["Nunca subas más de un 10% el volumen semanal de bici respecto a la semana anterior comparable. El plan ya lo cumple: si lo modificas, respétalo.","Las semanas de descarga (4, 10, 13, 20 y 26) NO son opcionales. Son justo las que evitan la recaída. Si llegas con buenas sensaciones, es tentador saltárselas: no lo hagas.","Si pierdes 1 semana entera: retoma en el volumen de la semana que perdiste, no en el que tocaría. Si pierdes 2-3 semanas: vuelve al último bloque completado y repite sus 2 últimas semanas antes de seguir. Si pierdes más de 3 semanas: se rehace el plan, avísame y lo reajustamos.","La carrera a pie NO sube de duración hasta que el tibial lleve 3 semanas seguidas en verde (0-2). Es la parte más prescindible del plan y la que más riesgo tiene ahora mismo: si dudas, quítala y nada.","Nunca metas intensidad (Z3-Z4) y aumento de volumen en la misma semana. El plan ya los alterna."]},{"h":"Material y posición sobre la bici","p":["En condromalacia, la posición sobre la bici influye más que casi cualquier otra cosa del plan. Merece la pena revisarla ANTES de empezar a subir volumen."],"items":["Estudio biomecánico: si no te lo han hecho desde la lesión, es la inversión más rentable de estas 30 semanas. Un sillín bajo o muy adelantado multiplica la compresión en la rótula.","Altura de sillín: demasiado baja aumenta la carga rotuliana; demasiado alta irrita la parte posterior. Si notas la rodilla en la cara anterior al pedalear, coméntalo en el estudio antes de tocar nada tú.","Calas: una mala rotación de la cala genera compensaciones que pueden ir precisamente al tibial. Revísalas si aparece molestia.","Desarrollos: ten piñón suficiente para subir sentada y a buena cadencia. Ir 'a manivela' en las cuestas es lo peor para tu rodilla.","Calzado de correr: si el tibial es por compensación, revisa también las zapatillas (desgaste, kilómetros) con tu fisio."]},{"h":"Rutina de cada sesión de bici","p":[],"items":["Calienta siempre 10-15 min muy suave antes de meter cualquier intensidad. En frío es cuando más se resiente la rótula.","Cadencia 85-95 rpm en llano. En subida, la más alta que puedas sostener; evita bajar de 70 rpm forzando desarrollo.","Levántate del sillín de vez en cuando en las salidas largas, pero sin hacer kilómetros de pie: de pie aumenta mucho la carga en la rodilla.","En rodillo, cuidado: no hay inercia ni bajadas, así que pedaleas de forma continua y la carga acumulada es mayor que fuera a igual duración. Si haces la tirada larga en rodillo, descuéntale un 20-25% de tiempo o mete pausas de 2-3 min cada hora.","Enfría 10 min suaves al final y estira sin forzar. Nada de estiramientos agresivos de cuádriceps si la rodilla está sensible."]},{"h":"Descanso y señales generales de sobrecarga","p":[],"items":["El viernes es descanso por defecto. Solo lo conviertes en 20-30 min suaves si llegas con buenas sensaciones. Con 6 días de entreno, ese día libre es parte del plan, no un hueco por rellenar.","Dormir menos de lo habitual varios días seguidos, pulso en reposo alto por la mañana, irritabilidad o piernas que no responden en el calentamiento: son señales de que toca bajar, no de que toca apretar.","Prioridad si una semana no te da la vida para todo: 1º la tirada larga del domingo, 2º la fuerza, 3º la natación, 4º la salida corta del sábado, 5º la carrera a pie. Recorta de abajo hacia arriba."]}],"carrera":"Día de la carrera: 12 de abril de 2027 - La Traka 100 km"};
+const DAYS = PLAN.days;
+const WEEKS = PLAN.weeks;
+const PHASES = PLAN.phases;
+const IDX = new Map(DAYS.map((d, i) => [d.date, i]));
+const RACE = "2027-04-12";
+const PLAN_WEEKS = 30;
+const MONTHS = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const LETTER = { "Lunes":"L", "Martes":"M", "Miércoles":"X", "Jueves":"J", "Viernes":"V", "Sábado":"S", "Domingo":"D" };
+const KIND_LABEL = { bike: "Bici", run: "Carrera a pie", swim: "Natación", gym: "Fuerza", rest: "Descanso", other: "Sesión", race: "Carrera" };
+const SHORT_PHASE = ["Adaptación", "Base / Volumen", "Navidad", "Específica", "Pico", "Taper"];
+const LS_REG = "plan-traka-registro";
+const LS_EDIT = "plan-traka-cambios";
+const PENCIL = '<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11.8 3.2 14.8 6.2 6.4 14.6 2.8 15.2 3.4 11.6z"/><path d="m10.3 4.7 3 3"/></svg>';
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+const pad = (n) => String(n).padStart(2, "0");
+const isoLocal = (dt) => `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())}`;
+const parseISO = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const dayDiff = (a, b) => Math.round((parseISO(b) - parseISO(a)) / 86400000);
+const fmtH = (h) => { const m = Math.round(h * 12) * 5; return m < 60 ? `${m}'` : `${Math.floor(m / 60)}h${m % 60 ? pad(m % 60) : ""}`; };
+function fmtRange(a, b) {
+  const [, ma, da] = a.split("-").map(Number), [, mb, db] = b.split("-").map(Number);
+  if (a === b) return `${da} ${MONTHS[ma - 1]}`;
+  return ma === mb ? `${da}–${db} ${MONTHS[mb - 1]}` : `${da} ${MONTHS[ma - 1]}–${db} ${MONTHS[mb - 1]}`;
+}
+function dateLabel(iso) {
+  const d = DAYS[IDX.get(iso)], [, m, dd] = iso.split("-").map(Number);
+  return `${d.dow} ${dd} ${MONTHS[m - 1]}`;
+}
+
+let todayISO = isoLocal(new Date());
+const clampDate = (iso) => IDX.has(iso) ? iso : iso < DAYS[0].date ? DAYS[0].date : DAYS[DAYS.length - 1].date;
+let sel = clampDate(todayISO);
+const selDay = () => DAYS[IDX.get(sel)];
+const phaseOf = (w) => PHASES.find((p) => w >= p.a && w <= p.b) || null;
+
+/* ---------- datos en este móvil ---------- */
+function load(key) { try { return JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) { return {}; } }
+let store = load(LS_REG);
+let cambios = load(LS_EDIT);
+let storageOK = true;
+function persist() {
+  try {
+    localStorage.setItem(LS_REG, JSON.stringify(store));
+    localStorage.setItem(LS_EDIT, JSON.stringify(cambios));
+    storageOK = true;
+  } catch (e) { storageOK = false; }
+  renderDataMeta();
+}
+const blocksFor = (date) => cambios[date] || DAYS[IDX.get(date)].b;
+const canon = (bs) => JSON.stringify(bs.map((b) => [b.k, b.title || "", b.h || "", b.d || "", b.z || "", b.t || "", b.w || "", b.n || "", (b.tags || []).join("|")]));
+function setDayBlocks(date, blocks) {
+  if (canon(blocks) === canon(DAYS[IDX.get(date)].b)) delete cambios[date];
+  else cambios[date] = blocks;
+  persist();
+}
+function saveLog(patch) {
+  store[sel] = Object.assign({}, store[sel] || {}, patch, { actualizado: new Date().toISOString() });
+  persist();
+  renderLog(); renderStrip(); renderStats();
+}
+
+const level = (v) => v == null ? null : v <= 2 ? "g" : v <= 4 ? "a" : "r";
+const SEMA = { g: PLAN.semaforo[0], a: PLAN.semaforo[1], r: PLAN.semaforo[2] };
+const worstPain = (rec) => rec ? Math.max(rec.rodilla ?? -1, rec.tibial ?? -1) : -1;
+
+/* ---------- sesiones ---------- */
+function timeHTML(b) {
+  if (!b.h) return `<div class="s-time is-flex"><span>Flexible</span></div>`;
+  const m = b.h.match(/^(\d{1,2}[:.]\d{2})(?:\s*[–-]\s*(\d{1,2}[:.]\d{2}))?$/);
+  if (m) return `<div class="s-time"><span>${esc(m[1])}${m[2] ? `<small>hasta ${esc(m[2])}</small>` : ""}</span></div>`;
+  return `<div class="s-time is-word"><span>${esc(b.h)}</span></div>`;
+}
+function durHTML(d) {
+  return esc(d)
+    .replace(/(\d)-(\d)/g, "$1–$2")
+    .replace(/(\d)\s*(?:min\b|')/g, '$1<span class="u">min</span>')
+    .replace(/(\d)\s*m\b/g, '$1<span class="u">m</span>')
+    .replace(/(\d)\s*km\b/g, '$1<span class="u">km</span>');
+}
+function sessionHTML(b, i) {
+  const k = KIND_LABEL[b.k] ? b.k : "other";
+  const title = b.title || KIND_LABEL[k];
+  let head;
+  if (k === "race") head = `<div class="s-kind">Día D</div><div class="s-main">${esc(title)}</div>`;
+  else if (b.d && k !== "rest") head = `<div class="s-kind">${esc(title)}</div><div class="s-main">${durHTML(b.d)}</div>`;
+  else head = `<div class="s-main">${esc(title)}</div>`;
+  const tags = (b.z ? `<span class="tag zone">${esc(b.z)}</span>` : "") +
+    (b.tags || []).map((t) => `<span class="tag${/^Opcional/.test(t) ? " opt" : ""}">${esc(t)}</span>`).join("");
+  return `<li class="s k-${k} s--${k}">${timeHTML(b)}<div class="s-body">${head}` +
+    (b.t ? `<p class="s-text">${esc(b.t)}</p>` : "") +
+    (b.w ? `<div class="work"><span class="eyebrow">Entreno concreto</span><p>${esc(b.w)}</p></div>` : "") +
+    (tags ? `<div class="tags">${tags}</div>` : "") +
+    (b.n ? `<p class="s-note"><b>Rodilla / tibial</b>${esc(b.n)}</p>` : "") +
+    `</div><button type="button" class="s-edit" data-edit="${i}" aria-label="Editar ${esc(title)}">${PENCIL}</button></li>`;
+}
+
+/* ---------- render ---------- */
+function renderHeader() {
+  const n = dayDiff(todayISO, RACE);
+  if (n > 1) { $("countN").textContent = n; $("countL").innerHTML = "días para<br>la salida"; }
+  else if (n === 1) { $("countN").textContent = "1"; $("countL").innerHTML = "día para<br>la salida"; }
+  else if (n === 0) { $("countN").textContent = "Hoy"; $("countL").innerHTML = "es La<br>Traka"; }
+  else { $("countN").textContent = "✓"; $("countL").innerHTML = "carrera<br>terminada"; }
+}
+
+function renderStrip() {
+  const d = selDay();
+  $("strip").innerHTML = DAYS.filter((x) => x.w === d.w).map((x) => {
+    const day = Number(x.date.slice(8));
+    const kinds = [...new Set(blocksFor(x.date).map((b) => KIND_LABEL[b.k] ? b.k : "other"))].slice(0, 3);
+    const rec = store[x.date];
+    const done = rec && rec.hecho === "Sí";
+    const lv = level(worstPain(rec) < 0 ? null : worstPain(rec));
+    const cls = ["dbtn", x.date === sel ? "is-sel" : "", x.date === todayISO ? "is-today" : ""].join(" ");
+    const lab = `${x.dow} ${day}${x.date === todayISO ? ", hoy" : ""}${done ? ", hecho" : ""}${lv && lv !== "g" ? ", con dolor" : ""}`;
+    return `<button type="button" class="${cls}" data-date="${x.date}" aria-label="${lab}" aria-current="${x.date === sel ? "date" : "false"}">` +
+      (lv && lv !== "g" ? `<i class="pdot lv-${lv}"></i>` : "") +
+      (done ? '<svg class="chk" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 6.2 2.3 2.3 4.7-5"/></svg>' : "") +
+      `<span class="dl">${LETTER[x.dow]}</span><span class="dn">${day}</span>` +
+      `<span class="marks">${kinds.map((k) => `<i class="k-${k}"></i>`).join("")}</span></button>`;
+  }).join("");
+}
+
+function renderWeek() {
+  const d = selDay();
+  const w = WEEKS[d.w - 1];
+  const ph = phaseOf(w.n);
+  if (w.n > PLAN_WEEKS) {
+    $("weekTitle").innerHTML = `<strong>Día de la carrera</strong> · ${fmtRange(w.ini, w.fin)}<span class="sub">La Traka · 100 km · Girona</span>`;
+    $("phaseNote").hidden = true;
+  } else {
+    $("weekTitle").innerHTML = `<strong>Semana ${w.n}</strong> · ${fmtRange(w.ini, w.fin)}<span class="sub">${esc(ph.name)} · ≈${fmtH(w.h)} de entreno${w.descarga ? ' · <span class="chip-d">Descarga</span>' : ""}</span>`;
+    $("phaseNote").hidden = false;
+    $("phaseLbl").textContent = `Fase ${PHASES.indexOf(ph) + 1} · ${ph.name} · semanas ${ph.a}–${ph.b}`;
+    $("phaseObj").textContent = ph.obj;
+    const rule = PLAN.prevSections.flatMap((s) => s.items).find((t) => /semanas de descarga/i.test(t));
+    $("descarga").hidden = !w.descarga;
+    if (w.descarga) $("descarga").innerHTML = `<b>Semana de descarga.</b> ${esc(rule || "")}`;
+  }
+  $("prevWeek").disabled = d.w === 1;
+  $("nextWeek").disabled = d.w === WEEKS.length;
+  renderStrip();
+}
+
+function renderDay(animate) {
+  const d = selDay();
+  const [, m, dd] = d.date.split("-").map(Number);
+  $("date").innerHTML = `${esc(d.dow)} <span class="num">${dd}</span> ${MONTHS[m - 1]}`;
+  const diff = dayDiff(todayISO, d.date);
+  const rel = $("rel");
+  rel.textContent = diff === 0 ? "Hoy" : diff === 1 ? "Mañana" : diff === -1 ? "Ayer" : diff > 1 ? `En ${diff} días` : `Hace ${-diff} días`;
+  rel.classList.toggle("is-today", diff === 0);
+  const ph = phaseOf(d.w);
+  $("dayWeek").textContent = ph ? `S${d.w} de ${PLAN_WEEKS} · ${ph.name}` : "Día de la carrera";
+  $("backToday").hidden = diff === 0 || !IDX.has(todayISO);
+  const blocks = blocksFor(sel);
+  const list = $("sessions");
+  list.innerHTML = blocks.length ? blocks.map(sessionHTML).join("") : `<li class="s-empty">Sin sesiones este día.</li>`;
+  $("edited").hidden = !cambios[sel];
+  if (animate) { list.classList.remove("anim"); void list.offsetWidth; list.classList.add("anim"); }
+  renderLog();
+}
+
+function renderLog() {
+  const rec = store[sel] || {};
+  document.querySelectorAll("#seg button").forEach((b) => b.setAttribute("aria-pressed", String(rec.hecho === b.dataset.v)));
+  ["rodilla", "tibial"].forEach((f) => {
+    document.querySelectorAll(`#${f} button`).forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.v) === rec[f])));
+    $(f + "Val").textContent = rec[f] == null ? "Sin apuntar" : `${rec[f]} · ${SEMA[level(rec[f])].lv}`;
+  });
+  const worst = worstPain(rec);
+  const sema = $("sema");
+  if (worst < 0) { sema.hidden = true; }
+  else {
+    const lv = level(worst), s = SEMA[lv];
+    sema.hidden = false;
+    sema.className = `sema lv-${lv}`;
+    sema.innerHTML = `<i></i><b>${esc(s.lv)} · ${esc(s.rango)}</b><span>${esc(s.acc)}</span>`;
+  }
+  const notes = $("notes");
+  if (document.activeElement !== notes) notes.value = rec.notas || "";
+}
+
+function renderProfile() {
+  const W = 360, x0 = 16, x1 = 326, base = 128, top = 30, maxH = 10;
+  const step = (x1 - x0) / (PLAN_WEEKS - 1), hw = step / 2;
+  const X = (i) => x0 + (i - 1) * step;
+  const Y = (h) => base - (h / maxH) * (base - top);
+  const flagX = x1 + 20;
+  const xOf = (n) => n > PLAN_WEEKS ? flagX : X(n);
+  const selW = selDay().w;
+  const nowW = IDX.has(todayISO) ? DAYS[IDX.get(todayISO)].w : null;
+  const ws = WEEKS.slice(0, PLAN_WEEKS);
+  let s = "";
+  PHASES.forEach((p, i) => {
+    if (i % 2 === 0) s += `<rect class="pf-band" x="${X(p.a) - hw}" y="${top - 12}" width="${(p.b - p.a + 1) * step}" height="${base - top + 12}"/>`;
+  });
+  s += `<rect class="pf-selband" x="${xOf(selW) - hw}" y="${top - 12}" width="${step}" height="${base - top + 12}"/>`;
+  [5, 10].forEach((h) => {
+    s += `<line class="pf-grid" x1="0" x2="${W}" y1="${Y(h)}" y2="${Y(h)}"/><text class="pf-ylab" x="2" y="${Y(h) - 3}">${h}h</text>`;
+  });
+  const pts = ws.map((w) => [X(w.n), Y(w.h)]);
+  const line = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join("");
+  s += `<path class="pf-area" d="${line}L${pts[pts.length - 1][0].toFixed(1)},${base}L${pts[0][0].toFixed(1)},${base}Z"/>`;
+  s += `<path class="pf-line" d="${line}"/>`;
+  s += `<line class="pf-base" x1="0" x2="${W}" y1="${base}" y2="${base}"/>`;
+  s += `<line class="pf-pole" x1="${flagX}" x2="${flagX}" y1="${base}" y2="${base - 30}"/><path class="pf-flag" d="M${flagX},${base - 30}L${flagX + 12},${base - 25.5}L${flagX},${base - 21}Z"/>`;
+  ws.filter((w) => w.descarga).forEach((w) => { s += `<text class="pf-d" x="${X(w.n)}" y="${Y(w.h) + 13}">D</text>`; });
+  const peak = ws.reduce((a, b) => (b.h > a.h ? b : a));
+  if (nowW !== peak.n) s += `<text class="pf-peak" x="${X(peak.n)}" y="${Y(peak.h) - 7}">máx ${fmtH(peak.h)}</text>`;
+  if (nowW) {
+    const nx = xOf(nowW), ny = nowW > PLAN_WEEKS ? base : Y(WEEKS[nowW - 1].h);
+    s += `<line class="pf-now" x1="${nx}" x2="${nx}" y1="${top - 8}" y2="${base}"/>`;
+    s += `<rect class="pf-pill" x="${Math.min(nx - 14, W - 28)}" y="${top - 26}" width="28" height="13" rx="3"/><text class="pf-pilltxt" x="${Math.min(nx, W - 14)}" y="${top - 16.5}">HOY</text>`;
+    s += `<circle class="pf-nowdot" cx="${nx}" cy="${ny}" r="3.5"/>`;
+  }
+  pts.forEach((p, i) => { if (ws[i].n !== nowW) s += `<circle class="pf-dot" cx="${p[0]}" cy="${p[1]}" r="2"/>`; });
+  const show = new Set([1, 5, 10, 15, 20, 25, 30]);
+  if (selW <= PLAN_WEEKS) {
+    [...show].forEach((n) => { if (n !== selW && Math.abs(n - selW) <= 2) show.delete(n); });
+    show.add(selW);
+  }
+  show.forEach((n) => { s += `<text class="pf-wk${n === selW ? " is-sel" : ""}" x="${X(n)}" y="${base + 14}">${n}</text>`; });
+  PHASES.forEach((p, i) => {
+    const narrow = p.b - p.a < 2;
+    s += `<text class="pf-phase" x="${(X(p.a) + X(p.b)) / 2}" y="${base + (narrow ? 42 : 30)}">${esc(SHORT_PHASE[i].toUpperCase())}</text>`;
+  });
+  s += `<text class="pf-race" x="${W - 1}" y="${base + 30}">12 ABR</text>`;
+  WEEKS.forEach((w) => {
+    const wide = w.n > PLAN_WEEKS ? step * 2 : step;
+    s += `<rect class="pf-hit" data-w="${w.n}" tabindex="0" role="button" aria-label="Ir a ${w.n > PLAN_WEEKS ? "el día de la carrera" : `la semana ${w.n}`}" x="${xOf(w.n) - wide / 2}" y="0" width="${wide}" height="176"/>`;
+  });
+  $("pf").innerHTML = s;
+}
+
+function renderStats() {
+  const recs = DAYS.map((d) => store[d.date]).filter(Boolean);
+  const si = recs.filter((r) => r.hecho === "Sí").length;
+  const parcial = recs.filter((r) => r.hecho === "Parcial").length;
+  const alerta = recs.filter((r) => worstPain(r) >= 3).length;
+  $("stats").innerHTML = `<span>Hechas <b>${si}</b></span><span>Parciales <b>${parcial}</b></span><span>Plan completado <b>${Math.round((si / DAYS.length) * 100)}%</b></span><span>Días con dolor ≥3 <b>${alerta}</b></span>`;
+}
+
+function renderGuides() {
+  const S = PLAN.semaforo;
+  $("prev").innerHTML =
+    `<p>${esc(PLAN.prevIntro)}</p><h3>Semáforo de dolor (rodilla y tibial)</h3><div>` +
+    S.map((s, i) => `<div class="sem-row lv-${"gar"[i]}"><i></i><div><strong>${esc(s.lv)} · ${esc(s.rango)}</strong><p>${esc(s.sig)}</p><p><b>Qué haces:</b> ${esc(s.acc)}</p></div></div>`).join("") +
+    `</div>` +
+    PLAN.prevSections.filter((s) => s.items.length).map((s) =>
+      `<h3>${esc(s.h)}</h3>${s.p.map((p) => `<p>${esc(p)}</p>`).join("")}<ul>${s.items.map((it) => `<li>${esc(it)}</li>`).join("")}</ul>`).join("") +
+    `<p class="closing">${esc(PLAN.prevCierre)}</p>`;
+  $("zonas").innerHTML =
+    `<p>${esc(PLAN.zonasIntro)}</p><div>` +
+    PLAN.zonas.map((z) => `<div class="zone"><span class="zone-z">${esc(z.z)}</span><div><strong>${esc(z.nombre)}</strong><span class="meta">RPE ${esc(z.rpe)} · ${esc(z.fc)} FC máx</span><p>${esc(z.siente)}</p><p><b>En tu plan:</b> ${esc(z.plan)}</p></div></div>`).join("") +
+    `</div>` + PLAN.zonasTxt.map((t) => `<p>${esc(t)}</p>`).join("");
+  $("perfil").innerHTML =
+    `<dl class="facts">${Object.entries(PLAN.perfil).map(([k, v]) => `<div><dt class="eyebrow">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>` +
+    `<h3>Fases del plan</h3><ol class="phases">${PHASES.map((p) => `<li><strong>${esc(p.name)}</strong><span class="wk">S${p.a}–${p.b}</span><br>${esc(p.obj)}</li>`).join("")}</ol>` +
+    `<p class="closing">${esc(PLAN.carrera)}</p>`;
+}
+
+function renderDataMeta() {
+  const ed = Object.keys(cambios).length, reg = Object.keys(store).length;
+  $("dataMeta").textContent = storageOK
+    ? `${ed} ${ed === 1 ? "día editado" : "días editados"} · ${reg} ${reg === 1 ? "día registrado" : "días registrados"}`
+    : "Este navegador no deja guardar datos (¿modo privado?). Abre la app desde el icono de inicio.";
+}
+
+let toastTimer;
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.hidden = true; }, 2200);
+}
+
+function go(iso, animate = true) {
+  const next = clampDate(iso);
+  if (next === sel) return;
+  sel = next;
+  renderWeek(); renderDay(animate); renderProfile();
+}
+function shiftDay(n) { const i = IDX.get(sel) + n; if (i >= 0 && i < DAYS.length) go(DAYS[i].date); }
+function goWeek(n) {
+  if (n < 1 || n > WEEKS.length) return;
+  const cur = selDay();
+  const target = DAYS.find((d) => d.w === n && d.dow === cur.dow) || DAYS.find((d) => d.w === n);
+  go(target.date);
+}
+function renderAll() { renderHeader(); renderWeek(); renderDay(false); renderProfile(); renderStats(); renderDataMeta(); }
+
+/* ---------- editor ---------- */
+const dlg = $("editor");
+let edIndex = null;
+let delArmed = false;
+function disarmDelete() { delArmed = false; $("edDelete").classList.remove("armed"); $("edDelete").textContent = "Eliminar"; }
+function openEditor(i) {
+  edIndex = i;
+  const b = i == null ? { k: "bike" } : blocksFor(sel)[i];
+  $("edHeading").textContent = i == null ? "Nueva sesión" : "Editar sesión";
+  $("edDate").textContent = dateLabel(sel);
+  $("ekRaceLbl").hidden = b.k !== "race";
+  const k = KIND_LABEL[b.k] ? b.k : "other";
+  document.querySelectorAll('input[name="edKind"]').forEach((r) => { r.checked = r.value === k; });
+  $("edTitle").value = b.title || "";
+  $("edTime").value = b.h || "";
+  $("edDur").value = (b.d || "").replace(/(\d)'/g, "$1 min");
+  $("edZone").value = b.z || "";
+  $("edWork").value = b.w || "";
+  $("edText").value = b.t || "";
+  $("edDelete").hidden = i == null;
+  disarmDelete();
+  dlg.showModal();
+  dlg.scrollTop = 0;
+}
+$("edForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const blocks = blocksFor(sel).map((x) => Object.assign({}, x));
+  const k = (document.querySelector('input[name="edKind"]:checked') || {}).value || "other";
+  const prev = edIndex == null ? { n: null, tags: [] } : blocks[edIndex];
+  const val = (id) => $(id).value.trim();
+  let h = val("edTime") || null;
+  if (h && /^flexible/i.test(h)) h = null;
+  if (h) h = h.replace(/^(\d{1,2}[:.]\d{2})\s*-\s*(\d{1,2}[:.]\d{2})$/, "$1–$2");
+  const nb = Object.assign({}, prev, {
+    k,
+    title: val("edTitle") || KIND_LABEL[k],
+    h,
+    d: val("edDur") || null,
+    z: val("edZone") || null,
+    t: val("edText"),
+    w: val("edWork") || null,
+    tags: k === prev.k ? (prev.tags || []) : [],
+  });
+  if (edIndex == null) blocks.push(nb); else blocks[edIndex] = nb;
+  setDayBlocks(sel, blocks);
+  dlg.close();
+  renderDay(false); renderStrip();
+  toast(edIndex == null ? "Sesión añadida" : "Sesión guardada");
+});
+$("edCancel").addEventListener("click", () => dlg.close());
+$("edDelete").addEventListener("click", () => {
+  if (!delArmed) { delArmed = true; $("edDelete").classList.add("armed"); $("edDelete").textContent = "Toca otra vez para eliminar"; return; }
+  const blocks = blocksFor(sel).map((x) => Object.assign({}, x));
+  blocks.splice(edIndex, 1);
+  setDayBlocks(sel, blocks);
+  dlg.close();
+  renderDay(false); renderStrip();
+  toast("Sesión eliminada");
+});
+dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+$("sessions").addEventListener("click", (e) => { const b = e.target.closest("[data-edit]"); if (b) openEditor(Number(b.dataset.edit)); });
+$("addSession").addEventListener("click", () => openEditor(null));
+$("restore").addEventListener("click", () => {
+  if (!confirm("¿Volver al plan original de este día? Se borran las sesiones que has cambiado o añadido hoy.")) return;
+  delete cambios[sel];
+  persist();
+  renderDay(false); renderStrip();
+  toast("Plan original restaurado");
+});
+
+/* ---------- copia de seguridad ---------- */
+$("exportBtn").addEventListener("click", async () => {
+  const data = JSON.stringify({ app: "plan-traka", v: 1, exportado: new Date().toISOString(), registro: store, cambios }, null, 2);
+  const name = `plan-la-traka-copia-${isoLocal(new Date())}.json`;
+  const file = new File([data], name, { type: "application/json" });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file], title: "Copia Plan La Traka" }); return; }
+    catch (err) { if (err && err.name === "AbortError") return; }
+  }
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(file); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+});
+$("importBtn").addEventListener("click", () => $("importFile").click());
+$("importFile").addEventListener("change", async (e) => {
+  const f = e.target.files && e.target.files[0];
+  e.target.value = "";
+  if (!f) return;
+  try {
+    const data = JSON.parse(await f.text());
+    if (!data || data.app !== "plan-traka") throw new Error("formato");
+    const when = data.exportado ? new Date(data.exportado).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" }) : "sin fecha";
+    if (!confirm(`Esto sustituye tus sesiones editadas y tu registro por los de la copia del ${when}. ¿Continuar?`)) return;
+    store = data.registro || {};
+    cambios = data.cambios || {};
+    persist();
+    renderAll();
+    toast("Copia recuperada");
+  } catch (err) {
+    toast("Ese archivo no es una copia de este plan");
+  }
+});
+
+/* ---------- eventos ---------- */
+["rodilla", "tibial"].forEach((f) => {
+  $(f).innerHTML = Array.from({ length: 11 }, (_, v) =>
+    `<button type="button" id="${f}${v}" class="lv-${level(v)}" data-v="${v}" aria-pressed="false" aria-label="${v}">${v}</button>`).join("");
+  $(f).addEventListener("click", (e) => {
+    const b = e.target.closest("[data-v]"); if (!b) return;
+    const v = Number(b.dataset.v);
+    saveLog({ [f]: (store[sel] || {})[f] === v ? null : v });
+  });
+});
+$("seg").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-v]"); if (!b) return;
+  saveLog({ hecho: (store[sel] || {}).hecho === b.dataset.v ? null : b.dataset.v });
+});
+$("notes").addEventListener("change", (e) => saveLog({ notas: e.target.value.trim() }));
+$("notes").addEventListener("input", (e) => { e.target.style.height = "auto"; e.target.style.height = e.target.scrollHeight + 2 + "px"; });
+$("strip").addEventListener("click", (e) => { const b = e.target.closest("[data-date]"); if (b) go(b.dataset.date); });
+$("prevWeek").addEventListener("click", () => goWeek(selDay().w - 1));
+$("nextWeek").addEventListener("click", () => goWeek(selDay().w + 1));
+$("backToday").addEventListener("click", () => go(todayISO));
+const pickWeek = (e) => { const r = e.target.closest("[data-w]"); if (r) goWeek(Number(r.dataset.w)); };
+$("pf").addEventListener("click", pickWeek);
+$("pf").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pickWeek(e); } });
+document.addEventListener("keydown", (e) => {
+  if (dlg.open || e.target.closest("textarea, input")) return;
+  if (e.key === "ArrowLeft") shiftDay(-1);
+  if (e.key === "ArrowRight") shiftDay(1);
+});
+let tx = null, ty = null;
+$("sessions").addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+$("sessions").addEventListener("touchend", (e) => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+  tx = null;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) shiftDay(dx < 0 ? 1 : -1);
+}, { passive: true });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "visible") return;
+  const now = isoLocal(new Date());
+  if (now === todayISO) return;
+  const wasToday = sel === clampDate(todayISO);
+  todayISO = now;
+  if (wasToday) sel = clampDate(now);
+  renderHeader(); renderWeek(); renderDay(false); renderProfile();
+});
+
+renderGuides();
+renderAll();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+}
+</script>
+</body>
+</html>
