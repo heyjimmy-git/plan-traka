@@ -30,10 +30,10 @@
   --accent-ink: #8A5300;
   --accent-soft: #F1DFBC;
   --on-ink: #FAFBF8;
-  --run: #C27A0E;
-  --gym: #5B4F99;
-  --swim: #1D6E8E;
-  --bike: #3C7B50;
+  --run: #EDA100;
+  --gym: #4A3AA7;
+  --swim: #2A78D6;
+  --bike: #1BAF7A;
   --rest: #8B928C;
   --ok: #2F7D4F;
   --part: #B7791F;
@@ -52,7 +52,7 @@
     --ground: #0F1215; --surface: #171B1F; --sunken: #0B0D10; --band: #13171A; --line: #2A3036;
     --ink: #ECEAE3; --ink-2: #B5BBB6; --ink-3: #858C87;
     --accent: #F2AA3C; --accent-ink: #F5B95C; --accent-soft: #3A2C14; --on-ink: #0F1215;
-    --run: #F2AA3C; --gym: #A99DEB; --swim: #5CB8D9; --bike: #7BC792; --rest: #7E8680;
+    --run: #C98500; --gym: #9085E9; --swim: #3987E5; --bike: #199E70; --rest: #7E8680;
     --ok: #6CC592; --part: #F2AA3C; --no: #EE7B70; --on-ok: #0F1215; --on-part: #0F1215; --on-no: #0F1215; --focus: #5CB8D9;
     color-scheme: dark;
   }
@@ -61,7 +61,7 @@
   --ground: #0F1215; --surface: #171B1F; --sunken: #0B0D10; --band: #13171A; --line: #2A3036;
   --ink: #ECEAE3; --ink-2: #B5BBB6; --ink-3: #858C87;
   --accent: #F2AA3C; --accent-ink: #F5B95C; --accent-soft: #3A2C14; --on-ink: #0F1215;
-  --run: #F2AA3C; --gym: #A99DEB; --swim: #5CB8D9; --bike: #7BC792; --rest: #7E8680;
+  --run: #C98500; --gym: #9085E9; --swim: #3987E5; --bike: #199E70; --rest: #7E8680;
   --ok: #6CC592; --part: #F2AA3C; --no: #EE7B70; --on-ok: #0F1215; --on-part: #0F1215; --on-no: #0F1215; --focus: #5CB8D9;
   color-scheme: dark;
 }
@@ -77,12 +77,12 @@ body {
   font-size: 16px;
   line-height: 1.45;
   padding-inline: 16px;
-  padding-block: 14px 48px;
+  padding-block: 14px 104px;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
 @supports (padding: env(safe-area-inset-top)) {
-  body { padding-block: calc(14px + env(safe-area-inset-top)) calc(48px + env(safe-area-inset-bottom)); }
+  body { padding-block: calc(14px + env(safe-area-inset-top)) calc(104px + env(safe-area-inset-bottom)); }
 }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; touch-action: manipulation; }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
@@ -153,7 +153,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .tag { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); background: var(--ground); }
 .tag.opt { border-style: dashed; background: transparent; }
-.tag.zone { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ck); border-color: currentColor; background: transparent; }
+.tag.zone { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ink-2); border-color: var(--c); background: transparent; }
 .s-note { margin: 8px 0 0; font-size: 13px; line-height: 1.4; color: var(--ink-3); }
 .s-note b { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin-right: 6px; }
 .s-edit { position: absolute; top: 4px; right: -8px; width: 42px; height: 42px; display: grid; place-items: center; color: var(--ink-3); border-radius: 50%; }
@@ -164,9 +164,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .s--rest .s-main { color: var(--ink-3); }
 
 .k-run { --c: var(--run); --ck: var(--accent-ink); }
-.k-gym { --c: var(--gym); --ck: var(--gym); }
-.k-swim { --c: var(--swim); --ck: var(--swim); }
-.k-bike { --c: var(--bike); --ck: var(--bike); }
+.k-gym { --c: var(--gym); --ck: var(--ink-2); }
+.k-swim { --c: var(--swim); --ck: var(--ink-2); }
+.k-bike { --c: var(--bike); --ck: var(--ink-2); }
 .k-rest { --c: var(--rest); --ck: var(--ink-3); }
 .k-race { --c: var(--accent); --ck: var(--accent-ink); }
 .k-other { --c: var(--ink-3); --ck: var(--ink-2); }
@@ -298,12 +298,195 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
 .kinds label:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
 .ed-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-top: 2px; }
 
-.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--on-ink); padding: 10px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; z-index: 20; box-shadow: 0 4px 16px rgb(0 0 0 / .2); white-space: nowrap; }
+.toast { position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--on-ink); padding: 10px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; z-index: 20; box-shadow: 0 4px 16px rgb(0 0 0 / .2); white-space: nowrap; }
 
 .anim { animation: rise .18s ease-out; }
 @keyframes rise { from { opacity: .4; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .anim { animation: none; } .keys summary svg { transition: none; } }
 @media (max-width: 360px) { .s { grid-template-columns: 66px 1fr; } .seg button { padding: 7px 10px; } .kinds { grid-template-columns: repeat(2, 1fr); } }
+
+/* ================= Estadísticas ================= */
+[hidden] { display: none !important; }
+.view { display: grid; gap: 22px; }
+
+/* Barra de pestañas */
+.tabbar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 15; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 5px; width: min(360px, calc(100vw - 32px)); border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 78%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(16px); backdrop-filter: saturate(1.4) blur(16px); box-shadow: 0 8px 28px rgb(0 0 0 / .14); }
+.tab { position: relative; display: flex; align-items: center; justify-content: center; gap: 7px; height: 44px; border-radius: 999px; font-size: 14px; font-weight: 700; color: var(--ink-2); transition: background-color .2s, color .2s; }
+.tab svg { width: 18px; height: 18px; flex: none; }
+.tab[aria-current="page"] { background: var(--ink); color: var(--on-ink); }
+.tab-new { position: absolute; top: 9px; right: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--surface); }
+
+/* Estructura */
+.sx { display: grid; gap: 28px; position: relative; }
+.sx-head { display: grid; gap: 4px; padding-inline: 2px; }
+.sx-title { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(42px, 13vw, 60px); line-height: .9; text-transform: uppercase; letter-spacing: .01em; }
+.sx-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 14px; min-width: 0; }
+.sx-sec { display: grid; gap: 12px; min-width: 0; }
+.sx-sec > header { display: grid; gap: 3px; padding-inline: 2px; }
+.sx-sec h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 26px; text-transform: uppercase; letter-spacing: .02em; line-height: 1; }
+.sx-sec > header p { margin: 0; font-size: 14px; color: var(--ink-3); }
+.sx-empty { margin: 0; font-size: 14px; color: var(--ink-3); }
+.sx-insight { margin: 0; font-size: 15px; color: var(--ink-2); }
+.sx-insight b { color: var(--ink); }
+.sx-ok { --lv: var(--ok); } .sx-warn { --lv: var(--part); } .sx-bad { --lv: var(--no); } .sx-none { --lv: var(--ink-3); }
+
+/* Hero */
+.sx-hero { display: grid; grid-template-columns: 112px 1fr; gap: 16px; align-items: center; }
+.sx-ring { width: 112px; height: 112px; display: block; }
+.sx-ring .trk { fill: none; stroke: var(--accent-soft); stroke-width: 11; }
+.sx-ring .val { fill: none; stroke: var(--accent); stroke-width: 11; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(.2, .8, .2, 1); }
+.sx-ring text { fill: var(--ink); font-family: var(--display); font-weight: 800; font-size: 34px; text-anchor: middle; dominant-baseline: central; }
+.sx-hero-txt { display: grid; gap: 6px; min-width: 0; }
+.sx-hero-txt p { margin: 0; font-size: 15px; color: var(--ink-2); }
+.sx-chip { justify-self: start; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 4px 10px 4px 8px; border-radius: 999px; background: var(--sunken); color: var(--ink); }
+.sx-chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--lv); flex: none; }
+.sx-road { display: grid; gap: 6px; }
+.sx-road-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.sx-road-top b { color: var(--ink); }
+.sx-road-bar { position: relative; height: 10px; border-radius: 999px; background: var(--sunken); overflow: hidden; }
+.sx-road-bar b { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: var(--ink); }
+.sx-road-meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+
+/* KPIs */
+.sx-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sx-kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 12px 10px; display: grid; gap: 2px; align-content: start; min-width: 0; }
+.sx-kpi .lbl { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.sx-kpi .v { font-family: var(--display); font-weight: 800; font-size: 44px; line-height: 1; letter-spacing: .01em; white-space: nowrap; }
+.sx-kpi .v small { font-size: .45em; color: var(--ink-2); margin-left: 3px; letter-spacing: .02em; }
+.sx-kpi .sub { font-size: 12px; color: var(--ink-3); line-height: 1.35; }
+.sx-kpi .sub .sx-chip { margin-top: 4px; }
+.sx-spark { width: 100%; height: 28px; display: block; margin-top: 6px; overflow: visible; }
+.sx-spark path { fill: none; stroke: var(--ink-3); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+.sx-spark circle { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
+
+/* SVG comunes */
+.sx-svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: pan-y; }
+.sx-ax { fill: var(--ink-3); font-family: var(--mono); font-size: 9px; font-variant-numeric: tabular-nums; }
+.sx-ax.is-now { fill: var(--ink); font-weight: 700; }
+.sx-grid { stroke: var(--line); stroke-width: 1; }
+.sx-base { stroke: var(--ink-3); stroke-width: 1; }
+.sx-kf { fill: var(--c); }
+.sx-plan { fill: var(--sunken); }
+.sx-acc { fill: var(--accent); }
+.sx-lbl { fill: var(--ink); font-family: var(--mono); font-size: 9.5px; font-weight: 700; text-anchor: middle; }
+.sx-hit { fill: transparent; cursor: pointer; outline: none; }
+.sx-svg[data-hot] .sx-col:not(.hot) { opacity: .45; }
+.sx-col { transition: opacity .15s; }
+.sx-hit:focus-visible { fill: var(--focus); fill-opacity: .12; }
+
+/* Calendario de constancia */
+.sx-heat-wrap { overflow-x: auto; padding: 4px 4px 2px; margin-inline: -4px; scrollbar-width: none; }
+.sx-heat-wrap::-webkit-scrollbar { display: none; }
+.st-done { fill: var(--ok); }
+.st-part { fill: var(--part); }
+.st-no { fill: var(--no); }
+.st-miss { fill: var(--ink-3); fill-opacity: .38; }
+.st-rest, .st-next { fill: var(--sunken); }
+.st-race { fill: var(--ink); }
+.st-dot { fill: var(--ink-3); pointer-events: none; }
+.st-today { fill: none; stroke: var(--ink); stroke-width: 2; pointer-events: none; }
+.sx-heat .sx-hit:focus-visible { fill: none; stroke: var(--focus); stroke-width: 2; }
+
+/* Leyenda */
+.sx-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--ink-2); padding-inline: 2px; }
+.sx-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sx-legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); flex: none; position: relative; }
+.sx-legend i.line { width: 14px; height: 2px; border-radius: 1px; }
+.sx-legend i.dot { border-radius: 50%; }
+.sx-legend i.ring { background: none; box-shadow: inset 0 0 0 2px var(--ink); }
+.sx-legend i.restdot::after { content: ""; position: absolute; inset: 3.5px; border-radius: 50%; background: var(--ink-3); }
+
+/* Reparto */
+.sx-split { display: flex; gap: 2px; height: 14px; border-radius: 999px; overflow: hidden; }
+.sx-split span { background: var(--c); min-width: 4px; }
+.sx-rows { display: grid; }
+.sx-row { display: grid; grid-template-columns: 10px 1fr auto; gap: 6px 10px; align-items: center; padding-block: 10px; border-top: 1px solid var(--line); }
+.sx-row:first-child { border-top: 0; padding-top: 2px; }
+.sx-row > i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+.sx-row .nm { font-weight: 600; font-size: 15px; }
+.sx-row .val { font-family: var(--mono); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; text-align: right; }
+.sx-meter { grid-column: 2 / -1; height: 6px; border-radius: 999px; background: color-mix(in srgb, var(--c) 20%, var(--surface)); overflow: hidden; }
+.sx-meter b { display: block; height: 100%; border-radius: 999px; background: var(--c); }
+
+/* Sensaciones */
+.sx-bandz-g { fill: var(--ok); fill-opacity: .09; }
+.sx-bandz-a { fill: var(--part); fill-opacity: .12; }
+.sx-bandz-r { fill: var(--no); fill-opacity: .09; }
+.sx-dot { stroke: var(--surface); stroke-width: 2; }
+.sx-dot.de { fill: var(--ink-3); }
+.sx-dot.lv-g { fill: var(--ok); } .sx-dot.lv-a { fill: var(--part); } .sx-dot.lv-r { fill: var(--no); }
+.sx-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.sx-line.de { stroke: var(--ink-3); stroke-width: 1.5; }
+.sx-cross { stroke: var(--ink-3); stroke-width: 1; pointer-events: none; }
+.sx-mini-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.sx-pair { display: grid; gap: 16px; }
+
+/* Listas: récords y notas */
+.sx-list { display: grid; }
+.sx-li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 11px; border-top: 1px solid var(--line); }
+.sx-li:first-child { border-top: 0; padding-top: 2px; }
+.sx-li .k { font-size: 15px; min-width: 0; }
+.sx-li .k small { display: block; font-size: 12px; color: var(--ink-3); margin-top: 1px; }
+.sx-li .v { font-family: var(--display); font-weight: 800; font-size: 28px; line-height: 1; white-space: nowrap; }
+.sx-note { display: grid; gap: 4px; padding-block: 11px; border-top: 1px solid var(--line); text-align: left; width: 100%; }
+.sx-note:first-child { border-top: 0; padding-top: 2px; }
+.sx-note .d { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.sx-note p { margin: 0; font-size: 15px; line-height: 1.45; white-space: pre-line; color: var(--ink); }
+.sx-tag { font-family: var(--body); font-size: 11px; font-weight: 700; letter-spacing: 0; text-transform: none; padding: 2px 7px; border-radius: 999px; background: var(--sunken); color: var(--ink-2); display: inline-flex; align-items: center; gap: 5px; }
+.sx-tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--lv); }
+
+/* Logros */
+.sx-badges { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sx-badge { display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: center; padding: 10px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); min-width: 0; }
+.sx-badge .ic { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--sunken); color: var(--ink-3); }
+.sx-badge .ic svg { width: 16px; height: 16px; }
+.sx-badge.on { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+.sx-badge.on .ic { background: var(--accent); color: #161B1F; }
+.sx-badge b { display: block; font-size: 14px; line-height: 1.2; }
+.sx-badge:not(.on) b { color: var(--ink-2); }
+.sx-badge small { display: block; font-size: 12px; color: var(--ink-3); line-height: 1.3; margin-top: 2px; }
+.sx-badge .prog { display: block; height: 4px; border-radius: 999px; background: var(--sunken); margin-top: 6px; overflow: hidden; }
+.sx-badge .prog b { height: 100%; border-radius: 999px; background: var(--ink-3); }
+
+/* Tooltip */
+.sx-tip { position: absolute; z-index: 12; min-width: 160px; max-width: 250px; padding: 10px 12px; border-radius: 12px; background: var(--ink); color: var(--on-ink); box-shadow: 0 10px 28px rgb(0 0 0 / .28); font-size: 13px; line-height: 1.35; }
+.sx-tip .t { font-size: 12px; opacity: .72; margin-bottom: 5px; }
+.sx-tip .r { display: grid; grid-template-columns: 14px auto 1fr; gap: 8px; align-items: center; padding-block: 1px; }
+.sx-tip .r i { height: 2px; width: 14px; border-radius: 1px; background: var(--c, currentColor); }
+.sx-tip .r b { font-family: var(--mono); font-weight: 700; font-variant-numeric: tabular-nums; }
+.sx-tip .r span { opacity: .8; }
+.sx-tip .note { margin-top: 5px; opacity: .85; }
+.sx-tip button { margin-top: 8px; font-size: 13px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; color: inherit; padding: 2px 0; }
+
+/* Tabla (vista accesible) */
+.sx-table summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--accent-ink); padding-block: 4px; list-style: none; }
+.sx-table summary::-webkit-details-marker { display: none; }
+.sx-tbl { overflow-x: auto; margin-top: 6px; }
+.sx-tbl table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+.sx-tbl th, .sx-tbl td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.sx-tbl th:first-child, .sx-tbl td:first-child { text-align: left; padding-left: 0; }
+.sx-tbl th { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+
+/* Movimiento al abrir la pestaña */
+.sx-go .grow { animation: sxGrow .6s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 22ms); transform-box: fill-box; transform-origin: 50% 100%; }
+.sx-go .growx { animation: sxGrowX .7s cubic-bezier(.2, .8, .2, 1) both; transform-origin: 0 50%; }
+.sx-go .pop { animation: sxPop .38s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 16ms); transform-box: fill-box; transform-origin: center; }
+.sx-go .rise { animation: sxRise .45s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 40ms); }
+@keyframes sxGrow { from { transform: scaleY(0); } }
+@keyframes sxGrowX { from { transform: scaleX(0); } }
+@keyframes sxPop { from { transform: scale(.35); opacity: .35; } }
+@keyframes sxRise { from { transform: translateY(8px); opacity: .5; } }
+@media (prefers-reduced-motion: reduce) {
+  .sx-go .grow, .sx-go .growx, .sx-go .pop, .sx-go .rise { animation: none; }
+  .sx-ring .val, .tab { transition: none; }
+}
+@media (max-width: 360px) { .sx-badges { grid-template-columns: 1fr; } .sx-hero { grid-template-columns: 96px 1fr; } .sx-ring { width: 96px; height: 96px; } .sx-kpi .v { font-size: 38px; } }
+.sx-sm { display: block; font-size: 12px; font-weight: 400; color: var(--ink-3); margin-top: 1px; }
+.sx-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sx-badge { position: relative; }
+.sx-cross { opacity: 0; }
+.sx-col.hot .sx-cross { opacity: 1; }
+.sx-svg.no-dim[data-hot] .sx-col:not(.hot) { opacity: 1; }
 </style>
 </head>
 <body>
@@ -319,6 +502,7 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
     </div>
   </header>
 
+  <div class="view" id="viewHoy">
   <nav class="week" aria-label="Semana">
     <div class="week-bar">
       <button class="nav-btn" id="prevWeek" aria-label="Semana anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
@@ -406,7 +590,30 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
     <span>Fuente: Plan_Entrenamiento_La_Traka_100km.xlsx</span>
     <span>Desliza el día a los lados para cambiar · toca el lápiz para editar una sesión</span>
   </footer>
+  </div>
+
+  <div class="view" id="viewStats" hidden>
+    <section class="sx" id="sx" aria-label="Estadísticas">
+      <div class="sx-head"><span class="eyebrow" id="sxSub"></span><h1 class="sx-title">Estadísticas</h1></div>
+      <div class="sx-card rise" id="sxHero"></div>
+      <div class="sx-kpis" id="sxKpis"></div>
+      <section class="sx-sec"><header><h2>Constancia</h2><p>Cada casilla es un día del plan. Tócala para ver el detalle.</p></header><div class="sx-card"><div class="sx-heat-wrap" id="sxHeatWrap"></div><div class="sx-legend" id="sxHeatLegend"></div></div></section>
+      <section class="sx-sec"><header><h2>Volumen semanal</h2><p id="sxVolSub"></p></header><div class="sx-card"><div id="sxVol"></div><div class="sx-legend" id="sxVolLegend"></div><details class="sx-table"><summary>Ver datos en tabla</summary><div class="sx-tbl" id="sxVolTbl"></div></details></div></section>
+      <section class="sx-sec"><header><h2>Reparto por disciplina</h2><p id="sxMixSub"></p></header><div class="sx-card"><div class="sx-split growx" id="sxSplit"></div><div class="sx-rows" id="sxMix"></div></div></section>
+      <section class="sx-sec"><header><h2 id="sxFeelTitle"></h2><p id="sxFeelSub"></p></header><div class="sx-card" id="sxFeel"></div></section>
+      <section class="sx-sec"><header><h2>Por día de la semana</h2><p>Qué día cumples más y cuál te cuesta</p></header><div class="sx-card"><div id="sxDow"></div><p class="sx-insight" id="sxDowTxt"></p></div></section>
+      <section class="sx-sec"><header><h2>Récords</h2></header><div class="sx-card"><div class="sx-list" id="sxRec"></div></div></section>
+      <section class="sx-sec"><header><h2>Logros</h2><p id="sxBadgeSub"></p></header><div class="sx-badges" id="sxBadges"></div></section>
+      <section class="sx-sec"><header><h2>Últimas notas</h2></header><div class="sx-card"><div class="sx-list" id="sxNotes"></div></div></section>
+      <div class="sx-tip" id="sxTip" role="status" hidden></div>
+    </section>
+  </div>
 </div>
+
+<nav class="tabbar" aria-label="Secciones">
+  <button type="button" class="tab" id="tabHoy" data-tab="hoy" aria-current="page"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="14" height="12.5" rx="2.5"/><path d="M3 8.5h14M7 2.8v3.2M13 2.8v3.2"/></svg><span>Hoy</span></button>
+  <button type="button" class="tab" id="tabStats" data-tab="stats" aria-current="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16.5V10M8.7 16.5V4M13.3 16.5V8M18 16.5H2"/></svg><span>Estadísticas</span><i class="tab-new" id="tabNew" hidden></i></button>
+</nav>
 
 <dialog class="sheet" id="editor" aria-labelledby="edHeading">
   <form class="ed" id="edForm" method="dialog">
@@ -909,9 +1116,628 @@ document.addEventListener("visibilitychange", () => {
 
 renderGuides();
 renderAll();
+/* ================= Estadísticas: datos propios del plan La Traka ================= */
+const SXA = {
+  weeks: 31, planWeeks: 30, volWeeks: 30,
+  race: "2027-04-12", raceLabel: "La Traka 100 km",
+  kinds: [{ k: "bike", label: "Bici" }, { k: "swim", label: "Natación" }, { k: "run", label: "Carrera a pie" }, { k: "gym", label: "Fuerza" }],
+  blocks: (d) => blocksFor(d.date),
+  name: (b) => b.title || KIND_LABEL[b.k] || "Sesión",
+  weekRange: (n) => fmtRange(WEEKS[n - 1].ini, WEEKS[n - 1].fin),
+  hasFeel: (rec) => rec.rodilla != null || rec.tibial != null,
+  feelRows: (rec) => [["rodilla", "Rodilla"], ["tibial", "Tibial"]].filter(([f]) => rec[f] != null).map(([f, l]) => ({ v: String(rec[f]), l: `${l} · ${sxLvName[sxLv(rec[f])]}` })),
+  noteChips: (rec) => [["rodilla", "Rodilla"], ["tibial", "Tibial"]].filter(([f]) => rec[f] != null).map(([f, l]) => `<span class="sx-tag ${sxLvCls[sxLv(rec[f])]}"><i></i>${l} ${rec[f]}</span>`).join(""),
+  renderFeel: (C) => sxRenderPain(C),
+  feelKpi(C) {
+    const g = Math.min(3, sxGreenWeeks(C, "tibial"));
+    const last = [...C.days].reverse().find((x) => x.rec.tibial != null);
+    const chip = last ? `<span class="sx-chip ${sxLvCls[sxLv(last.rec.tibial)]}"><i></i>Último: ${last.rec.tibial} · ${sxLvName[sxLv(last.rec.tibial)]}</span>` : "";
+    return {
+      lbl: "Tibial en verde",
+      v: `<span data-to="${g}">${g}</span><small>de 3 sem.</small>`,
+      sub: `${g >= 3 ? "Ya puedes subir la carrera a pie" : "Semanas seguidas para subir la carrera a pie"}${chip ? "<br>" + chip : ""}`,
+    };
+  },
+  records(C) {
+    const nut = C.days.filter((x) => x.bl.some((b) => (b.tags || []).includes("Nutrición")));
+    const desc = C.weeks.filter((w) => WEEKS[w.n - 1] && WEEKS[w.n - 1].descarga && w.n < C.nowW);
+    const descOk = desc.filter((w) => w.due && w.score / w.due >= 0.75).length;
+    const escritos = Object.values(cambios).reduce((a, bs) => a + bs.filter((b) => b.w).length, 0);
+    return [
+      { k: "Salidas con nutrición de carrera", s: "Las del plan en las que ensayas geles y bebida", v: `${nut.filter((x) => x.f === 1).length}/${nut.length}` },
+      { k: "Semanas de descarga cumplidas", s: "De las ya pasadas (4, 10, 13, 20 y 26)", v: desc.length ? `${descOk}/${desc.length}` : "—" },
+      { k: "Entrenos concretos escritos", s: "Sesiones con tu entreno detallado", v: String(escritos) },
+    ];
+  },
+  badges(C) {
+    const doneBike = (min) => C.days.some((x) => x.f === 1 && x.bl.some((b, i) => b.k === "bike" && x.mins[i] >= min));
+    const g = sxGreenWeeks(C, "tibial");
+    return [
+      { t: "Tres horas de gravel", d: "Primera salida de 3 h o más", on: doneBike(180) },
+      { t: "Cuatro horas", d: "Una salida de 4 h o más", on: doneBike(240) },
+      { t: "Gasolina probada", d: "Primera salida con nutrición de carrera", on: C.days.some((x) => x.f === 1 && x.bl.some((b) => (b.tags || []).includes("Nutrición"))) },
+      { t: "Tibial en verde", d: "3 semanas seguidas en verde (0–2)", on: g >= 3, prog: [Math.min(g, 3), 3] },
+      { t: "Tu propio plan", d: "Tu primer entreno concreto escrito", on: Object.values(cambios).some((bs) => bs.some((b) => b.w)) },
+      { t: "Meta en La Traka", d: "12 de abril terminado", on: C.days[IDX.get("2027-04-12")].f === 1 },
+    ];
+  },
+};
+
+/* ================= Estadísticas: datos ================= */
+const SX_DOWS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+const sxReduce = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+const sxDay = (iso) => DAYS[IDX.get(iso)];
+function sxH(min) {
+  const m = Math.round((min || 0) / 5) * 5;
+  if (m < 60) return `${m}'`;
+  return `${Math.floor(m / 60)}h${m % 60 ? String(m % 60).padStart(2, "0") : ""}`;
+}
+function sxDate(iso, withDow = true) {
+  const d = sxDay(iso), [, m, dd] = iso.split("-").map(Number);
+  return `${withDow && d ? d.dow.slice(0, 3).toLowerCase() + " " : ""}${dd} ${MONTHS[m - 1]}`;
+}
+const sxNum = (v, dec = 1) => v.toFixed(dec).replace(".", ",");
+
+// Minutos estimados de una sesión a partir de su duración escrita
+function sxMin(b) {
+  if (!b || b.k === "rest" || b.k === "race") return 0;
+  const raw = String(b.d || "").toLowerCase().replace(/~/g, "").trim();
+  if (raw) {
+    const mt = raw.match(/^(\d{1,2}(?:\.\d{3})+|\d+)\s*(?:[–-]\s*(\d{1,2}(?:\.\d{3})+|\d+))?\s*m$/);
+    if (mt) {
+      const a = +mt[1].replace(/\./g, ""), c = mt[2] ? +mt[2].replace(/\./g, "") : a;
+      return Math.round(((a + c) / 2 / 100) * 2.15);
+    }
+    const vals = raw.split(/\s*[–-]\s*/).map((p) => {
+      const h = p.match(/(\d+)\s*h\s*(\d+)?/);
+      if (h) return +h[1] * 60 + (+h[2] || 0);
+      const m = p.match(/(\d+)/);
+      return m ? +m[1] : null;
+    }).filter((v) => v > 0);
+    if (vals.length) return Math.round(vals.reduce((a, v) => a + v, 0) / vals.length);
+  }
+  return ["gym", "crossfit", "swim"].includes(b.k) ? 60 : 0;
+}
+
+function sxBuild() {
+  const today = todayISO;
+  const kindKeys = SXA.kinds.map((k) => k.k);
+  const kindOf = (k) => (kindKeys.includes(k) ? k : "other");
+  const nowIdx = IDX.has(today) ? IDX.get(today) : today < DAYS[0].date ? -1 : DAYS.length - 1;
+  const nowW = nowIdx >= 0 ? DAYS[nowIdx].w : 0;
+  const weeks = Array.from({ length: SXA.weeks }, (_, i) => ({ n: i + 1, plan: 0, done: 0, planK: {}, doneK: {}, due: 0, score: 0, trainDays: 0, fullDone: 0 }));
+  const planK = {}, dueK = {}, doneK = {};
+  const dow = SX_DOWS.map((name) => ({ name, due: 0, score: 0 }));
+  const days = DAYS.map((d) => {
+    const bl = SXA.blocks(d);
+    const rec = store[d.date] || {};
+    const train = bl.some((b) => b.k !== "rest");
+    const mins = bl.map(sxMin);
+    const plan = mins.reduce((a, m) => a + m, 0);
+    // Lo marcado en días futuros no cuenta hasta que llegue ese día
+    const f = d.date > today ? 0 : rec.hecho === "Sí" ? 1 : rec.hecho === "Parcial" ? 0.5 : 0;
+    const past = d.date < today, isToday = d.date === today;
+    const due = train && (past || (isToday && !!rec.hecho));
+    const x = { d, date: d.date, bl, rec, train, mins, plan, f, done: plan * f, past, isToday, due, race: bl.some((b) => b.k === "race") };
+    const w = weeks[d.w - 1];
+    bl.forEach((b, i) => {
+      const k = kindOf(b.k), m = mins[i];
+      if (!m) return;
+      planK[k] = (planK[k] || 0) + m;
+      if (due) dueK[k] = (dueK[k] || 0) + m;
+      if (f) doneK[k] = (doneK[k] || 0) + m * f;
+      if (w) {
+        w.planK[k] = (w.planK[k] || 0) + m; w.plan += m;
+        if (f) { w.doneK[k] = (w.doneK[k] || 0) + m * f; w.done += m * f; }
+      }
+    });
+    if (w && train) { w.trainDays++; if (f === 1) w.fullDone++; }
+    if (w && due) { w.due++; w.score += f; }
+    if (due) { const o = dow[SX_DOWS.indexOf(d.dow)]; o.due++; o.score += f; }
+    return x;
+  });
+  const dueDays = days.filter((x) => x.due);
+  const score = dueDays.reduce((a, x) => a + x.f, 0);
+  let run = 0, best = 0;
+  days.forEach((x) => {
+    if (!x.train || x.date > today) return;
+    if (x.f > 0) { run++; best = Math.max(best, run); }
+    else if (!x.isToday) run = 0;
+  });
+  const sessPlan = dueDays.reduce((a, x) => a + x.bl.filter((b) => b.k !== "rest").length, 0);
+  const sessDone = dueDays.filter((x) => x.f === 1).reduce((a, x) => a + x.bl.filter((b) => b.k !== "rest").length, 0);
+  const logged = days.filter((x) => x.rec && (x.rec.hecho || x.rec.notas || SXA.hasFeel(x.rec)));
+  return {
+    today, nowIdx, nowW, days, weeks, dow, planK, dueK, doneK, kindOf,
+    dueCount: dueDays.length, score, pct: dueDays.length ? score / dueDays.length : null,
+    streak: run, best, sessPlan, sessDone,
+    doneMin: days.reduce((a, x) => a + x.done, 0),
+    dueMin: dueDays.reduce((a, x) => a + x.plan, 0),
+    logged,
+  };
+}
+
+/* ================= Tooltip ================= */
+const SXT = new Map();
+let sxTipSeq = 0, sxTipEl = null;
+function sxTip(data) { const id = "t" + ++sxTipSeq; SXT.set(id, data); return id; }
+function sxTipHide() {
+  $("sxTip").hidden = true; sxTipEl = null;
+  document.querySelectorAll(".sx-svg[data-hot]").forEach((s) => s.removeAttribute("data-hot"));
+  document.querySelectorAll(".sx-col.hot").forEach((g) => g.classList.remove("hot"));
+}
+function sxTipShow(el) {
+  const data = SXT.get(el.getAttribute("data-tip"));
+  if (!data) return;
+  sxTipHide();
+  sxTipEl = el;
+  const tip = $("sxTip");
+  tip.replaceChildren();
+  const add = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  tip.append(add("div", "t", data.title));
+  (data.rows || []).forEach((r) => {
+    const row = add("div", "r"), key = add("i");
+    if (r.c) key.style.setProperty("--c", `var(--${r.c})`); else key.style.visibility = "hidden";
+    row.append(key, add("b", null, r.v), add("span", null, r.l || ""));
+    tip.append(row);
+  });
+  if (data.note) tip.append(add("div", "note", data.note));
+  if (data.date) {
+    const btn = add("button", null, "Abrir este día");
+    btn.type = "button";
+    btn.addEventListener("click", () => { sxShow("hoy"); go(data.date, false); });
+    tip.append(btn);
+  }
+  tip.hidden = false;
+  const host = $("sx").getBoundingClientRect(), r = el.getBoundingClientRect();
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  const x = Math.max(0, Math.min(r.left + r.width / 2 - host.left - w / 2, host.width - w));
+  const y = r.top - h - 10 > 8 ? r.top - host.top - h - 10 : r.bottom - host.top + 10;
+  tip.style.left = `${x}px`; tip.style.top = `${y}px`;
+  const svg = el.closest(".sx-svg");
+  if (svg && el.dataset.col != null) {
+    svg.setAttribute("data-hot", "");
+    svg.querySelectorAll(`.sx-col[data-col="${el.dataset.col}"]`).forEach((g) => g.classList.add("hot"));
+  }
+}
+
+/* ================= Pestañas y animación ================= */
+function sxCountAll(root) {
+  root.querySelectorAll("[data-to]").forEach((el) => {
+    const to = +el.dataset.to, fmt = el.dataset.fmt;
+    const f = (v) => fmt === "h" ? sxH(v) : fmt === "pct" ? `${Math.round(v)}%` : fmt === "1" ? sxNum(v) : String(Math.round(v));
+    el.textContent = f(to);
+    if (sxReduce() || !to) return;
+    const t0 = performance.now(), dur = 800;
+    const step = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      el.textContent = f(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+let sxGoTimer;
+function sxShow(tab) {
+  const stats = tab === "stats";
+  $("viewHoy").hidden = stats;
+  $("viewStats").hidden = !stats;
+  $("tabHoy").setAttribute("aria-current", stats ? "false" : "page");
+  $("tabStats").setAttribute("aria-current", stats ? "page" : "false");
+  sxTipHide();
+  try { history.replaceState(null, "", stats ? "#estadisticas" : location.pathname + location.search); } catch (e) {}
+  window.scrollTo(0, 0);
+  if (!stats) return;
+  try { localStorage.setItem("sx-visto", "1"); } catch (e) {}
+  $("tabNew").hidden = true;
+  const root = $("sx");
+  root.classList.remove("sx-go");
+  sxRender();
+  void root.offsetWidth;
+  root.classList.add("sx-go");
+  clearTimeout(sxGoTimer);
+  sxGoTimer = setTimeout(() => root.classList.remove("sx-go"), 2000);
+}
+
+/* ================= Cabecera, anillo y KPIs ================= */
+function sxRenderHero(C) {
+  const w = C.nowW ? `Semana ${Math.min(C.nowW, SXA.weeks)} de ${SXA.planWeeks}` : "Antes de empezar";
+  $("sxSub").textContent = `${w} · ${SXA.raceLabel}`;
+  const pct = C.pct == null ? null : Math.round(C.pct * 100);
+  const R = 50, L = 2 * Math.PI * R;
+  const state = pct == null ? ["sx-none", "Aún sin datos"] : pct >= 85 ? ["sx-ok", "Clavando el plan"] : pct >= 65 ? ["sx-warn", "Buen ritmo, sin despistes"] : ["sx-bad", "Toca retomar el hilo"];
+  const doneDays = C.days.filter((x) => x.due && x.f > 0).length;
+  const text = C.dueCount
+    ? `Has cumplido <b>${sxNum(C.score, C.score % 1 ? 1 : 0)}</b> de <b>${C.dueCount}</b> ${C.dueCount === 1 ? "día" : "días"} de entreno que llevas de plan (parciales cuentan la mitad).`
+    : "Cuando marques tus sesiones como hechas en <b>Hoy</b>, aquí verás cómo vas.";
+  const total = DAYS.length, dayN = Math.max(0, C.nowIdx + 1);
+  const toRace = Math.max(0, dayDiff(C.today, SXA.race));
+  $("sxHero").innerHTML =
+    `<div class="sx-hero">
+      <svg class="sx-ring" viewBox="0 0 120 120" role="img" aria-label="Adherencia ${pct == null ? "sin datos" : pct + "%"}">
+        <circle class="trk" cx="60" cy="60" r="${R}"/>
+        <circle class="val" id="sxRingVal" cx="60" cy="60" r="${R}" transform="rotate(-90 60 60)" stroke-dasharray="${L.toFixed(1)}" stroke-dashoffset="${L.toFixed(1)}" ${pct == null ? 'visibility="hidden"' : ""}/>
+        <text x="60" y="61" ${pct == null ? "" : `data-to="${pct}" data-fmt="pct"`}>${pct == null ? "—" : pct + "%"}</text>
+      </svg>
+      <div class="sx-hero-txt">
+        <span class="eyebrow">Adherencia hasta hoy</span>
+        <p>${text}</p>
+        <span class="sx-chip ${state[0]}"><i></i>${state[1]}</span>
+      </div>
+    </div>
+    <div class="sx-road">
+      <div class="sx-road-top"><span>Día <b>${dayN}</b> de ${total}</span><span><b>${toRace}</b> días para la salida</span></div>
+      <div class="sx-road-bar" role="img" aria-label="Plan recorrido ${Math.round((dayN / total) * 100)}%"><b class="growx" style="width:${((dayN / total) * 100).toFixed(1)}%"></b></div>
+      <div class="sx-road-meta"><span>${sxDate(DAYS[0].date, false)}</span><span>${Math.round((dayN / total) * 100)}% del plan recorrido</span><span>${sxDate(SXA.race, false)}</span></div>
+    </div>`;
+  if (pct != null) {
+    const target = (L * (1 - Math.min(1, pct / 100))).toFixed(1);
+    const ring = $("sxRingVal");
+    if (sxReduce()) ring.setAttribute("stroke-dashoffset", target);
+    else requestAnimationFrame(() => requestAnimationFrame(() => ring.setAttribute("stroke-dashoffset", target)));
+  }
+}
+
+function sxSpark(values) {
+  if (values.length < 2) return "";
+  const W = 140, H = 28, max = Math.max(...values, 1);
+  const pts = values.map((v, i) => [(i / (values.length - 1)) * W, H - 3 - (v / max) * (H - 6)]);
+  const last = pts[pts.length - 1];
+  return `<svg class="sx-spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join("")}" vector-effect="non-scaling-stroke"/><circle cx="${last[0]}" cy="${last[1]}" r="3.5" vector-effect="non-scaling-stroke"/></svg>`;
+}
+
+function sxRenderKpis(C) {
+  const weeksSoFar = C.weeks.slice(0, Math.max(1, Math.min(C.nowW, SXA.volWeeks)));
+  const tiles = [
+    { lbl: "Racha actual", v: `<span data-to="${C.streak}">${C.streak}</span><small>${C.streak === 1 ? "día" : "días"}</small>`, sub: `Días de entreno seguidos cumplidos · mejor: <b>${C.best}</b>` },
+    { lbl: "Horas hechas", v: `<span data-to="${Math.round(C.doneMin)}" data-fmt="h">${sxH(C.doneMin)}</span>`, sub: `de ${sxH(C.dueMin)} planificadas hasta hoy`, spark: sxSpark(weeksSoFar.map((w) => w.done)) },
+    { lbl: "Sesiones hechas", v: `<span data-to="${C.sessDone}">${C.sessDone}</span><small>de ${C.sessPlan}</small>`, sub: "Sesiones de días marcados como hechos" },
+    SXA.feelKpi(C),
+  ];
+  $("sxKpis").innerHTML = tiles.map((t, i) =>
+    `<div class="sx-kpi rise" style="--i:${i}"><span class="lbl">${t.lbl}</span><span class="v">${t.v}</span><span class="sub">${t.sub}</span>${t.spark || ""}</div>`).join("");
+}
+
+/* ================= Calendario de constancia ================= */
+function sxState(x) {
+  if (x.rec.hecho === "Sí") return { k: "done", label: "Hecho" };
+  if (x.rec.hecho === "Parcial") return { k: "part", label: "Parcial" };
+  if (x.rec.hecho === "No") return { k: "no", label: "No hecho" };
+  if (x.race) return { k: "race", label: "Día de carrera" };
+  if (!x.train) return { k: "rest", label: "Descanso" };
+  if (x.isToday) return { k: "next", label: "Hoy · sin marcar" };
+  return x.past ? { k: "miss", label: "Sin marcar" } : { k: "next", label: "Próximo" };
+}
+function sxRenderHeat(C) {
+  const wrap = $("sxHeatWrap");
+  const nW = SXA.weeks, lab = 16, top = 15, gap = 3;
+  const fit = Math.floor((wrap.clientWidth - 8 - lab) / nW) - gap;
+  const cell = Math.max(18, Math.min(30, fit));
+  const W = lab + nW * (cell + gap), H = top + 7 * (cell + gap);
+  const X = (col) => lab + col * (cell + gap);
+  let s = "";
+  SX_DOWS.forEach((d, r) => {
+    s += `<text class="sx-ax" x="0" y="${top + r * (cell + gap) + cell / 2 + 3}">${LETTER[d]}</text>`;
+  });
+  for (let n = 1; n <= nW; n++) {
+    if (nW > 16 && n !== 1 && n % 5 && n !== C.nowW) continue;
+    s += `<text class="sx-ax${n === C.nowW ? " is-now" : ""}" x="${X(n - 1) + cell / 2}" y="9" text-anchor="middle">${n}</text>`;
+  }
+  C.days.forEach((x) => {
+    const col = x.d.w - 1, row = SX_DOWS.indexOf(x.d.dow);
+    if (col >= nW || row < 0) return;
+    const px = X(col), py = top + row * (cell + gap), rx = Math.min(5, cell / 4);
+    const st = sxState(x);
+    s += `<rect class="st-${st.k} pop" style="--i:${col}" x="${px}" y="${py}" width="${cell}" height="${cell}" rx="${rx}"/>`;
+    if (st.k === "rest") s += `<circle class="st-dot" cx="${px + cell / 2}" cy="${py + cell / 2}" r="${Math.max(1.6, cell / 10)}"/>`;
+    if (x.isToday) s += `<rect class="st-today" x="${px - 1.5}" y="${py - 1.5}" width="${cell + 3}" height="${cell + 3}" rx="${rx + 1}"/>`;
+    const sessions = x.bl.filter((b) => b.k !== "rest").map(SXA.name).join(" + ") || "Descanso";
+    const rows = [{ v: st.label }];
+    if (x.plan) rows.push({ v: sxH(x.plan), l: "planificado" });
+    rows.push(...SXA.feelRows(x.rec));
+    const id = sxTip({ title: `${sxDate(x.date)} · semana ${x.d.w}`, rows, note: sessions, date: x.date });
+    s += `<rect class="sx-hit" data-tip="${id}" tabindex="0" role="button" aria-label="${esc(sxDate(x.date))}: ${esc(st.label)}" x="${px - gap / 2}" y="${py - gap / 2}" width="${cell + gap}" height="${cell + gap}"/>`;
+  });
+  wrap.innerHTML = `<svg class="sx-svg sx-heat no-dim" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="width:${W}px;height:${H}px" role="group" aria-label="Calendario de constancia por días">${s}</svg>`;
+  if (C.nowW && W > wrap.clientWidth) wrap.scrollLeft = Math.max(0, X(C.nowW - 1) - wrap.clientWidth / 2);
+  const leg = [
+    ["var(--ok)", "Hecho"], ["var(--part)", "Parcial"], ["var(--no)", "No hecho"],
+    ["color-mix(in srgb, var(--ink-3) 38%, var(--surface))", "Sin marcar"],
+    ["var(--sunken)", "Descanso", "restdot"], ["var(--sunken)", "Próximo"], ["", "Hoy", "ring"], ["var(--ink)", "Carrera"],
+  ];
+  $("sxHeatLegend").innerHTML = leg.map(([c, t, cls]) => `<span><i class="${cls || ""}" style="--c:${c}"></i>${t}</span>`).join("");
+}
+
+/* ================= Volumen semanal ================= */
+function sxTopBar(x, y, w, h, cls, attrs = "") {
+  if (!(h > 0.5)) return "";
+  const r = Math.min(4, w / 2, h);
+  return `<path class="${cls}" ${attrs} d="M${x.toFixed(1)},${(y + h).toFixed(1)}V${(y + r).toFixed(1)}Q${x.toFixed(1)},${y.toFixed(1)} ${(x + r).toFixed(1)},${y.toFixed(1)}H${(x + w - r).toFixed(1)}Q${(x + w).toFixed(1)},${y.toFixed(1)} ${(x + w).toFixed(1)},${(y + r).toFixed(1)}V${(y + h).toFixed(1)}Z"/>`;
+}
+function sxKindsWith(obj) {
+  const list = SXA.kinds.filter((k) => obj[k.k] > 0);
+  if (obj.other > 0) list.push({ k: "other", label: "Otros" });
+  return list;
+}
+function sxRenderVol(C) {
+  const n = SXA.volWeeks, W = 340, H = 176, padL = 24, padR = 4, top = 16, base = 150;
+  const ws = C.weeks.slice(0, n);
+  const maxH = Math.max(2, Math.ceil(Math.max(...ws.map((w) => Math.max(w.plan, w.done))) / 60 / 2) * 2);
+  const Y = (min) => base - (min / 60 / maxH) * (base - top);
+  const slot = (W - padL - padR) / n, bw = Math.min(24, Math.max(5, slot * 0.64));
+  const step = maxH <= 6 ? 2 : maxH <= 12 ? 4 : 5;
+  let s = "";
+  for (let h = step; h <= maxH; h += step) {
+    s += `<line class="sx-grid" x1="${padL}" x2="${W}" y1="${Y(h * 60)}" y2="${Y(h * 60)}"/><text class="sx-ax" x="${padL - 5}" y="${Y(h * 60) + 3}" text-anchor="end">${h}h</text>`;
+  }
+  ws.forEach((w, i) => {
+    const cx = padL + slot * i + slot / 2, x = cx - bw / 2;
+    let g = `<g class="sx-col" data-col="${i}">`;
+    g += sxTopBar(x, Y(w.plan), bw, base - Y(w.plan), "sx-plan grow", `style="--i:${i}"`);
+    const segs = sxKindsWith(w.doneK);
+    let yCur = base;
+    segs.forEach((k, j) => {
+      const hgt = (w.doneK[k.k] / 60 / maxH) * (base - top);
+      const y0 = yCur - hgt, y1 = yCur - (j > 0 ? 2 : 0);
+      const cls = `sx-kf k-${k.k} grow`;
+      g += j === segs.length - 1 ? sxTopBar(x, y0, bw, Math.max(1, y1 - y0), cls, `style="--i:${i}"`) : `<rect class="${cls}" style="--i:${i}" x="${x.toFixed(1)}" y="${y0.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1, y1 - y0).toFixed(1)}"/>`;
+      yCur = y0;
+    });
+    g += "</g>";
+    s += g;
+    if (w.n === C.nowW && w.done > 0) s += `<text class="sx-lbl" x="${cx}" y="${Y(Math.max(w.done, w.plan)) - 5}">${sxH(w.done)}</text>`;
+    const show = n <= 16 || w.n === 1 || w.n % 5 === 0 || w.n === C.nowW;
+    if (show && !(n > 16 && w.n !== C.nowW && Math.abs(w.n - C.nowW) <= 1)) s += `<text class="sx-ax${w.n === C.nowW ? " is-now" : ""}" x="${cx}" y="${base + 13}" text-anchor="middle">${w.n}</text>`;
+    const rows = sxKindsWith(w.doneK).map((k) => ({ c: k.k === "other" ? "ink-3" : k.k, v: sxH(w.doneK[k.k]), l: k.label }));
+    rows.push({ v: sxH(w.done), l: "hecho en total" }, { v: sxH(w.plan), l: "planificado" });
+    const id = sxTip({ title: `Semana ${w.n} · ${SXA.weekRange(w.n)}`, rows });
+    s += `<rect class="sx-hit" data-tip="${id}" data-col="${i}" tabindex="0" role="button" aria-label="Semana ${w.n}: ${sxH(w.done)} hechas de ${sxH(w.plan)}" x="${padL + slot * i}" y="${top - 10}" width="${slot}" height="${base - top + 24}"/>`;
+  });
+  s += `<line class="sx-base" x1="${padL}" x2="${W}" y1="${base}" y2="${base}"/>`;
+  $("sxVol").innerHTML = `<svg class="sx-svg" viewBox="0 0 ${W} ${H}" role="group" aria-label="Horas por semana: hechas y planificadas">${s}</svg>`;
+  $("sxVolSub").textContent = C.doneMin > 0 ? "Horas hechas por disciplina frente a lo planificado (gris)" : "Aún no hay horas hechas: en gris, lo que marca el plan cada semana";
+  $("sxVolLegend").innerHTML = sxKindsWith(C.planK).map((k) => `<span><i class="k-${k.k}"></i>${k.label}</span>`).join("") + `<span><i style="--c:var(--sunken)"></i>Planificado</span>`;
+  $("sxVolTbl").innerHTML = `<table><thead><tr><th>Semana</th><th>Fechas</th><th>Plan</th><th>Hecho</th><th>Cumplido</th></tr></thead><tbody>${ws.map((w) =>
+    `<tr><td>${w.n}</td><td>${esc(SXA.weekRange(w.n))}</td><td>${sxH(w.plan)}</td><td>${w.done ? sxH(w.done) : "—"}</td><td>${w.due ? Math.round((w.score / w.due) * 100) + "%" : "—"}</td></tr>`).join("")}</tbody></table>`;
+}
+
+/* ================= Reparto por disciplina ================= */
+function sxRenderMix(C) {
+  const hasDone = Object.values(C.doneK).some((v) => v > 0);
+  const src = hasDone ? C.doneK : C.planK;
+  const kinds = sxKindsWith(C.planK);
+  const total = kinds.reduce((a, k) => a + (src[k.k] || 0), 0) || 1;
+  $("sxMixSub").textContent = hasDone ? "Cómo se reparten las horas que llevas hechas" : "Cómo se reparte el plan completo (aún sin horas hechas)";
+  $("sxSplit").setAttribute("role", "img");
+  $("sxSplit").setAttribute("aria-label", kinds.map((k) => `${k.label} ${Math.round(((src[k.k] || 0) / total) * 100)}%`).join(", "));
+  $("sxSplit").innerHTML = kinds.filter((k) => src[k.k] > 0).map((k) => `<span class="k-${k.k}" style="flex:${src[k.k].toFixed(1)} 1 0"></span>`).join("");
+  $("sxMix").innerHTML = kinds.map((k) => {
+    const share = Math.round(((src[k.k] || 0) / total) * 100);
+    const due = C.dueK[k.k] || 0, done = C.doneK[k.k] || 0;
+    const comp = due ? Math.min(1, done / due) : 0;
+    const small = due ? `${sxH(done)} de ${sxH(due)} planificadas hasta hoy · ${Math.round(comp * 100)}%` : `${sxH(C.planK[k.k])} en todo el plan`;
+    return `<div class="sx-row k-${k.k}"><i></i><span class="nm">${k.label}<small class="sx-sm">${small}</small></span><span class="val">${share}%</span>` +
+      `<span class="sx-meter" role="img" aria-label="${k.label}: cumplido ${Math.round(comp * 100)}%"><b class="growx" style="width:${(comp * 100).toFixed(1)}%"></b></span></div>`;
+  }).join("");
+}
+
+/* ================= Sensaciones ================= */
+function sxTimeScale(C, idxs, padL, padR, W) {
+  const lo = Math.min(...idxs), hi = Math.max(C.nowIdx, ...idxs);
+  const span = Math.max(6, hi - lo);
+  return { lo, hi: lo + span, X: (i) => padL + ((i - lo) / span) * (W - padL - padR) };
+}
+function sxPointHits(pts, sc, top, base, W, mk) {
+  return pts.map((p, j) => {
+    const cx = sc.X(p.i);
+    const prev = j ? sc.X(pts[j - 1].i) : cx - 24, next = j < pts.length - 1 ? sc.X(pts[j + 1].i) : cx + 24;
+    const x0 = Math.max(0, (prev + cx) / 2), x1 = Math.min(W, (cx + next) / 2);
+    const wHit = Math.max(24, x1 - x0);
+    return `<g class="sx-col" data-col="${j}"><line class="sx-cross" x1="${cx}" x2="${cx}" y1="${top}" y2="${base}"/></g>` +
+      `<rect class="sx-hit" data-tip="${mk(p)}" data-col="${j}" tabindex="0" role="button" aria-label="${esc(sxDate(p.x.date))}" x="${cx - wHit / 2}" y="${top - 6}" width="${wHit}" height="${base - top + 12}"/>`;
+  }).join("");
+}
+function sxRenderRpe(C) {
+  $("sxFeelTitle").textContent = "Sensaciones";
+  $("sxFeelSub").textContent = "Esfuerzo percibido (RPE 1–10) y su media de 7 días";
+  const pts = C.days.map((x, i) => ({ x, i, v: x.rec.rpe })).filter((p) => p.v != null);
+  if (!pts.length) { $("sxFeel").innerHTML = `<p class="sx-empty">Apunta tus sensaciones (RPE) en <b>Hoy</b> y aquí verás cómo evoluciona el esfuerzo.</p>`; return; }
+  pts.forEach((p) => {
+    const win = pts.filter((q) => q.i <= p.i && q.i > p.i - 7);
+    p.avg = win.reduce((a, q) => a + q.v, 0) / win.length;
+  });
+  const W = 340, H = 168, padL = 22, padR = 10, top = 12, base = 140;
+  const sc = sxTimeScale(C, pts.map((p) => p.i), padL, padR, W);
+  const Y = (v) => base - (v / 10) * (base - top);
+  let s = "";
+  [2, 4, 6, 8, 10].forEach((v) => { s += `<line class="sx-grid" x1="${padL}" x2="${W}" y1="${Y(v)}" y2="${Y(v)}"/><text class="sx-ax" x="${padL - 5}" y="${Y(v) + 3}" text-anchor="end">${v}</text>`; });
+  s += sxPointHits(pts, sc, top, base, W, (p) => sxTip({ title: sxDate(p.x.date), rows: [{ v: String(p.v), l: "RPE del día" }, { c: "accent", v: sxNum(p.avg), l: "media 7 días" }], note: p.x.bl.filter((b) => b.k !== "rest").map(SXA.name).join(" + "), date: p.x.date }));
+  if (pts.length > 1) s += `<path class="sx-line" d="${pts.map((p, j) => `${j ? "L" : "M"}${sc.X(p.i).toFixed(1)},${Y(p.avg).toFixed(1)}`).join("")}"/>`;
+  pts.forEach((p) => { s += `<circle class="sx-dot de pop" style="--i:${Math.round(p.i / 7)}" cx="${sc.X(p.i).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="4"/>`; });
+  const last = pts[pts.length - 1];
+  s += `<circle class="sx-dot" style="fill:var(--accent)" cx="${sc.X(last.i).toFixed(1)}" cy="${Y(last.avg).toFixed(1)}" r="4.5"/>`;
+  s += `<text class="sx-lbl" x="${Math.min(W - 12, sc.X(last.i))}" y="${Math.max(10, Y(last.avg) - 9)}">${sxNum(last.avg)}</text>`;
+  s += `<line class="sx-base" x1="${padL}" x2="${W}" y1="${base}" y2="${base}"/>`;
+  s += `<text class="sx-ax" x="${padL}" y="${base + 14}">${sxDate(DAYS[sc.lo].date, false)}</text><text class="sx-ax" x="${W}" y="${base + 14}" text-anchor="end">${sxDate(DAYS[Math.min(sc.hi, DAYS.length - 1)].date, false)}</text>`;
+  const avg = pts.reduce((a, p) => a + p.v, 0) / pts.length;
+  const hard = pts.reduce((a, p) => (p.v > a.v ? p : a));
+  $("sxFeel").innerHTML =
+    `<svg class="sx-svg no-dim" viewBox="0 0 ${W} ${H}" role="group" aria-label="Evolución del RPE">${s}</svg>` +
+    `<div class="sx-legend"><span><i class="dot" style="--c:var(--ink-3)"></i>RPE del día</span><span><i class="line" style="--c:var(--accent)"></i>Media 7 días</span></div>` +
+    `<p class="sx-insight">Media <b>${sxNum(avg)}</b> · día más duro <b>${sxDate(hard.x.date)}</b> (${hard.v}) · días a 8 o más: <b>${pts.filter((p) => p.v >= 8).length}</b></p>` +
+    `<details class="sx-table"><summary>Ver datos en tabla</summary><div class="sx-tbl"><table><thead><tr><th>Día</th><th>Sesión</th><th>RPE</th></tr></thead><tbody>${pts.map((p) => `<tr><td>${esc(sxDate(p.x.date))}</td><td>${esc(p.x.bl.filter((b) => b.k !== "rest").map(SXA.name).join(" + "))}</td><td>${p.v}</td></tr>`).join("")}</tbody></table></div></details>`;
+}
+function sxGreenWeeks(C, field) {
+  let streak = 0;
+  for (let n = 1; n <= Math.min(C.nowW, SXA.weeks); n++) {
+    const vals = C.days.filter((x) => x.d.w === n && x.rec[field] != null).map((x) => x.rec[field]);
+    if (!vals.length) { if (n < C.nowW) streak = 0; continue; }
+    streak = vals.every((v) => v <= 2) ? streak + 1 : 0;
+  }
+  return streak;
+}
+const sxLv = (v) => (v <= 2 ? "g" : v <= 4 ? "a" : "r");
+const sxLvName = { g: "Verde", a: "Ámbar", r: "Rojo" };
+const sxLvCls = { g: "sx-ok", a: "sx-warn", r: "sx-bad" };
+function sxRenderPain(C) {
+  $("sxFeelTitle").textContent = "Rodilla y tibial";
+  $("sxFeelSub").textContent = "Tu semáforo de dolor día a día (0–10)";
+  const fields = [["rodilla", "Rodilla"], ["tibial", "Tibial"]];
+  const all = C.days.map((x, i) => ({ x, i })).filter((p) => fields.some(([f]) => p.x.rec[f] != null));
+  if (!all.length) { $("sxFeel").innerHTML = `<p class="sx-empty">Apunta el dolor de rodilla y de tibial en <b>Hoy</b> y aquí verás tu semáforo semana a semana.</p>`; return; }
+  const W = 340, H = 118, padL = 22, padR = 10, top = 8, base = 96;
+  const sc = sxTimeScale(C, all.map((p) => p.i), padL, padR, W);
+  const Y = (v) => base - (v / 10) * (base - top);
+  const charts = fields.map(([f, name]) => {
+    const pts = all.filter((p) => p.x.rec[f] != null).map((p) => ({ ...p, v: p.x.rec[f] }));
+    const lastP = pts[pts.length - 1];
+    let s = `<rect class="sx-bandz-r" x="${padL}" y="${Y(10)}" width="${W - padL}" height="${Y(4.5) - Y(10)}"/><rect class="sx-bandz-a" x="${padL}" y="${Y(4.5)}" width="${W - padL}" height="${Y(2.5) - Y(4.5)}"/><rect class="sx-bandz-g" x="${padL}" y="${Y(2.5)}" width="${W - padL}" height="${base - Y(2.5)}"/>`;
+    [[0, "0"], [2.5, "3"], [4.5, "5"], [10, "10"]].forEach(([v, t]) => { s += `<text class="sx-ax" x="${padL - 5}" y="${Math.min(base, Y(v) + 3)}" text-anchor="end">${t}</text>`; });
+    if (pts.length) {
+      s += sxPointHits(pts, sc, top, base, W, (p) => sxTip({ title: sxDate(p.x.date), rows: [{ v: String(p.v), l: `${name} · ${sxLvName[sxLv(p.v)]}` }], note: p.x.bl.filter((b) => b.k !== "rest").map(SXA.name).join(" + "), date: p.x.date }));
+      if (pts.length > 1) s += `<path class="sx-line de" d="${pts.map((p, j) => `${j ? "L" : "M"}${sc.X(p.i).toFixed(1)},${Y(p.v).toFixed(1)}`).join("")}"/>`;
+      pts.forEach((p) => { s += `<circle class="sx-dot lv-${sxLv(p.v)} pop" style="--i:${Math.round(p.i / 7)}" cx="${sc.X(p.i).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="4.5"/>`; });
+    }
+    s += `<line class="sx-base" x1="${padL}" x2="${W}" y1="${base}" y2="${base}"/>`;
+    s += `<text class="sx-ax" x="${padL}" y="${base + 14}">${sxDate(DAYS[sc.lo].date, false)}</text><text class="sx-ax" x="${W}" y="${base + 14}" text-anchor="end">${sxDate(DAYS[Math.min(sc.hi, DAYS.length - 1)].date, false)}</text>`;
+    const chip = lastP ? `<span class="sx-chip ${sxLvCls[sxLv(lastP.v)]}"><i></i>Último: ${lastP.v} · ${sxLvName[sxLv(lastP.v)]}</span>` : `<span class="sx-chip sx-none"><i></i>Sin apuntar</span>`;
+    return `<div><div class="sx-mini-h"><span>${name}</span>${chip}</div><svg class="sx-svg no-dim" viewBox="0 0 ${W} ${H}" role="group" aria-label="Dolor de ${name.toLowerCase()} por día">${s}</svg></div>`;
+  });
+  const g = sxGreenWeeks(C, "tibial");
+  const alert = all.filter((p) => fields.some(([f]) => p.x.rec[f] != null && p.x.rec[f] >= 3)).length;
+  $("sxFeel").innerHTML =
+    `<div class="sx-pair">${charts.join("")}</div>` +
+    `<div class="sx-legend"><span><i class="dot" style="--c:var(--ok)"></i>Verde 0–2</span><span><i class="dot" style="--c:var(--part)"></i>Ámbar 3–4</span><span><i class="dot" style="--c:var(--no)"></i>Rojo 5 o más</span></div>` +
+    `<p class="sx-insight">Tibial en verde <b>${Math.min(g, 3)} de 3</b> semanas seguidas${g >= 3 ? ": ya puedes subir la duración de la carrera a pie." : " antes de subir la carrera a pie."} Días con dolor 3 o más: <b>${alert}</b>.</p>` +
+    `<details class="sx-table"><summary>Ver datos en tabla</summary><div class="sx-tbl"><table><thead><tr><th>Día</th><th>Rodilla</th><th>Tibial</th></tr></thead><tbody>${all.map((p) => `<tr><td>${esc(sxDate(p.x.date))}</td><td>${p.x.rec.rodilla ?? "—"}</td><td>${p.x.rec.tibial ?? "—"}</td></tr>`).join("")}</tbody></table></div></details>`;
+}
+
+/* ================= Día de la semana ================= */
+function sxRenderDow(C) {
+  const W = 340, H = 142, top = 20, base = 118, padX = 6;
+  const slot = (W - padX * 2) / 7, bw = Math.min(24, slot * 0.5);
+  const vals = C.dow.map((o) => (o.due ? o.score / o.due : null));
+  const withData = vals.map((v, i) => ({ v, i })).filter((o) => o.v != null);
+  const best = withData.length > 1 ? withData.reduce((a, o) => (o.v > a.v ? o : a)) : null;
+  const worst = withData.length > 1 ? withData.reduce((a, o) => (o.v < a.v ? o : a)) : null;
+  let s = "";
+  C.dow.forEach((o, i) => {
+    const cx = padX + slot * i + slot / 2, x = cx - bw / 2, v = vals[i];
+    s += `<g class="sx-col" data-col="${i}">${sxTopBar(x, top, bw, base - top, "sx-plan")}`;
+    if (v) s += sxTopBar(x, base - v * (base - top), bw, v * (base - top), "sx-acc grow", `style="--i:${i}"`);
+    s += "</g>";
+    if (v != null && ((best && i === best.i) || (worst && i === worst.i && worst.v !== best.v))) s += `<text class="sx-lbl" x="${cx}" y="${top - 6}">${Math.round(v * 100)}%</text>`;
+    s += `<text class="sx-ax${SX_DOWS[i] === (sxDay(C.today) || {}).dow ? " is-now" : ""}" x="${cx}" y="${base + 15}" text-anchor="middle">${LETTER[o.name]}</text>`;
+    const id = sxTip({ title: o.name, rows: v == null ? [{ v: "—", l: "sin días de entreno aún" }] : [{ c: "accent", v: `${Math.round(v * 100)}%`, l: "cumplido" }, { v: `${sxNum(o.score, o.score % 1 ? 1 : 0)}/${o.due}`, l: "días" }] });
+    s += `<rect class="sx-hit" data-tip="${id}" data-col="${i}" tabindex="0" role="button" aria-label="${o.name}: ${v == null ? "sin datos" : Math.round(v * 100) + "%"}" x="${padX + slot * i}" y="0" width="${slot}" height="${H}"/>`;
+  });
+  $("sxDow").innerHTML = `<svg class="sx-svg" viewBox="0 0 ${W} ${H}" role="group" aria-label="Cumplimiento por día de la semana">${s}</svg>`;
+  $("sxDowTxt").innerHTML = best
+    ? `Tu mejor día es el <b>${best ? SX_DOWS[best.i].toLowerCase() : ""}</b> (${Math.round(best.v * 100)}%)${worst && worst.v < best.v ? ` y el que más cuesta, el <b>${SX_DOWS[worst.i].toLowerCase()}</b> (${Math.round(worst.v * 100)}%).` : "."}`
+    : "Cuando lleves unos días marcados verás qué día cumples más y cuál se te atraganta.";
+}
+
+/* ================= Récords, logros y notas ================= */
+function sxRenderRecords(C) {
+  let longest = null;
+  C.days.forEach((x) => { if (x.f === 1) x.bl.forEach((b, i) => { if (x.mins[i] && (!longest || x.mins[i] > longest.m)) longest = { m: x.mins[i], b, x }; }); });
+  const bestWeek = C.weeks.reduce((a, w) => (w.done > (a ? a.done : 0) ? w : a), null);
+  const pctWeeks = C.weeks.filter((w) => w.due >= 3);
+  const topPct = pctWeeks.reduce((a, w) => (!a || w.score / w.due > a.score / a.due ? w : a), null);
+  const rows = [
+    { k: "Sesión más larga hecha", s: longest ? `${SXA.name(longest.b)} · ${sxDate(longest.x.date)}` : "Aún ninguna", v: longest ? sxH(longest.m) : "—" },
+    { k: "Semana con más horas", s: bestWeek ? `Semana ${bestWeek.n} · ${SXA.weekRange(bestWeek.n)}` : "Aún ninguna", v: bestWeek ? sxH(bestWeek.done) : "—" },
+    { k: "Mejor semana en cumplimiento", s: topPct ? `Semana ${topPct.n}` : "Con al menos 3 días de entreno", v: topPct ? `${Math.round((topPct.score / topPct.due) * 100)}%` : "—" },
+    { k: "Mejor racha", s: "Días de entreno seguidos cumplidos", v: String(C.best) },
+    ...SXA.records(C),
+  ];
+  $("sxRec").innerHTML = rows.map((r, i) => `<div class="sx-li rise" style="--i:${i}"><span class="k">${r.k}<small>${esc(r.s)}</small></span><span class="v">${r.v}</span></div>`).join("");
+}
+const SX_ICON_OK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8.4 2.9 2.9 6.1-6.6"/></svg>';
+const SX_ICON_LOCK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7"/></svg>';
+function sxRenderBadges(C) {
+  const hoursDone = C.doneMin / 60;
+  const fullWeek = C.weeks.some((w) => w.trainDays > 0 && w.fullDone === w.trainDays);
+  const list = [
+    { t: "Primer paso", d: "Tu primer entreno marcado como hecho", on: C.days.some((x) => x.f > 0) },
+    { t: "Semana redonda", d: "Todos los entrenos de una semana hechos", on: fullWeek },
+    { t: "Racha de 7", d: "7 días de entreno seguidos cumplidos", on: C.best >= 7, prog: [Math.min(C.best, 7), 7] },
+    { t: "Racha de 21", d: "21 días de entreno seguidos", on: C.best >= 21, prog: [Math.min(C.best, 21), 21] },
+    { t: "25 sesiones", d: "Sesiones de días hechos", on: C.sessDone >= 25, prog: [Math.min(C.sessDone, 25), 25] },
+    { t: "50 horas", d: "Horas de entreno hechas", on: hoursDone >= 50, prog: [Math.min(Math.floor(hoursDone), 50), 50] },
+    ...SXA.badges(C),
+  ];
+  const on = list.filter((b) => b.on).length;
+  $("sxBadgeSub").textContent = `${on} de ${list.length} desbloqueados`;
+  $("sxBadges").innerHTML = list.sort((a, b) => b.on - a.on).map((b, i) =>
+    `<div class="sx-badge rise${b.on ? " on" : ""}" style="--i:${i}"><span class="ic${b.on ? " pop" : ""}" aria-hidden="true">${b.on ? SX_ICON_OK : SX_ICON_LOCK}</span><span><b>${b.t}</b><small>${b.on ? b.d : b.prog ? `${b.d} · ${b.prog[0]}/${b.prog[1]}` : b.d}</small>${!b.on && b.prog ? `<span class="prog"><b style="display:block;width:${((b.prog[0] / b.prog[1]) * 100).toFixed(0)}%"></b></span>` : ""}</span><span class="sx-vh">${b.on ? "Desbloqueado" : "Bloqueado"}</span></div>`).join("");
+}
+function sxRenderNotes(C) {
+  const notes = C.days.filter((x) => x.rec.notas).sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 6);
+  const hecho = { "Sí": ["sx-ok", "Hecho"], "Parcial": ["sx-warn", "Parcial"], "No": ["sx-bad", "No hecho"] };
+  $("sxNotes").innerHTML = notes.length
+    ? notes.map((x) => `<button type="button" class="sx-note" data-open="${x.date}"><span class="d">${esc(sxDate(x.date))}${x.rec.hecho ? `<span class="sx-tag ${hecho[x.rec.hecho][0]}"><i></i>${hecho[x.rec.hecho][1]}</span>` : ""}${SXA.noteChips(x.rec)}</span><p>${esc(x.rec.notas)}</p></button>`).join("")
+    : `<p class="sx-empty">Aún no has escrito notas. Apúntalas en <b>Hoy</b> y aquí tendrás tu diario de entreno.</p>`;
+}
+
+/* ================= Render e inicio ================= */
+function sxRender() {
+  SXT.clear();
+  sxTipHide();
+  const C = sxBuild();
+  sxRenderHero(C); sxRenderKpis(C); sxRenderHeat(C); sxRenderVol(C); sxRenderMix(C);
+  SXA.renderFeel(C); sxRenderDow(C); sxRenderRecords(C); sxRenderBadges(C); sxRenderNotes(C);
+  sxCountAll($("sx"));
+}
+(function sxInit() {
+  const hover = () => !!(window.matchMedia && matchMedia("(hover: hover)").matches);
+  $("tabHoy").addEventListener("click", () => sxShow("hoy"));
+  $("tabStats").addEventListener("click", () => sxShow("stats"));
+  let seen = false;
+  try { seen = localStorage.getItem("sx-visto") === "1"; } catch (e) {}
+  $("tabNew").hidden = seen;
+  const sx = $("sx");
+  sx.addEventListener("click", (e) => {
+    const t = e.target.closest("[data-tip]");
+    if (t) { if (sxTipEl === t && !hover()) sxTipHide(); else sxTipShow(t); return; }
+    const n = e.target.closest("[data-open]");
+    if (n) { sxShow("hoy"); go(n.dataset.open, false); return; }
+    if (!e.target.closest("#sxTip")) sxTipHide();
+  });
+  sx.addEventListener("mouseover", (e) => { const t = e.target.closest("[data-tip]"); if (t && t !== sxTipEl && hover()) sxTipShow(t); });
+  sx.addEventListener("mouseout", (e) => {
+    if (!hover() || !e.target.closest("[data-tip]")) return;
+    const to = e.relatedTarget;
+    if (!to || !to.closest || !to.closest("[data-tip], #sxTip")) sxTipHide();
+  });
+  sx.addEventListener("focusin", (e) => { const t = e.target.closest("[data-tip]"); if (t) sxTipShow(t); });
+  sx.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { sxTipHide(); return; }
+    if ((e.key === "Enter" || e.key === " ") && e.target.matches("[data-tip]")) {
+      e.preventDefault();
+      const d = SXT.get(e.target.getAttribute("data-tip"));
+      if (d && d.date) { sxShow("hoy"); go(d.date, false); }
+    }
+  });
+  document.addEventListener("click", (e) => { if (!e.target.closest("#sx")) sxTipHide(); });
+  let lastW = window.innerWidth;
+  window.addEventListener("resize", () => {
+    if (window.innerWidth === lastW || $("viewStats").hidden) return;
+    lastW = window.innerWidth;
+    sxRender();
+  });
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && !$("viewStats").hidden) sxRender(); });
+  if (location.hash === "#estadisticas") sxShow("stats");
+})();
+
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+  let swHad = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (swHad && !sessionStorage.getItem("sw-recargada")) { sessionStorage.setItem("sw-recargada", "1"); location.reload(); }
+    swHad = true;
+  });
 }
 </script>
 </body>
