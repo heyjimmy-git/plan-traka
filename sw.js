@@ -1,4 +1,4 @@
-const CACHE = "plan-traka-v2";
+const CACHE = "plan-traka-v3";
 const PREFIX = "plan-traka-";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 self.addEventListener("install", (e) => {

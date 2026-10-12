@@ -310,7 +310,7 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
 .view { display: grid; gap: 22px; }
 
 /* Barra de pestañas */
-.tabbar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 15; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 5px; width: min(360px, calc(100vw - 32px)); border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 78%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(16px); backdrop-filter: saturate(1.4) blur(16px); box-shadow: 0 8px 28px rgb(0 0 0 / .14); }
+.tabbar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 15; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 5px; width: min(420px, calc(100vw - 32px)); border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 78%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(16px); backdrop-filter: saturate(1.4) blur(16px); box-shadow: 0 8px 28px rgb(0 0 0 / .14); }
 .tab { position: relative; display: flex; align-items: center; justify-content: center; gap: 7px; height: 44px; border-radius: 999px; font-size: 14px; font-weight: 700; color: var(--ink-2); transition: background-color .2s, color .2s; }
 .tab svg { width: 18px; height: 18px; flex: none; }
 .tab[aria-current="page"] { background: var(--ink); color: var(--on-ink); }
@@ -487,6 +487,34 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
 .sx-cross { opacity: 0; }
 .sx-col.hot .sx-cross { opacity: 1; }
 .sx-svg.no-dim[data-hot] .sx-col:not(.hot) { opacity: 1; }
+
+/* ================= Comidas ================= */
+@media (max-width: 419px) {
+  .tab { gap: 6px; font-size: 13px; }
+  .tab span { display: none; }
+  .tab[aria-current="page"] span { display: inline; }
+}
+.fd { display: grid; gap: 22px; position: relative; }
+.fd-head { display: grid; gap: 4px; padding-inline: 2px; }
+.fd-day { text-align: center; line-height: 1.25; }
+.fd-day strong { font-weight: 700; }
+.fd-day .sub { display: block; font-size: 13px; color: var(--ink-3); }
+.fd-train { display: flex; flex-wrap: wrap; gap: 6px; }
+.fd-train span { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); background: var(--ground); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; }
+.fd-train i { width: 8px; height: 8px; border-radius: 2px; background: var(--c); flex: none; }
+.fd-meals { display: grid; gap: 12px; }
+.fd-meal { display: grid; gap: 5px; }
+.fd-kcal { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
+.fd-kcal input { width: 112px; font: inherit; font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--ink); background: var(--ground); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-variant-numeric: tabular-nums; }
+.fd-kcal .hint { font-size: 12px; color: var(--ink-3); line-height: 1.35; }
+.fd-actions { gap: 12px; }
+.fd-send { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.fd-hint { margin: 0; font-size: 13px; color: var(--ink-3); }
+.fd-empty { margin: 0; font-size: 14px; color: var(--ink-3); }
+.fd-recent { width: 100%; text-align: left; }
+.fd-recent .v small { font-size: .42em; margin-left: 3px; color: var(--ink-2); }
+.sx-neutral { fill: var(--ink-3); fill-opacity: .5; }
+.sx-avg { stroke: var(--ink-3); stroke-width: 1; }
 </style>
 </head>
 <body>
@@ -592,6 +620,43 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
   </footer>
   </div>
 
+  <div class="view" id="viewFood" hidden>
+    <section class="fd" id="fd" aria-label="Comidas">
+      <div class="fd-head"><span class="eyebrow" id="fdSub"></span><h1 class="sx-title">Comidas</h1></div>
+      <div class="week-bar">
+        <button type="button" class="nav-btn" id="fdPrev" aria-label="Día anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
+        <div class="fd-day" id="fdDay"></div>
+        <button type="button" class="nav-btn" id="fdNext" aria-label="Día siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4 6 6-6 6"/></svg></button>
+      </div>
+      <div class="sx-card">
+        <div class="fd-train" id="fdTrain"></div>
+        <div class="fd-meals" id="fdMeals"></div>
+        <div class="fd-kcal">
+          <input type="number" id="fdKcal" inputmode="numeric" min="0" max="20000" step="10" placeholder="kcal" aria-label="Kilocalorías estimadas del día">
+          <span class="hint">Kcal estimadas del día: apunta aquí lo que te diga la IA.</span>
+        </div>
+      </div>
+      <section class="sx-sec">
+        <header><h2>Pasar a la IA</h2><p>Manda lo que has comido y el entreno de esos días para que te estime las kcal.</p></header>
+        <div class="sx-card fd-actions">
+          <div class="seg" role="group" aria-label="Qué mandar" id="fdScope">
+            <button type="button" id="fdScopeDay" data-v="day" aria-pressed="true">Este día</button>
+            <button type="button" id="fdScopeWeek" data-v="week" aria-pressed="false">Últimos 7 días</button>
+          </div>
+          <div class="fd-send">
+            <button type="button" class="btn" id="fdSend">Pasar a la IA</button>
+            <button type="button" class="btn ghost" id="fdCopy">Copiar texto</button>
+          </div>
+          <p class="fd-hint" id="fdSendHint"></p>
+        </div>
+      </section>
+      <section class="sx-sec">
+        <header><h2>Últimos días</h2></header>
+        <div class="sx-card"><div class="sx-list" id="fdRecent"></div></div>
+      </section>
+    </section>
+  </div>
+
   <div class="view" id="viewStats" hidden>
     <section class="sx" id="sx" aria-label="Estadísticas">
       <div class="sx-head"><span class="eyebrow" id="sxSub"></span><h1 class="sx-title">Estadísticas</h1></div>
@@ -602,6 +667,7 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
       <section class="sx-sec"><header><h2>Reparto por disciplina</h2><p id="sxMixSub"></p></header><div class="sx-card"><div class="sx-split growx" id="sxSplit"></div><div class="sx-rows" id="sxMix"></div></div></section>
       <section class="sx-sec"><header><h2 id="sxFeelTitle"></h2><p id="sxFeelSub"></p></header><div class="sx-card" id="sxFeel"></div></section>
       <section class="sx-sec"><header><h2>Por día de la semana</h2><p>Qué día cumples más y cuál te cuesta</p></header><div class="sx-card"><div id="sxDow"></div><p class="sx-insight" id="sxDowTxt"></p></div></section>
+      <section class="sx-sec" id="sxFoodSec" hidden><header><h2>Comida y energía</h2><p id="sxFoodSub"></p></header><div class="sx-card" id="sxFood"></div></section>
       <section class="sx-sec"><header><h2>Récords</h2></header><div class="sx-card"><div class="sx-list" id="sxRec"></div></div></section>
       <section class="sx-sec"><header><h2>Logros</h2><p id="sxBadgeSub"></p></header><div class="sx-badges" id="sxBadges"></div></section>
       <section class="sx-sec"><header><h2>Últimas notas</h2></header><div class="sx-card"><div class="sx-list" id="sxNotes"></div></div></section>
@@ -612,6 +678,7 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
 
 <nav class="tabbar" aria-label="Secciones">
   <button type="button" class="tab" id="tabHoy" data-tab="hoy" aria-current="page"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="14" height="12.5" rx="2.5"/><path d="M3 8.5h14M7 2.8v3.2M13 2.8v3.2"/></svg><span>Hoy</span></button>
+  <button type="button" class="tab" id="tabFood" data-tab="comidas" aria-current="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2.5v6a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2v-6M7 10.5v7M14.5 2.5c-1.4 1-2 2.6-2 4.5s.6 2.5 2 2.5V2.5zm0 7v8"/></svg><span>Comidas</span><i class="tab-new" id="tabFoodNew" hidden></i></button>
   <button type="button" class="tab" id="tabStats" data-tab="stats" aria-current="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16.5V10M8.7 16.5V4M13.3 16.5V8M18 16.5H2"/></svg><span>Estadísticas</span><i class="tab-new" id="tabNew" hidden></i></button>
 </nav>
 
@@ -716,6 +783,7 @@ function persist() {
   try {
     localStorage.setItem(LS_REG, JSON.stringify(store));
     localStorage.setItem(LS_EDIT, JSON.stringify(cambios));
+    localStorage.setItem(LS_FOOD, JSON.stringify(comidas));
     storageOK = true;
   } catch (e) { storageOK = false; }
   renderDataMeta();
@@ -935,9 +1003,9 @@ function renderGuides() {
 }
 
 function renderDataMeta() {
-  const ed = Object.keys(cambios).length, reg = Object.keys(store).length;
+  const ed = Object.keys(cambios).length, reg = Object.keys(store).length, com = Object.keys(comidas).length;
   $("dataMeta").textContent = storageOK
-    ? `${ed} ${ed === 1 ? "día editado" : "días editados"} · ${reg} ${reg === 1 ? "día registrado" : "días registrados"}`
+    ? `${ed} ${ed === 1 ? "día editado" : "días editados"} · ${reg} ${reg === 1 ? "día registrado" : "días registrados"} · ${com} ${com === 1 ? "día con comidas" : "días con comidas"}`
     : "Este navegador no deja guardar datos (¿modo privado?). Abre la app desde el icono de inicio.";
 }
 
@@ -953,7 +1021,7 @@ function go(iso, animate = true) {
   const next = clampDate(iso);
   if (next === sel) return;
   sel = next;
-  renderWeek(); renderDay(animate); renderProfile();
+  renderWeek(); renderDay(animate); renderProfile(); renderFoodIfVisible();
 }
 function shiftDay(n) { const i = IDX.get(sel) + n; if (i >= 0 && i < DAYS.length) go(DAYS[i].date); }
 function goWeek(n) {
@@ -962,7 +1030,224 @@ function goWeek(n) {
   const target = DAYS.find((d) => d.w === n && d.dow === cur.dow) || DAYS.find((d) => d.w === n);
   go(target.date);
 }
-function renderAll() { renderHeader(); renderWeek(); renderDay(false); renderProfile(); renderStats(); renderDataMeta(); }
+function renderAll() { renderHeader(); renderWeek(); renderDay(false); renderProfile(); renderStats(); renderDataMeta(); renderFoodIfVisible(); }
+
+/* ================= Comidas ================= */
+const LS_FOOD = "plan-traka-comidas";
+const MEALS = [
+  ["desayuno", "Desayuno", "Café con leche, tostadas…"],
+  ["media", "Media mañana", "Fruta, yogur, frutos secos…"],
+  ["comida", "Comida", "Primero, segundo, postre…"],
+  ["merienda", "Merienda", "Algo entre horas"],
+  ["cena", "Cena", "Lo de la noche"],
+  ["picoteo", "Picoteo y bebidas", "Snacks, refrescos, geles, barritas…"],
+];
+let comidas = load(LS_FOOD);
+let foodScope = "day";
+
+const foodOf = (date) => comidas[date] || {};
+const foodCount = (f) => MEALS.filter(([k]) => (f[k] || "").trim()).length;
+const foodHas = (f) => !!(f && (foodCount(f) || f.kcal));
+const kcalFmt = (v) => Number(v).toLocaleString("es-ES");
+function autoGrow(el) { el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; }
+function saveFood(date, patch) {
+  const next = Object.assign({}, comidas[date] || {}, patch, { actualizado: new Date().toISOString() });
+  if (foodHas(next)) comidas[date] = next; else delete comidas[date];
+  persist();
+  renderFoodRecent(); renderFoodHint();
+}
+const renderFoodIfVisible = () => { if (!$("viewFood").hidden) renderFood(); };
+
+function foodTrainLine(date) {
+  const bl = blocksFor(date).filter((b) => b.k !== "rest");
+  if (!bl.length) return "Descanso";
+  return bl.map((b) => `${b.title || KIND_LABEL[b.k] || "Sesión"}${b.d ? ` ${b.d}` : ""}${b.z ? ` (${b.z})` : ""}`).join(" + ");
+}
+function foodDates(scope) {
+  return scope === "week"
+    ? DAYS.filter((d) => dayDiff(d.date, sel) >= 0 && dayDiff(d.date, sel) <= 6).map((d) => d.date)
+    : [sel];
+}
+function foodBlock(date) {
+  const f = foodOf(date);
+  const meals = MEALS.filter(([k]) => (f[k] || "").trim()).map(([k, label]) => `- ${label}: ${f[k].trim()}`);
+  if (!meals.length && !f.kcal) return null;
+  return [
+    dateLabel(date),
+    `Entreno: ${foodTrainLine(date)}`,
+    ...meals,
+    f.kcal ? `Kcal que ya tengo apuntadas: ${kcalFmt(f.kcal)}` : null,
+  ].filter(Boolean).join("\n");
+}
+function foodPrompt(scope) {
+  const parts = foodDates(scope).map(foodBlock).filter(Boolean);
+  if (!parts.length) return null;
+  return [
+    "Estima las kilocalorías y el reparto de macronutrientes (hidratos, proteína y grasa) de lo que he comido.",
+    "Entreno para una ultra de 100 km en gravel, así que te paso también el entreno de cada día.",
+    "",
+    parts.join("\n\n"),
+    "",
+    "Dime las kcal totales de cada día, el reparto aproximado de macros y si encaja con la carga de entreno que llevo. Si te falta información para estimar algo, dime qué necesitas.",
+  ].join("\n");
+}
+async function foodSend(copyOnly) {
+  const text = foodPrompt(foodScope);
+  if (!text) { toast("Apunta primero lo que has comido"); return; }
+  if (!copyOnly && navigator.share) {
+    try { await navigator.share({ text }); return; }
+    catch (err) { if (err && err.name === "AbortError") return; }
+  }
+  try { await navigator.clipboard.writeText(text); toast("Copiado para la IA"); return; } catch (err) {}
+  const ta = document.createElement("textarea");
+  ta.value = text; ta.setAttribute("readonly", "");
+  ta.style.cssText = "position:fixed;top:-1000px;opacity:0";
+  document.body.appendChild(ta);
+  ta.select(); ta.setSelectionRange(0, text.length);
+  let ok = false;
+  try { ok = document.execCommand("copy"); } catch (err) {}
+  ta.remove();
+  toast(ok ? "Copiado para la IA" : "No se ha podido copiar");
+}
+
+function renderFoodHint() {
+  const dates = foodDates(foodScope).filter((d) => foodHas(foodOf(d)));
+  const meals = dates.reduce((a, d) => a + foodCount(foodOf(d)), 0);
+  $("fdSendHint").textContent = !dates.length
+    ? "Todavía no hay nada apuntado en esos días."
+    : foodScope === "day"
+      ? `Se manda ${dateLabel(sel).toLowerCase()}: ${meals} ${meals === 1 ? "comida" : "comidas"} y el entreno del día.`
+      : `Se mandan ${dates.length} ${dates.length === 1 ? "día" : "días"} con ${meals} ${meals === 1 ? "comida" : "comidas"} y sus entrenos.`;
+}
+function renderFoodRecent() {
+  const list = DAYS.filter((d) => foodHas(comidas[d.date])).sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 10);
+  $("fdRecent").innerHTML = list.length
+    ? list.map((d) => {
+        const f = comidas[d.date], n = foodCount(f);
+        return `<button type="button" class="sx-li fd-recent" data-food-day="${d.date}"><span class="k">${esc(dateLabel(d.date))}<small>${n} ${n === 1 ? "comida apuntada" : "comidas apuntadas"}</small></span><span class="v">${f.kcal ? kcalFmt(f.kcal) + '<small>kcal</small>' : "—"}</span></button>`;
+      }).join("")
+    : `<p class="fd-empty">Aún no has apuntado ninguna comida. Escríbelas arriba y aquí tendrás el histórico.</p>`;
+}
+function renderFood() {
+  const d = selDay(), f = foodOf(sel), ph = phaseOf(d.w);
+  $("fdSub").textContent = ph ? `Semana ${d.w} de ${PLAN_WEEKS} · ${ph.name}` : "Día de la carrera";
+  const diff = dayDiff(todayISO, sel);
+  const rel = diff === 0 ? "Hoy" : diff === 1 ? "Mañana" : diff === -1 ? "Ayer" : diff > 1 ? `En ${diff} días` : `Hace ${-diff} días`;
+  $("fdDay").innerHTML = `<strong>${esc(dateLabel(sel))}</strong><span class="sub">${rel}${diff !== 0 && IDX.has(todayISO) ? ' · <button type="button" class="link" id="fdToday">Volver a hoy</button>' : ""}</span>`;
+  $("fdPrev").disabled = IDX.get(sel) === 0;
+  $("fdNext").disabled = IDX.get(sel) === DAYS.length - 1;
+  const bl = blocksFor(sel).filter((b) => b.k !== "rest");
+  $("fdTrain").innerHTML = bl.length
+    ? bl.map((b) => `<span class="k-${KIND_LABEL[b.k] ? b.k : "other"}"><i></i>${esc(b.title || KIND_LABEL[b.k] || "Sesión")}${b.d ? ` · ${esc(b.d)}` : ""}</span>`).join("")
+    : '<span class="k-rest"><i></i>Día de descanso</span>';
+  const active = document.activeElement;
+  MEALS.forEach(([k]) => {
+    const ta = $("fdm-" + k);
+    if (ta && ta !== active) { ta.value = f[k] || ""; autoGrow(ta); }
+  });
+  const kc = $("fdKcal");
+  if (kc !== active) kc.value = f.kcal != null ? f.kcal : "";
+  renderFoodRecent(); renderFoodHint();
+}
+
+/* Montaje de la pestaña */
+$("fdMeals").innerHTML = MEALS.map(([k, label, ph]) =>
+  `<div class="fd-meal"><label class="eyebrow" for="fdm-${k}">${label}</label><textarea class="notes" id="fdm-${k}" data-meal="${k}" rows="1" placeholder="${ph}"></textarea></div>`).join("");
+$("fdMeals").addEventListener("change", (e) => {
+  const ta = e.target.closest("[data-meal]");
+  if (ta) saveFood(sel, { [ta.dataset.meal]: ta.value.trim() });
+});
+$("fdMeals").addEventListener("input", (e) => { const ta = e.target.closest("[data-meal]"); if (ta) autoGrow(ta); });
+$("fdKcal").addEventListener("change", (e) => {
+  const v = e.target.value.trim();
+  const n = v === "" ? null : Math.min(20000, Math.max(0, Math.round(+v))) || null;
+  e.target.value = n == null ? "" : n;
+  saveFood(sel, { kcal: n });
+});
+$("fdPrev").addEventListener("click", () => shiftDay(-1));
+$("fdNext").addEventListener("click", () => shiftDay(1));
+$("fdScope").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-v]");
+  if (!b) return;
+  foodScope = b.dataset.v;
+  document.querySelectorAll("#fdScope button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.v === foodScope)));
+  renderFoodHint();
+});
+$("fdSend").addEventListener("click", () => foodSend(false));
+$("fdCopy").addEventListener("click", () => foodSend(true));
+$("fd").addEventListener("click", (e) => {
+  if (e.target.closest("#fdToday")) { go(todayISO); return; }
+  const r = e.target.closest("[data-food-day]");
+  if (r) { go(r.dataset.foodDay); window.scrollTo(0, 0); }
+});
+let fdTx = null, fdTy = null;
+$("fd").addEventListener("touchstart", (e) => {
+  if (e.target.closest("textarea, input, button")) { fdTx = null; return; }
+  fdTx = e.touches[0].clientX; fdTy = e.touches[0].clientY;
+}, { passive: true });
+$("fd").addEventListener("touchend", (e) => {
+  if (fdTx === null) return;
+  const dx = e.changedTouches[0].clientX - fdTx, dy = e.changedTouches[0].clientY - fdTy;
+  fdTx = null;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) shiftDay(dx < 0 ? 1 : -1);
+}, { passive: true });
+
+/* ================= Comida y energía (en Estadísticas) ================= */
+function sxRenderFoodStats(C) {
+  const sec = $("sxFoodSec");
+  const logged = C.days.filter((x) => foodHas(comidas[x.date]));
+  if (!logged.length) { sec.hidden = true; return; }
+  sec.hidden = false;
+  const lastIdx = IDX.get(logged[logged.length - 1].date);
+  const endIdx = Math.max(C.nowIdx, lastIdx);
+  const win = C.days.slice(Math.max(0, endIdx - 20), endIdx + 1);
+  const kcals = win.map((x) => (comidas[x.date] || {}).kcal || null);
+  const known = kcals.filter(Boolean);
+  const avg = known.length ? known.reduce((a, v) => a + v, 0) / known.length : 0;
+  const maxK = Math.max(...known, 1), maxMin = Math.max(...win.map((x) => x.plan), 60);
+  const W = 340, padL = 26, padR = 4, slot = (W - padL - padR) / win.length;
+  const bw = Math.min(22, Math.max(5, slot * 0.6));
+  const chart = (H, top, base, values, max, cls, fmt, label) => {
+    let s = "";
+    [0.5, 1].forEach((p) => {
+      const y = base - p * (base - top);
+      s += `<line class="sx-grid" x1="${padL}" x2="${W}" y1="${y}" y2="${y}"/><text class="sx-ax" x="${padL - 5}" y="${y + 3}" text-anchor="end">${fmt(max * p)}</text>`;
+    });
+    win.forEach((x, i) => {
+      const v = values[i], cx = padL + slot * i + slot / 2;
+      if (v) s += sxTopBar(cx - bw / 2, base - (v / max) * (base - top), bw, (v / max) * (base - top), `${cls} grow`, `style="--i:${i}"`);
+      const f = comidas[x.date] || {}, n = foodCount(f);
+      const rows = [];
+      if (f.kcal) rows.push({ c: "accent", v: kcalFmt(f.kcal), l: "kcal" });
+      if (n) rows.push({ v: String(n), l: n === 1 ? "comida apuntada" : "comidas apuntadas" });
+      rows.push({ v: sxH(x.plan), l: "de entreno" });
+      const id = sxTip({ title: sxDate(x.date), rows, note: foodTrainLine(x.date), date: x.date });
+      s += `<rect class="sx-hit" data-tip="${id}" data-col="${i}" tabindex="0" role="button" aria-label="${esc(sxDate(x.date))}: ${v ? fmt(v) : "sin datos"}" x="${padL + slot * i}" y="${top - 6}" width="${slot}" height="${base - top + 18}"/>`;
+    });
+    if (cls === "sx-acc" && known.length > 1) {
+      const y = base - (avg / max) * (base - top);
+      s += `<line class="sx-avg" x1="${padL}" x2="${W}" y1="${y}" y2="${y}"/><text class="sx-ax" x="${W}" y="${y - 4}" text-anchor="end">media ${kcalFmt(Math.round(avg))}</text>`;
+    }
+    s += `<line class="sx-base" x1="${padL}" x2="${W}" y1="${base}" y2="${base}"/>`;
+    return `<div><div class="sx-mini-h"><span>${label}</span></div><svg class="sx-svg no-dim" viewBox="0 0 ${W} ${H}" role="group" aria-label="${label} por día">${s}</svg></div>`;
+  };
+  const top = 12, base = 86, H = 104;
+  const fmtK = (v) => kcalFmt(Math.round(v / 100) * 100);
+  const fmtT = (v) => sxH(Math.round(v / 15) * 15);
+  const best = win.reduce((a, x, i) => (kcals[i] && (!a || kcals[i] > a.v) ? { x, v: kcals[i] } : a), null);
+  $("sxFoodSub").textContent = `${known.length} ${known.length === 1 ? "día con kcal apuntadas" : "días con kcal apuntadas"} de los últimos ${win.length}`;
+  $("sxFood").innerHTML =
+    `<div class="sx-pair">${chart(H, top, base, kcals, maxK, "sx-acc", fmtK, "Kcal por día")}${chart(H, top, base, win.map((x) => x.plan), maxMin, "sx-neutral", fmtT, "Entreno por día")}</div>` +
+    `<div class="sx-legend"><span><i style="--c:var(--accent)"></i>Kcal apuntadas</span><span><i style="--c:color-mix(in srgb, var(--ink-3) 50%, var(--surface))"></i>Horas de entreno</span></div>` +
+    (known.length
+      ? `<p class="sx-insight">Media <b>${kcalFmt(Math.round(avg))} kcal</b> en los días apuntados${best ? ` · el día de más fue <b>${sxDate(best.x.date)}</b> con ${kcalFmt(best.v)}` : ""}.</p>`
+      : `<p class="sx-insight">Apunta en <b>Comidas</b> las kcal que te diga la IA y aquí las verás junto a tu carga de entreno.</p>`) +
+    `<details class="sx-table"><summary>Ver datos en tabla</summary><div class="sx-tbl"><table><thead><tr><th>Día</th><th>Kcal</th><th>Entreno</th><th>Comidas</th></tr></thead><tbody>${win.map((x, i) => {
+      const n = foodCount(comidas[x.date] || {});
+      return `<tr><td>${esc(sxDate(x.date))}</td><td>${kcals[i] ? kcalFmt(kcals[i]) : "—"}</td><td>${x.plan ? sxH(x.plan) : "—"}</td><td>${n || "—"}</td></tr>`;
+    }).join("")}</tbody></table></div></details>`;
+}
+
 
 /* ---------- editor ---------- */
 const dlg = $("editor");
@@ -1036,7 +1321,7 @@ $("restore").addEventListener("click", () => {
 
 /* ---------- copia de seguridad ---------- */
 $("exportBtn").addEventListener("click", async () => {
-  const data = JSON.stringify({ app: "plan-traka", v: 1, exportado: new Date().toISOString(), registro: store, cambios }, null, 2);
+  const data = JSON.stringify({ app: "plan-traka", v: 1, exportado: new Date().toISOString(), registro: store, cambios, comidas }, null, 2);
   const name = `plan-la-traka-copia-${isoLocal(new Date())}.json`;
   const file = new File([data], name, { type: "application/json" });
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -1060,6 +1345,7 @@ $("importFile").addEventListener("change", async (e) => {
     if (!confirm(`Esto sustituye tus sesiones editadas y tu registro por los de la copia del ${when}. ¿Continuar?`)) return;
     store = data.registro || {};
     cambios = data.cambios || {};
+    comidas = data.comidas || {};
     persist();
     renderAll();
     toast("Copia recuperada");
@@ -1318,16 +1604,24 @@ function sxCountAll(root) {
   });
 }
 let sxGoTimer;
+const SX_VIEWS = { hoy: "viewHoy", comidas: "viewFood", stats: "viewStats" };
 function sxShow(tab) {
-  const stats = tab === "stats";
-  $("viewHoy").hidden = stats;
-  $("viewStats").hidden = !stats;
-  $("tabHoy").setAttribute("aria-current", stats ? "false" : "page");
-  $("tabStats").setAttribute("aria-current", stats ? "page" : "false");
+  const view = SX_VIEWS[tab] ? tab : "hoy";
+  Object.keys(SX_VIEWS).forEach((k) => { $(SX_VIEWS[k]).hidden = k !== view; });
+  $("tabHoy").setAttribute("aria-current", view === "hoy" ? "page" : "false");
+  $("tabFood").setAttribute("aria-current", view === "comidas" ? "page" : "false");
+  $("tabStats").setAttribute("aria-current", view === "stats" ? "page" : "false");
   sxTipHide();
-  try { history.replaceState(null, "", stats ? "#estadisticas" : location.pathname + location.search); } catch (e) {}
+  const hash = view === "stats" ? "#estadisticas" : view === "comidas" ? "#comidas" : location.pathname + location.search;
+  try { history.replaceState(null, "", hash); } catch (e) {}
   window.scrollTo(0, 0);
-  if (!stats) return;
+  if (view === "comidas") {
+    try { localStorage.setItem("fd-visto", "1"); } catch (e) {}
+    $("tabFoodNew").hidden = true;
+    renderFood();
+    return;
+  }
+  if (view !== "stats") return;
   try { localStorage.setItem("sx-visto", "1"); } catch (e) {}
   $("tabNew").hidden = true;
   const root = $("sx");
@@ -1686,13 +1980,15 @@ function sxRender() {
   sxTipHide();
   const C = sxBuild();
   sxRenderHero(C); sxRenderKpis(C); sxRenderHeat(C); sxRenderVol(C); sxRenderMix(C);
-  SXA.renderFeel(C); sxRenderDow(C); sxRenderRecords(C); sxRenderBadges(C); sxRenderNotes(C);
+  SXA.renderFeel(C); sxRenderDow(C); sxRenderFoodStats(C); sxRenderRecords(C); sxRenderBadges(C); sxRenderNotes(C);
   sxCountAll($("sx"));
 }
 (function sxInit() {
   const hover = () => !!(window.matchMedia && matchMedia("(hover: hover)").matches);
   $("tabHoy").addEventListener("click", () => sxShow("hoy"));
   $("tabStats").addEventListener("click", () => sxShow("stats"));
+  $("tabFood").addEventListener("click", () => sxShow("comidas"));
+  try { $("tabFoodNew").hidden = localStorage.getItem("fd-visto") === "1"; } catch (e) { $("tabFoodNew").hidden = true; }
   let seen = false;
   try { seen = localStorage.getItem("sx-visto") === "1"; } catch (e) {}
   $("tabNew").hidden = seen;
@@ -1728,6 +2024,7 @@ function sxRender() {
   });
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && !$("viewStats").hidden) sxRender(); });
   if (location.hash === "#estadisticas") sxShow("stats");
+  else if (location.hash === "#comidas") sxShow("comidas");
 })();
 
 
