@@ -1,0 +1,73 @@
+:root {
+  --ground: #EDEFEB;
+  --surface: #FAFBF8;
+  --sunken: #E2E6E0;
+  --band: #E5E8E3;
+  --line: #D2D8D1;
+  --ink: #161B1F;
+  --ink-2: #48524D;
+  --ink-3: #737C76;
+  --accent: #C27A0E;
+  --accent-ink: #8A5300;
+  --accent-soft: #F1DFBC;
+  --on-ink: #FAFBF8;
+  --run: #EDA100;
+  --gym: #4A3AA7;
+  --swim: #2A78D6;
+  --bike: #1BAF7A;
+  --rest: #8B928C;
+  --ok: #2F7D4F;
+  --part: #B7791F;
+  --no: #B4433A;
+  --on-ok: #FFFFFF;
+  --on-part: #161B1F;
+  --on-no: #FFFFFF;
+  --focus: #1D6E8E;
+  --display: "Sofia Sans Extra Condensed", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --body: "Sofia Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0F1215; --surface: #171B1F; --sunken: #0B0D10; --band: #13171A; --line: #2A3036;
+    --ink: #ECEAE3; --ink-2: #B5BBB6; --ink-3: #858C87;
+    --accent: #F2AA3C; --accent-ink: #F5B95C; --accent-soft: #3A2C14; --on-ink: #0F1215;
+    --run: #C98500; --gym: #9085E9; --swim: #3987E5; --bike: #199E70; --rest: #7E8680;
+    --ok: #6CC592; --part: #F2AA3C; --no: #EE7B70; --on-ok: #0F1215; --on-part: #0F1215; --on-no: #0F1215; --focus: #5CB8D9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0F1215; --surface: #171B1F; --sunken: #0B0D10; --band: #13171A; --line: #2A3036;
+  --ink: #ECEAE3; --ink-2: #B5BBB6; --ink-3: #858C87;
+  --accent: #F2AA3C; --accent-ink: #F5B95C; --accent-soft: #3A2C14; --on-ink: #0F1215;
+  --run: #C98500; --gym: #9085E9; --swim: #3987E5; --bike: #199E70; --rest: #7E8680;
+  --ok: #6CC592; --part: #F2AA3C; --no: #EE7B70; --on-ok: #0F1215; --on-part: #0F1215; --on-no: #0F1215; --focus: #5CB8D9;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.45;
+  padding-inline: 16px;
+  padding-block: 14px 104px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+@supports (padding: env(safe-area-inset-top)) {
+  body { padding-block: calc(14px + env(safe-area-inset-top)) calc(104px + env(safe-area-inset-bottom)); }
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; touch-action: manipulation; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+
+.app { max-width: 520px; margin-inline: auto; display: grid; gap: 22px; }
+

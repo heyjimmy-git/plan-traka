@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#EDEFEB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1215" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="La Traka">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<title>Plan La Traka 100K</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Sofia+Sans+Extra+Condensed:wght@700;800&family=Sofia+Sans:wght@400;500;600;700&display=swap">
+<style>
+{{CSS}}</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="bib">
+      <span class="bib-name">La Traka · 100 km</span>
+      <span class="bib-sub">Lun 12 abr 2027 · Girona · gravel</span>
+    </div>
+    <div class="count" aria-live="polite">
+      <span class="count-n" id="countN">–</span>
+      <span class="count-l" id="countL">días para<br>la salida</span>
+    </div>
+  </header>
+
+  <div class="view" id="viewHoy">
+  <nav class="week" aria-label="Semana">
+    <div class="week-bar">
+      <button class="nav-btn" id="prevWeek" aria-label="Semana anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
+      <div class="week-title" id="weekTitle"></div>
+      <button class="nav-btn" id="nextWeek" aria-label="Semana siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4 6 6-6 6"/></svg></button>
+    </div>
+    <div class="strip" id="strip"></div>
+  </nav>
+
+  <section class="day" id="day">
+    <div class="day-head">
+      <div class="day-meta"><span class="rel" id="rel">Hoy</span><span class="eyebrow" id="dayWeek"></span><button class="link" id="backToday" hidden>Volver a hoy</button></div>
+      <h1 class="date" id="date"></h1>
+    </div>
+    <ul class="sessions" id="sessions" aria-live="polite"></ul>
+    <div class="day-actions">
+      <button type="button" class="add" id="addSession"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 2v10M2 7h10"/></svg>Añadir sesión</button>
+      <span class="edited" id="edited" hidden>Día editado · <button type="button" class="link" id="restore">Volver al plan</button></span>
+    </div>
+    <div class="hb" id="habits" hidden>
+      <div class="log-row"><span class="log-lbl">Agua</span><span class="log-val" id="aguaVal"></span></div>
+      <div class="hb-water" id="agua" role="group" aria-label="Vasos de agua de 250 ml"></div>
+      <div class="hb-chips" id="sups" role="group" aria-label="Suplementos y pasos"></div>
+      <label class="eyebrow" for="extraFood">Fuera del menú</label>
+      <textarea class="notes" id="extraFood" rows="1" placeholder="Picoteo, bebidas, algo que no estaba…"></textarea>
+      <div class="hb-kcal">
+        <input type="number" id="dayKcal" inputmode="numeric" min="0" max="20000" step="10" placeholder="kcal" aria-label="Kilocalorías estimadas del día">
+        <span class="hint" id="dayKcalHint">Kcal del día que te diga la IA</span>
+        <button type="button" class="btn ghost hb-ai" id="dayAI">Pasar el día a la IA</button>
+      </div>
+    </div>
+    <div class="log">
+      <div class="log-row">
+        <span class="log-lbl">Entreno, ¿hecho?</span>
+        <div class="seg" role="group" aria-label="Sesión hecha" id="seg">
+          <button type="button" id="hSi" data-v="Sí" aria-pressed="false">Sí</button>
+          <button type="button" id="hParcial" data-v="Parcial" aria-pressed="false">Parcial</button>
+          <button type="button" id="hNo" data-v="No" aria-pressed="false">No</button>
+        </div>
+      </div>
+      <div class="pain">
+        <div class="log-row"><span class="log-lbl">Dolor de rodilla</span><span class="log-val" id="rodillaVal"></span></div>
+        <div class="pain-scale" role="group" aria-label="Dolor de rodilla de 0 a 10" id="rodilla"></div>
+      </div>
+      <div class="pain">
+        <div class="log-row"><span class="log-lbl">Dolor de tibial</span><span class="log-val" id="tibialVal"></span></div>
+        <div class="pain-scale" role="group" aria-label="Dolor de tibial de 0 a 10" id="tibial"></div>
+      </div>
+      <p class="sema" id="sema" hidden></p>
+      <label class="eyebrow" for="notes">Notas del día</label>
+      <textarea class="notes" id="notes" rows="1" placeholder="Sensaciones, rodillo o exterior…"></textarea>
+    </div>
+  </section>
+
+  <section class="wnote" id="phaseNote">
+    <span class="eyebrow" id="phaseLbl"></span>
+    <p id="phaseObj"></p>
+    <p class="descarga" id="descarga" hidden></p>
+  </section>
+
+  <section class="profile">
+    <div class="sec-head">
+      <h2>Perfil del plan</h2>
+      <span class="eyebrow">Horas por semana · D = descarga</span>
+    </div>
+    <svg class="pf" id="pf" viewBox="0 0 360 176" role="img" aria-label="Horas de entrenamiento por semana de las 30 semanas del plan"></svg>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <div>
+    <details class="keys">
+      <summary><span>Prevención y señales<small>Semáforo de dolor y reglas para no recaer</small></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7.5 5 5 5-5"/></svg></summary>
+      <div class="keys-body" id="prev"></div>
+    </details>
+    <details class="keys">
+      <summary><span>Zonas de bici<small>Z1–Z5, RPE, talk test y cadencia</small></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7.5 5 5 5-5"/></svg></summary>
+      <div class="keys-body" id="zonas"></div>
+    </details>
+    <details class="keys">
+      <summary><span>Punto de partida y fases<small>Tu situación y las 6 fases del plan</small></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7.5 5 5 5-5"/></svg></summary>
+      <div class="keys-body" id="perfil"></div>
+    </details>
+  </div>
+
+  <section class="data">
+    <div class="sec-head"><h2>Tus datos</h2></div>
+    <p>Tus sesiones editadas, tu registro y tu menú se guardan solo en este móvil. Guarda una copia de vez en cuando (en Archivos, tu correo o WhatsApp) para no perderlos si cambias de móvil o borras los datos de Safari.</p>
+    <div class="data-actions">
+      <button type="button" class="btn" id="exportBtn">Guardar copia</button>
+      <button type="button" class="btn ghost" id="importBtn">Recuperar copia</button>
+      <input type="file" id="importFile" accept=".json,application/json" hidden>
+    </div>
+    <p class="data-meta" id="dataMeta"></p>
+  </section>
+
+  <footer>
+    <span>Fuente: Plan_Entrenamiento_La_Traka_100km.xlsx</span>
+    <span>Desliza el día a los lados para cambiar · toca el lápiz para editar una sesión · marca cada comida al hacerla</span>
+  </footer>
+  </div>
+
+  <div class="view" id="viewFood" hidden>
+    <section class="mn" id="fd" aria-label="Menú">
+      <div class="fd-head"><span class="eyebrow" id="mnSub"></span><h1 class="sx-title">Menú</h1></div>
+      <p class="mn-notice" id="mnNotice" hidden>El menú era para octubre y noviembre. Si la nutricionista te da uno nuevo, cámbialo en <b>Editar el menú</b>.</p>
+      <div class="week-bar">
+        <button type="button" class="nav-btn" id="mnPrev" aria-label="Semana anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
+        <div class="week-title" id="mnWeek"></div>
+        <button type="button" class="nav-btn" id="mnNext" aria-label="Semana siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4 6 6-6 6"/></svg></button>
+      </div>
+      <section class="sx-sec"><header><h2>La semana</h2><p>Toca un día para abrirlo en Hoy y marcar las comidas.</p></header><div class="sx-card"><div class="mn-days" id="mnDays"></div></div></section>
+      <section class="sx-sec"><header><h2>Lista de la compra</h2><p id="mnShopSub"></p></header>
+        <div class="sx-card">
+          <div class="mn-shop" id="mnShop"></div>
+          <form class="mn-add" id="mnShopForm"><input id="mnShopAdd" type="text" placeholder="Añadir algo más…" autocomplete="off" aria-label="Añadir a la lista"><button type="submit" class="btn ghost">Añadir</button></form>
+          <div class="mn-row"><button type="button" class="btn" id="mnShopShare">Compartir lista</button><button type="button" class="btn ghost" id="mnShopClear">Desmarcar todo</button></div>
+        </div>
+      </section>
+      <section class="sx-sec"><header><h2>Kcal del menú</h2><p id="mnRefSub"></p></header>
+        <div class="sx-card">
+          <div id="mnRef"></div>
+          <div class="mn-row"><button type="button" class="btn" id="mnRefAsk">Pedir a la IA</button></div>
+          <label class="eyebrow" for="mnRefPaste">Pega aquí la respuesta de la IA</label>
+          <textarea class="notes" id="mnRefPaste" rows="3" placeholder="Lunes: 1650 kcal · H 150 g · P 130 g · G 45 g…"></textarea>
+          <div class="mn-row"><button type="button" class="btn ghost" id="mnRefRead">Leer respuesta</button></div>
+        </div>
+      </section>
+      <section class="sx-sec"><header><h2>Pasar la semana a la IA</h2><p>Lo que has comido esta semana, toma a toma, frente al menú.</p></header>
+        <div class="sx-card"><div class="mn-row"><button type="button" class="btn" id="mnWeekAI">Pasar a la IA</button></div></div>
+      </section>
+      <div>
+        <details class="keys"><summary><span>Pautas y suplementos<small>Agua, aceite, sal, desayunos y pasos</small></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7.5 5 5 5-5"/></svg></summary><div class="keys-body" id="mnPautas"></div></details>
+      </div>
+      <div class="mn-row"><button type="button" class="btn ghost" id="mnEditOpen">Editar el menú</button></div>
+    </section>
+  </div>
+
+  <div class="view" id="viewStats" hidden>
+    <section class="sx" id="sx" aria-label="Estadísticas">
+      <div class="sx-head"><span class="eyebrow" id="sxSub"></span><h1 class="sx-title">Estadísticas</h1></div>
+      <div class="sx-card rise" id="sxHero"></div>
+      <div class="sx-kpis" id="sxKpis"></div>
+      <section class="sx-sec"><header><h2>Constancia</h2><p>Cada casilla es un día del plan. Tócala para ver el detalle.</p></header><div class="sx-card"><div class="sx-heat-wrap" id="sxHeatWrap"></div><div class="sx-legend" id="sxHeatLegend"></div></div></section>
+      <section class="sx-sec"><header><h2>Volumen semanal</h2><p id="sxVolSub"></p></header><div class="sx-card"><div id="sxVol"></div><div class="sx-legend" id="sxVolLegend"></div><details class="sx-table"><summary>Ver datos en tabla</summary><div class="sx-tbl" id="sxVolTbl"></div></details></div></section>
+      <section class="sx-sec"><header><h2>Reparto por disciplina</h2><p id="sxMixSub"></p></header><div class="sx-card"><div class="sx-split growx" id="sxSplit"></div><div class="sx-rows" id="sxMix"></div></div></section>
+      <section class="sx-sec"><header><h2 id="sxFeelTitle"></h2><p id="sxFeelSub"></p></header><div class="sx-card" id="sxFeel"></div></section>
+      <section class="sx-sec"><header><h2>Por día de la semana</h2><p>Qué día cumples más y cuál te cuesta</p></header><div class="sx-card"><div id="sxDow"></div><p class="sx-insight" id="sxDowTxt"></p></div></section>
+      <section class="sx-sec" id="sxDietSec" hidden><header><h2>Dieta</h2><p id="sxDietSub"></p></header><div class="sx-card" id="sxDiet"></div></section>
+      <section class="sx-sec" id="sxFoodSec" hidden><header><h2>Comida y energía</h2><p id="sxFoodSub"></p></header><div class="sx-card" id="sxFood"></div></section>
+      <section class="sx-sec"><header><h2>Récords</h2></header><div class="sx-card"><div class="sx-list" id="sxRec"></div></div></section>
+      <section class="sx-sec"><header><h2>Logros</h2><p id="sxBadgeSub"></p></header><div class="sx-badges" id="sxBadges"></div></section>
+      <section class="sx-sec"><header><h2>Últimas notas</h2></header><div class="sx-card"><div class="sx-list" id="sxNotes"></div></div></section>
+      <div class="sx-tip" id="sxTip" role="status" hidden></div>
+    </section>
+  </div>
+</div>
+
+<nav class="tabbar" aria-label="Secciones">
+  <button type="button" class="tab" id="tabHoy" data-tab="hoy" aria-current="page"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="14" height="12.5" rx="2.5"/><path d="M3 8.5h14M7 2.8v3.2M13 2.8v3.2"/></svg><span>Hoy</span></button>
+  <button type="button" class="tab" id="tabFood" data-tab="comidas" aria-current="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2.5v6a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2v-6M7 10.5v7M14.5 2.5c-1.4 1-2 2.6-2 4.5s.6 2.5 2 2.5V2.5zm0 7v8"/></svg><span>Menú</span><i class="tab-new" id="tabFoodNew" hidden></i></button>
+  <button type="button" class="tab" id="tabStats" data-tab="stats" aria-current="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16.5V10M8.7 16.5V4M13.3 16.5V8M18 16.5H2"/></svg><span>Estadísticas</span><i class="tab-new" id="tabNew" hidden></i></button>
+</nav>
+
+<dialog class="sheet" id="editor" aria-labelledby="edHeading">
+  <form class="ed" id="edForm" method="dialog">
+    <div class="ed-head">
+      <span class="eyebrow" id="edDate"></span>
+      <h2 id="edHeading">Editar sesión</h2>
+    </div>
+    <fieldset class="kinds">
+      <legend class="eyebrow">Tipo</legend>
+      <label class="k-bike"><input type="radio" name="edKind" id="ekBike" value="bike">Bici</label>
+      <label class="k-run"><input type="radio" name="edKind" id="ekRun" value="run">Carrera</label>
+      <label class="k-swim"><input type="radio" name="edKind" id="ekSwim" value="swim">Natación</label>
+      <label class="k-gym"><input type="radio" name="edKind" id="ekGym" value="gym">Fuerza</label>
+      <label class="k-rest"><input type="radio" name="edKind" id="ekRest" value="rest">Descanso</label>
+      <label class="k-other"><input type="radio" name="edKind" id="ekOther" value="other">Otro</label>
+      <label class="k-race" id="ekRaceLbl" hidden><input type="radio" name="edKind" id="ekRace" value="race">Carrera D</label>
+    </fieldset>
+    <div class="field">
+      <label class="eyebrow" for="edTitle">Nombre</label>
+      <input id="edTitle" type="text" autocomplete="off" placeholder="Salida larga, series, técnica…">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label class="eyebrow" for="edTime">Hora</label>
+        <input id="edTime" type="text" autocomplete="off" placeholder="20:00">
+      </div>
+      <div class="field">
+        <label class="eyebrow" for="edDur">Duración</label>
+        <input id="edDur" type="text" autocomplete="off" placeholder="2h30 · 45 min · 2.000 m">
+      </div>
+    </div>
+    <div class="field">
+      <label class="eyebrow" for="edZone">Intensidad</label>
+      <input id="edZone" type="text" autocomplete="off" placeholder="Z2 + Z3">
+    </div>
+    <div class="field">
+      <label class="eyebrow" for="edWork">Entreno concreto</label>
+      <textarea id="edWork" rows="5" placeholder="Calentamiento 15' Z1&#10;3 × 10' Z3, rec. 5' Z1&#10;Vuelta a la calma 10'"></textarea>
+      <span class="hint">Escríbelo como quieras: series, ejercicios de fuerza, ruta… Se ve destacado en el día.</span>
+    </div>
+    <div class="field">
+      <label class="eyebrow" for="edText">Descripción del plan</label>
+      <textarea id="edText" rows="3"></textarea>
+    </div>
+    <div class="ed-actions">
+      <button type="submit" class="btn" id="edSave">Guardar</button>
+      <button type="button" class="btn ghost" id="edCancel">Cancelar</button>
+      <button type="button" class="btn danger" id="edDelete">Eliminar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="sheet" id="mnEditor" aria-labelledby="mnEdHeading">
+  <form class="ed" id="mnEdForm" method="dialog">
+    <div class="ed-head"><span class="eyebrow">Tu menú semanal</span><h2 id="mnEdHeading">Editar el menú</h2></div>
+    <fieldset class="kinds mn-dows">
+      <legend class="eyebrow">Día de la semana</legend>
+      <label><input type="radio" name="mnDow" id="mnDow0" value="Lunes" aria-label="Lunes">L</label>
+      <label><input type="radio" name="mnDow" id="mnDow1" value="Martes" aria-label="Martes">M</label>
+      <label><input type="radio" name="mnDow" id="mnDow2" value="Miércoles" aria-label="Miércoles">X</label>
+      <label><input type="radio" name="mnDow" id="mnDow3" value="Jueves" aria-label="Jueves">J</label>
+      <label><input type="radio" name="mnDow" id="mnDow4" value="Viernes" aria-label="Viernes">V</label>
+      <label><input type="radio" name="mnDow" id="mnDow5" value="Sábado" aria-label="Sábado">S</label>
+      <label><input type="radio" name="mnDow" id="mnDow6" value="Domingo" aria-label="Domingo">D</label>
+    </fieldset>
+    <div class="field"><label class="eyebrow" for="mnEdDesde">Aplica desde</label><input id="mnEdDesde" type="date"><span class="hint">Los días anteriores conservan el menú que tenían.</span></div>
+    <div class="field"><label class="eyebrow" for="mnEd-desayuno">Desayuno</label><textarea id="mnEd-desayuno" rows="4"></textarea></div>
+    <div class="field"><label class="eyebrow" for="mnEd-media">Media mañana</label><textarea id="mnEd-media" rows="3"></textarea></div>
+    <div class="field"><label class="eyebrow" for="mnEd-comida">Comida</label><textarea id="mnEd-comida" rows="4"></textarea></div>
+    <div class="field"><label class="eyebrow" for="mnEd-merienda">Merienda</label><textarea id="mnEd-merienda" rows="3"></textarea></div>
+    <div class="field"><label class="eyebrow" for="mnEdMerLabel">Nombre de la merienda ese día</label><input id="mnEdMerLabel" type="text" placeholder="Merienda o Pre entreno" autocomplete="off"></div>
+    <div class="field"><label class="eyebrow" for="mnEd-cena">Cena</label><textarea id="mnEd-cena" rows="5"></textarea></div>
+    <span class="hint">Un alimento por línea. «1 kiwi o 90g piña» da a elegir; empieza la línea con «a)» o «b)» para dos opciones de toma.</span>
+    <details class="mn-hdet"><summary class="eyebrow">Horas de las tomas</summary><div class="mn-hours"><div class="field"><label class="eyebrow" for="mnEdH-desayuno">Desayuno</label><input id="mnEdH-desayuno" type="time"></div><div class="field"><label class="eyebrow" for="mnEdH-media">Media mañana</label><input id="mnEdH-media" type="time"></div><div class="field"><label class="eyebrow" for="mnEdH-comida">Comida</label><input id="mnEdH-comida" type="time"></div><div class="field"><label class="eyebrow" for="mnEdH-merienda">Merienda</label><input id="mnEdH-merienda" type="time"></div><div class="field"><label class="eyebrow" for="mnEdH-cena">Cena</label><input id="mnEdH-cena" type="time"></div></div><span class="hint">El pre-entreno se coloca solo una hora antes del entreno, y la cena se retrasa si entrenas tarde.</span></details>
+    <div class="ed-actions">
+      <button type="submit" class="btn">Guardar</button>
+      <button type="button" class="btn ghost" id="mnEdCancel">Cancelar</button>
+      <button type="button" class="btn danger" id="mnEdReset">Volver al menú original</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+{{JS}}</script>
+</body>
+</html>

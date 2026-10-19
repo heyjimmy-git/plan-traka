@@ -1,0 +1,77 @@
+{
+  "fuente": "Planificación nutricional · oct–nov 2026",
+  "desde": "2026-10-01",
+  "hasta": "2026-11-30",
+  "tomas": [
+    { "id": "desayuno", "label": "Desayuno", "hora": "08:00" },
+    { "id": "media", "label": "Media mañana", "hora": "11:00" },
+    { "id": "comida", "label": "Comida", "hora": "14:30" },
+    { "id": "merienda", "label": "Merienda", "hora": "17:30" },
+    { "id": "cena", "label": "Cena", "hora": "21:30" }
+  ],
+  "semana": {
+    "Lunes": {
+      "desayuno": ["Vaso de agua con limón", "Té matcha con 100ml leche desnatada", "1 kiwi o 90g piña o 90g arándanos", "2 reb wasa o 40g pan hogaza", "50g cottage, 15g serrano sin grasa, 50g pavo >90%"],
+      "media": ["Infusión recomendable", "20g whey con agua", "150g fruta"],
+      "comida": ["Ensalada de tomate libre", "120g boniato o patata", "130g pechuga de pollo", "1 yogur soja nat"],
+      "merienda": ["100g fruta", "2 tortitas", "35g lomo"],
+      "cena": ["Migas de coliflor libre", "1 lata atún nat", "1 lata salmón nat", "1 yogur desnatado 0%", "3-4g creatina creapure y 2 cps bisglicinato magnesio"]
+    },
+    "Martes": {
+      "desayuno": ["Vaso de agua con limón", "Té matcha con 100ml leche desnatada", "1 kiwi o 90g piña o 90g arándanos", "2 reb wasa o 40g pan hogaza", "1 babybell prote, 50g pavo >90%"],
+      "media": ["Infusión recomendable", "20g whey con agua", "150g fruta"],
+      "comida": ["250g wok de verduras", "40g pasta lenteja roja o integral", "120g ternera picada magra", "1 yogur soja nat"],
+      "merienda": { "label": "Pre entreno", "items": ["1 plátano"] },
+      "cena": ["Crema de verduras (plato normal, 3 cazos grandes)", "1 huevo", "100g gambas", "1 yogur desnatado 0% + 90g piña o arándanos", "3-4g creatina creapure y 2 cps bisglicinato magnesio"]
+    },
+    "Miércoles": {
+      "desayuno": ["Vaso de agua con limón", "Té matcha con 100ml leche desnatada", "1 kiwi o 90g piña o 90g arándanos", "250g queso fresco batido 0%", "20g copos de avena, 5g semillas chía, canela"],
+      "media": ["Infusión recomendable", "20g whey con agua", "150g fruta"],
+      "comida": ["Calabacín y pimientos al horno libre", "120g boniato o patata", "150g pescado blanco", "1 yogur soja nat"],
+      "merienda": ["4 tortitas", "35g lomo", "1 babybell prote"],
+      "cena": ["250g wok de setas o alcachofas libre", "30g jamón taquitos", "130g filetes de pavo", "1 yogur desnatado 0%", "3-4g creatina creapure y 2 cps bisglicinato magnesio"]
+    },
+    "Jueves": {
+      "desayuno": ["Vaso de agua con limón", "Té matcha con 100ml leche desnatada", "1 kiwi o 90g piña o 90g arándanos", "2 reb wasa o 40g pan hogaza", "50g cottage, 15g serrano sin grasa, 50g pavo >90%"],
+      "media": ["Infusión recomendable", "20g whey con agua", "150g fruta"],
+      "comida": ["250g wok de verduras", "40g arroz basmati", "130g pechuga de pollo", "1 yogur soja nat"],
+      "merienda": { "label": "Pre entreno", "items": ["1 plátano"] },
+      "cena": ["Migas de coliflor libre", "1 huevo", "2 lata atún nat", "1 yogur desnatado 0% + 90g piña o arándanos", "3-4g creatina creapure y 2 cps bisglicinato magnesio"]
+    },
+    "Viernes": {
+      "desayuno": ["Vaso de agua con limón", "Té matcha con 100ml leche desnatada", "1 kiwi o 90g piña o 90g arándanos", "2 reb wasa o 40g pan hogaza", "1 babybell prote, 50g pavo >90%"],
+      "media": ["Infusión recomendable", "20g whey con agua", "150g fruta"],
+      "comida": ["Caldo desgrasado o verduras estofadas libre", "200g legumbre cocida", "130g filetes de pavo", "1 yogur soja nat"],
+      "merienda": ["100g fruta", "1 babybell prote"],
+      "cena": ["Ensalada de tomate libre", "140g atún rojo", "1 yogur desnatado 0%", "3-4g creatina creapure y 2 cps bisglicinato magnesio"]
+    },
+    "Sábado": {
+      "desayuno": ["Vaso de agua con limón", "Té matcha con 100ml leche desnatada", "1 kiwi o 90g piña o 90g arándanos", "2 reb wasa o 40g pan hogaza", "50g cottage, 15g serrano sin grasa, 50g pavo >90%"],
+      "media": ["20g whey con agua", "150g fruta"],
+      "comida": ["Calabacín y berenjena al horno libre", "120g boniato o patata", "150g pescado blanco", "1 yogur soja nat"],
+      "merienda": ["a) 100g fruta, 2 tortitas, 35g lomo", "b) 120g qfb 0%, 10g whey, 20g avena, 50g arándanos"],
+      "cena": ["a) Espárragos verdes con 30g jamón taquitos", "b) 250g salteado trigueros-gambas", "130g pechuga de pollo", "1 yogur desnatado 0%", "3-4g creatina creapure y 2 cps bisglicinato magnesio"]
+    },
+    "Domingo": {
+      "desayuno": ["Vaso de agua con limón", "Té matcha con 100ml leche desnatada", "1 kiwi o 90g piña o 90g arándanos", "2 reb wasa o 40g pan hogaza", "1 babybell prote, 50g pavo >90%"],
+      "media": ["20g whey con agua", "150g fruta"],
+      "comida": ["250g wok de setas o alcachofas libre", "40g arroz basmati", "130g contramuslo de pollo", "1 yogur soja nat"],
+      "merienda": ["a) 4 tortitas, 35g lomo, 1 babybell prote", "b) 120g qfb 0%, 10g whey, 20g avena, 10g choco"],
+      "cena": ["Crema de verduras (plato normal, 3 cazos grandes)", "200g sepia o chipirones con limón", "1 yogur desnatado 0%", "3-4g creatina creapure y 2 cps bisglicinato magnesio"]
+    }
+  },
+  "suplementos": [
+    "Whey protein: 20g/día en media mañana o en el momento que prefieras",
+    "Creatina creapure: 3-4g/día en el momento que prefieras",
+    "Bisglicinato de magnesio: 250-400 mg/día en cena"
+  ],
+  "pautas": [
+    "2,5l de agua a lo largo del día obligatorio, infusiones recomendable",
+    "Pizca de sal marina o rosa del himalaya siempre en comida y en cena",
+    "2 cucharaditas de aove al día para cocinar y aliñar o formato spray para dosificar mejor",
+    "Puedes repetir verdura si te ha sobrado. Puedes cambiar cualquier verdura por salteados",
+    "Puedes hacer el desayuno que prefieras, son muyyy similares kcal-macros",
+    "Puedes tomar 1 pan wasa fino extra al día",
+    "Neat alto para llegar a los 10-12 mil pasos los días de no entrenamiento"
+  ]
+}
