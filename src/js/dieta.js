@@ -10,7 +10,6 @@ const SUPS = [["creatina", "Creatina"], ["magnesio", "Magnesio"], ["whey", "Whey
 const AGUA_VASOS = 10; // 10 vasos de 250 ml = 2,5 L
 const ST_LABEL = { ok: "Tal cual", cambio: "Con cambios", no: "Saltada" };
 const ST_CLS = { ok: "sx-ok", cambio: "sx-warn", no: "sx-bad" };
-const ST_BTN = { ok: "Tal cual", cambio: "Cambios", no: "Saltada" };
 const CHECK = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 6.2 2.3 2.3 4.7-5"/></svg>';
 const kcalFmt = (v) => Number(v).toLocaleString("es-ES");
 const litros = (vasos) => (vasos * 0.25).toLocaleString("es-ES", { maximumFractionDigits: 2 });
@@ -41,7 +40,7 @@ const dtRec = (date) => comidas[date] || {};
 const dtTomaLog = (rec, id) => { rec.tomas = rec.tomas || {}; return (rec.tomas[id] = rec.tomas[id] || {}); };
 function dtHas(rec) {
   if (!rec) return false;
-  const tomaData = Object.values(rec.tomas || {}).some((t) => t && (t.st || t.nota || t.var || t.alt || Object.keys(t.opt || {}).length));
+  const tomaData = Object.values(rec.tomas || {}).some((t) => t && (t.st || t.nota || t.var || t.alt || t.skip || Object.keys(t.opt || {}).length || Object.values(t.eat || {}).some(Boolean)));
   return tomaData || !!rec.kcal || !!rec.agua || !!rec.extra || Object.values(rec.sup || {}).some(Boolean);
 }
 function dtSave(date, mutate) {
@@ -76,6 +75,43 @@ function dtParse(line) {
     opts: parts.length > 1 && parts.every((p) => /^\d/.test(p)) ? parts : null,
     libre: /\blibre\b/i.test(text),
   };
+}
+// Cada alimento de la toma se marca por separado: "50g cottage, 15g serrano…" son tres
+function dtAtoms(lines) {
+  const out = [];
+  lines.forEach((line, li) => {
+    const p = dtParse(line);
+    const parts = p.opts || p.text.includes("(") ? [p.text] : p.text.split(/,\s*(?=\d)|\s\+\s(?=\d)/);
+    parts.forEach((txt) => {
+      const q = p.opts ? p : dtParse(txt);
+      out.push({ text: q.text, opts: p.opts || q.opts, libre: q.libre, variant: p.variant, line: li });
+    });
+  });
+  return out;
+}
+// Registros de la versión anterior (opciones por línea y estado a mano) → por alimento
+function dtUpgrade(log, atoms) {
+  if (!log) return { a: 1 }; // toma nueva: ya en el formato por alimentos
+  const out = JSON.parse(JSON.stringify(log));
+  if (log.a) return out;
+  out.a = 1;
+  if (log.opt) {
+    out.opt = {};
+    Object.keys(log.opt).forEach((li) => { const ai = atoms.findIndex((x) => x.line === +li && x.opts); if (ai >= 0) out.opt[ai] = log.opt[li]; });
+  }
+  if (log.st === "ok") { out.eat = {}; atoms.forEach((x, i) => { out.eat[i] = true; }); }
+  if (log.st === "no") out.skip = true;
+  if (log.st === "cambio") out.legacy = true;
+  return out;
+}
+const dtVisAtoms = (atoms, log) => atoms.map((a, i) => [a, i]).filter(([a]) => !a.variant || a.variant === (log.var || "a"));
+function dtDerive(atoms, log) {
+  if (log.skip) return "no";
+  const vis = dtVisAtoms(atoms, log), eat = log.eat || {};
+  const n = vis.filter(([, i]) => eat[i]).length, nota = String(log.nota || "").trim();
+  if (log.legacy && !n) return log.st || null;
+  if (vis.length && n === vis.length && !nota) return "ok";
+  return n || nota ? "cambio" : null;
 }
 const dtVisible = (t) => t.items.map((it, idx) => [it, idx]).filter(([it]) => !it.variant || it.variant === (t.log.var || "a"));
 function dtItemText(it, log, idx, firstIfNone) {
@@ -139,11 +175,14 @@ function dtTomas(date) {
   const rec = dtRec(date);
   const times = dtTimes(date, dayMenu);
   return TOMAS.map((id) => {
-    const log = (rec.tomas || {})[id] || {};
+    const raw = (rec.tomas || {})[id];
     const def = dtDefLines(date, id, rec);
-    const lines = log.items || def.lines;
+    const lines = (raw && raw.items) || def.lines;
     if (!lines.length) return null;
-    return { id, label: def.label || TOMA_LABEL[id], min: times[id], items: lines.map(dtParse), log };
+    const items = dtAtoms(lines);
+    const log = dtUpgrade(raw, items);
+    log.st = dtDerive(items, log) || undefined;
+    return { id, label: def.label || TOMA_LABEL[id], min: times[id], items, log };
   }).filter(Boolean);
 }
 const dtRestDay = (date) => !blocksFor(date).some((b) => b.k !== "rest");
@@ -165,23 +204,53 @@ function dtBreakfastAlts(date) {
   }).filter(Boolean);
 }
 
-/* ---------- marcar una toma ---------- */
-function dtSetSt(date, id, st) {
+/* ---------- marcar una toma, alimento a alimento ---------- */
+function dtEditToma(date, id, fn) {
   const auto = [];
   dtSave(date, (r) => {
-    const t = dtTomaLog(r, id);
-    const was = t.st;
-    if (was === st) { delete t.st; delete t.items; return; }
-    t.st = st;
-    t.items = dtDefLines(date, id, r).lines.slice(); // foto del menú de ese día
-    if (st === "ok" && was !== "ok") {
-      r.sup = r.sup || {};
-      const add = id === "cena" ? ["creatina", "magnesio"] : id === "media" ? ["whey"] : [];
-      add.forEach((k) => { if (!r.sup[k]) { r.sup[k] = true; auto.push(k); } });
-    }
+    const raw = (r.tomas || {})[id];
+    const lines = (raw && raw.items) || dtDefLines(date, id, r).lines;
+    const atoms = dtAtoms(lines);
+    const log = dtUpgrade(raw, atoms);
+    const before = Object.assign({}, log.eat || {});
+    fn(log, atoms);
+    delete log.legacy;
+    const st = dtDerive(atoms, log);
+    if (st) { log.st = st; if (!log.items) log.items = lines.slice(); } // foto del menú de ese día
+    else { delete log.st; delete log.items; }
+    // Los suplementos que van dentro de una toma se marcan solos al tachar esa línea
+    r.sup = r.sup || {};
+    atoms.forEach((a, i) => {
+      if (!(log.eat || {})[i] || before[i]) return;
+      [["creatina", /creatina/i], ["magnesio", /magnesio|bisglicinato/i], ["whey", /whey/i]].forEach(([k, re]) => {
+        if (re.test(a.text) && !r.sup[k]) { r.sup[k] = true; auto.push(k); }
+      });
+    });
+    log.a = 1;
+    r.tomas = r.tomas || {};
+    if (Object.keys(log).some((k) => k !== "a")) r.tomas[id] = log; else delete r.tomas[id];
   });
   return auto;
 }
+const dtToggleEat = (date, id, i) => dtEditToma(date, id, (log) => {
+  log.eat = log.eat || {};
+  if (log.eat[i]) delete log.eat[i]; else log.eat[i] = true;
+  delete log.skip;
+});
+const dtPickOpt = (date, id, i, k) => dtEditToma(date, id, (log) => {
+  log.opt = log.opt || {}; log.eat = log.eat || {};
+  if (log.opt[i] === k) { delete log.opt[i]; delete log.eat[i]; } else { log.opt[i] = k; log.eat[i] = true; }
+  delete log.skip;
+});
+const dtAllEaten = (date, id) => dtEditToma(date, id, (log, atoms) => {
+  const vis = dtVisAtoms(atoms, log), all = vis.every(([, i]) => (log.eat || {})[i]);
+  log.eat = {};
+  if (!all) vis.forEach(([, i]) => { log.eat[i] = true; });
+  delete log.skip;
+});
+const dtSkip = (date, id) => dtEditToma(date, id, (log) => {
+  if (log.skip) delete log.skip; else { log.skip = true; log.eat = {}; }
+});
 
 /* ---------- lista de la compra ---------- */
 const shopKey = (w) => `S${w}`;
@@ -235,10 +304,17 @@ function dtDayBlock(date) {
   if (!tomas.length && !dtHas(rec)) return null;
   const lines = [dateLabel(date), `Entreno: ${dtTrainLine(date)}`];
   tomas.forEach((t) => {
-    const items = dtVisible(t).map(([it, idx]) => dtItemText(it, t.log, idx, false)).join("; ");
-    const st = t.log.st, nota = t.log.nota ? `: ${t.log.nota}` : "";
-    if (st === "no") lines.push(`- ${t.label}: no la hice (tocaba ${items})`);
-    else lines.push(`- ${t.label} (${st === "ok" ? "tal cual" : st === "cambio" ? `con cambios${nota}` : t.log.nota ? `sin marcar, nota${nota}` : "sin marcar"}): ${items}`);
+    const vis = dtVisible(t), eat = t.log.eat || {}, st = t.log.st;
+    const name = ([it, i]) => dtItemText(it, t.log, i, false);
+    const nota = String(t.log.nota || "").trim();
+    if (st === "no") { lines.push(`- ${t.label}: no la hice (tocaba ${vis.map(name).join("; ")})`); return; }
+    if (!st) { lines.push(`- ${t.label} (sin marcar; tocaba ${vis.map(name).join("; ")})`); return; }
+    if (t.log.legacy) { lines.push(`- ${t.label} (con cambios${nota ? `: ${nota}` : ""}): ${vis.map(name).join("; ")}`); return; }
+    const si = vis.filter(([, i]) => eat[i]).map(name), no = vis.filter(([, i]) => !eat[i]).map(name);
+    let s = `- ${t.label} (${st === "ok" ? "tal cual" : "con cambios"}): ${si.length ? `tomé ${si.join("; ")}` : "no tomé nada de lo pautado"}`;
+    if (si.length && no.length) s += `. No tomé: ${no.join("; ")}`;
+    if (nota) s += `. Además o en su lugar: ${nota}`;
+    lines.push(s);
   });
   if (rec.extra) lines.push(`- Fuera del menú: ${rec.extra}`);
   if (rec.agua) lines.push(`- Agua: ${litros(rec.agua)} L`);

@@ -508,29 +508,13 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
 .s--toma.is-no .s-time::before { background: var(--no); }
 .s--toma .s-kind { color: var(--ink-2); }
 .s-body.tm { gap: 6px; padding-right: 0; }
-.tm-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 15px; line-height: 1.35; }
-.tm-it { position: relative; padding-left: 13px; }
-.tm-it::before { content: ""; position: absolute; left: 1px; top: .58em; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); opacity: .5; }
-.tm-it.is-libre { color: var(--ink-2); }
-.s--toma.is-no .tm-items { color: var(--ink-3); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--ink-3) 60%, transparent); }
 .tm-opts, .tm-alt { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-.tm-it:has(.tm-opts)::before { top: .95em; }
 .tm-opt { font-size: 13px; font-weight: 600; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); background: var(--ground); }
 .tm-opt[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
 .tm-alt { margin-top: 2px; }
 .tm-alt .eyebrow { width: 100%; }
 .tm-var { justify-self: start; margin-top: 2px; }
 .tm-var button { padding: 5px 12px; font-size: 13px; }
-.tm-acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 4px; }
-.tm-sum { margin: 0; font-size: 14px; line-height: 1.4; color: var(--ink-2); }
-.s--toma.is-no .tm-sum { color: var(--ink-3); text-decoration: line-through; }
-.tm-st { display: inline-flex; align-items: center; justify-content: center; gap: 5px; font-size: 12.5px; font-weight: 700; padding: 7px 4px; border-radius: 999px; background: var(--sunken); color: var(--ink-2); }
-.tm-st i { width: 8px; height: 8px; border-radius: 50%; background: var(--lv); flex: none; }
-.tm-st.sx-ok { --on-st: var(--on-ok); }
-.tm-st.sx-warn { --on-st: var(--on-part); }
-.tm-st.sx-bad { --on-st: var(--on-no); }
-.tm-st[aria-pressed="true"] { background: var(--lv); color: var(--on-st); }
-.tm-st[aria-pressed="true"] i { background: currentColor; }
 .tm-nota { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--ground); border: 1px solid var(--line); border-radius: 10px; padding: 8px 11px; margin-top: 2px; }
 .tm-nota::placeholder { color: var(--ink-3); }
 
@@ -599,6 +583,29 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
 .mn-wbar { margin-block: -2px 2px; }
 .mn-day.is-sel .mn-d { background: var(--ink); color: var(--on-ink); border-radius: 10px; padding-block: 5px; }
 .mn-day.is-sel .mn-d b { color: inherit; opacity: .7; }
+
+/* Tomas: cada alimento con su casilla */
+.tm-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tm-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 3px 9px 3px 7px; border-radius: 999px; background: var(--sunken); color: var(--ink-2); white-space: nowrap; }
+.tm-chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--lv); }
+.tm-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.tm-row { display: flex; align-items: center; gap: 10px; min-height: 38px; }
+.tm-check { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 38px; text-align: left; font-size: 15px; line-height: 1.35; color: var(--ink); padding-block: 3px; }
+.tm-box { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--ink-3); display: grid; place-items: center; color: transparent; transition: background-color .12s, border-color .12s; }
+.tm-box svg { width: 12px; height: 12px; }
+.tm-row.on .tm-box { background: var(--ok); border-color: var(--ok); color: var(--on-ok); }
+.tm-row.is-libre .tm-check { color: var(--ink-2); }
+.tm-row .tm-opts { flex: 1; }
+.tm-sum { display: grid; gap: 3px; width: 100%; text-align: left; font-size: 14px; line-height: 1.4; color: var(--ink-2); padding-block: 2px; }
+.s--toma.is-no .tm-sum > span:first-child { color: var(--ink-3); text-decoration: line-through; }
+.tm-edit { font-size: 13px; font-weight: 600; color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+textarea.tm-nota { resize: none; line-height: 1.4; min-height: 40px; }
+.tm-acts2 { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 2px; }
+.tm-all, .tm-skip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 8px 13px; border-radius: 999px; background: var(--sunken); color: var(--ink-2); }
+.tm-all svg { width: 12px; height: 12px; }
+.tm-all[aria-pressed="true"] { background: var(--ok); color: var(--on-ok); }
+.tm-skip[aria-pressed="true"] { background: var(--no); color: var(--on-no); }
+@media (prefers-reduced-motion: reduce) { .tm-box { transition: none; } }
 </style>
 </head>
 <body>
@@ -955,7 +962,6 @@ const SUPS = [["creatina", "Creatina"], ["magnesio", "Magnesio"], ["whey", "Whey
 const AGUA_VASOS = 10; // 10 vasos de 250 ml = 2,5 L
 const ST_LABEL = { ok: "Tal cual", cambio: "Con cambios", no: "Saltada" };
 const ST_CLS = { ok: "sx-ok", cambio: "sx-warn", no: "sx-bad" };
-const ST_BTN = { ok: "Tal cual", cambio: "Cambios", no: "Saltada" };
 const CHECK = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 6.2 2.3 2.3 4.7-5"/></svg>';
 const kcalFmt = (v) => Number(v).toLocaleString("es-ES");
 const litros = (vasos) => (vasos * 0.25).toLocaleString("es-ES", { maximumFractionDigits: 2 });
@@ -986,7 +992,7 @@ const dtRec = (date) => comidas[date] || {};
 const dtTomaLog = (rec, id) => { rec.tomas = rec.tomas || {}; return (rec.tomas[id] = rec.tomas[id] || {}); };
 function dtHas(rec) {
   if (!rec) return false;
-  const tomaData = Object.values(rec.tomas || {}).some((t) => t && (t.st || t.nota || t.var || t.alt || Object.keys(t.opt || {}).length));
+  const tomaData = Object.values(rec.tomas || {}).some((t) => t && (t.st || t.nota || t.var || t.alt || t.skip || Object.keys(t.opt || {}).length || Object.values(t.eat || {}).some(Boolean)));
   return tomaData || !!rec.kcal || !!rec.agua || !!rec.extra || Object.values(rec.sup || {}).some(Boolean);
 }
 function dtSave(date, mutate) {
@@ -1021,6 +1027,43 @@ function dtParse(line) {
     opts: parts.length > 1 && parts.every((p) => /^\d/.test(p)) ? parts : null,
     libre: /\blibre\b/i.test(text),
   };
+}
+// Cada alimento de la toma se marca por separado: "50g cottage, 15g serrano…" son tres
+function dtAtoms(lines) {
+  const out = [];
+  lines.forEach((line, li) => {
+    const p = dtParse(line);
+    const parts = p.opts || p.text.includes("(") ? [p.text] : p.text.split(/,\s*(?=\d)|\s\+\s(?=\d)/);
+    parts.forEach((txt) => {
+      const q = p.opts ? p : dtParse(txt);
+      out.push({ text: q.text, opts: p.opts || q.opts, libre: q.libre, variant: p.variant, line: li });
+    });
+  });
+  return out;
+}
+// Registros de la versión anterior (opciones por línea y estado a mano) → por alimento
+function dtUpgrade(log, atoms) {
+  if (!log) return { a: 1 }; // toma nueva: ya en el formato por alimentos
+  const out = JSON.parse(JSON.stringify(log));
+  if (log.a) return out;
+  out.a = 1;
+  if (log.opt) {
+    out.opt = {};
+    Object.keys(log.opt).forEach((li) => { const ai = atoms.findIndex((x) => x.line === +li && x.opts); if (ai >= 0) out.opt[ai] = log.opt[li]; });
+  }
+  if (log.st === "ok") { out.eat = {}; atoms.forEach((x, i) => { out.eat[i] = true; }); }
+  if (log.st === "no") out.skip = true;
+  if (log.st === "cambio") out.legacy = true;
+  return out;
+}
+const dtVisAtoms = (atoms, log) => atoms.map((a, i) => [a, i]).filter(([a]) => !a.variant || a.variant === (log.var || "a"));
+function dtDerive(atoms, log) {
+  if (log.skip) return "no";
+  const vis = dtVisAtoms(atoms, log), eat = log.eat || {};
+  const n = vis.filter(([, i]) => eat[i]).length, nota = String(log.nota || "").trim();
+  if (log.legacy && !n) return log.st || null;
+  if (vis.length && n === vis.length && !nota) return "ok";
+  return n || nota ? "cambio" : null;
 }
 const dtVisible = (t) => t.items.map((it, idx) => [it, idx]).filter(([it]) => !it.variant || it.variant === (t.log.var || "a"));
 function dtItemText(it, log, idx, firstIfNone) {
@@ -1084,11 +1127,14 @@ function dtTomas(date) {
   const rec = dtRec(date);
   const times = dtTimes(date, dayMenu);
   return TOMAS.map((id) => {
-    const log = (rec.tomas || {})[id] || {};
+    const raw = (rec.tomas || {})[id];
     const def = dtDefLines(date, id, rec);
-    const lines = log.items || def.lines;
+    const lines = (raw && raw.items) || def.lines;
     if (!lines.length) return null;
-    return { id, label: def.label || TOMA_LABEL[id], min: times[id], items: lines.map(dtParse), log };
+    const items = dtAtoms(lines);
+    const log = dtUpgrade(raw, items);
+    log.st = dtDerive(items, log) || undefined;
+    return { id, label: def.label || TOMA_LABEL[id], min: times[id], items, log };
   }).filter(Boolean);
 }
 const dtRestDay = (date) => !blocksFor(date).some((b) => b.k !== "rest");
@@ -1110,23 +1156,53 @@ function dtBreakfastAlts(date) {
   }).filter(Boolean);
 }
 
-/* ---------- marcar una toma ---------- */
-function dtSetSt(date, id, st) {
+/* ---------- marcar una toma, alimento a alimento ---------- */
+function dtEditToma(date, id, fn) {
   const auto = [];
   dtSave(date, (r) => {
-    const t = dtTomaLog(r, id);
-    const was = t.st;
-    if (was === st) { delete t.st; delete t.items; return; }
-    t.st = st;
-    t.items = dtDefLines(date, id, r).lines.slice(); // foto del menú de ese día
-    if (st === "ok" && was !== "ok") {
-      r.sup = r.sup || {};
-      const add = id === "cena" ? ["creatina", "magnesio"] : id === "media" ? ["whey"] : [];
-      add.forEach((k) => { if (!r.sup[k]) { r.sup[k] = true; auto.push(k); } });
-    }
+    const raw = (r.tomas || {})[id];
+    const lines = (raw && raw.items) || dtDefLines(date, id, r).lines;
+    const atoms = dtAtoms(lines);
+    const log = dtUpgrade(raw, atoms);
+    const before = Object.assign({}, log.eat || {});
+    fn(log, atoms);
+    delete log.legacy;
+    const st = dtDerive(atoms, log);
+    if (st) { log.st = st; if (!log.items) log.items = lines.slice(); } // foto del menú de ese día
+    else { delete log.st; delete log.items; }
+    // Los suplementos que van dentro de una toma se marcan solos al tachar esa línea
+    r.sup = r.sup || {};
+    atoms.forEach((a, i) => {
+      if (!(log.eat || {})[i] || before[i]) return;
+      [["creatina", /creatina/i], ["magnesio", /magnesio|bisglicinato/i], ["whey", /whey/i]].forEach(([k, re]) => {
+        if (re.test(a.text) && !r.sup[k]) { r.sup[k] = true; auto.push(k); }
+      });
+    });
+    log.a = 1;
+    r.tomas = r.tomas || {};
+    if (Object.keys(log).some((k) => k !== "a")) r.tomas[id] = log; else delete r.tomas[id];
   });
   return auto;
 }
+const dtToggleEat = (date, id, i) => dtEditToma(date, id, (log) => {
+  log.eat = log.eat || {};
+  if (log.eat[i]) delete log.eat[i]; else log.eat[i] = true;
+  delete log.skip;
+});
+const dtPickOpt = (date, id, i, k) => dtEditToma(date, id, (log) => {
+  log.opt = log.opt || {}; log.eat = log.eat || {};
+  if (log.opt[i] === k) { delete log.opt[i]; delete log.eat[i]; } else { log.opt[i] = k; log.eat[i] = true; }
+  delete log.skip;
+});
+const dtAllEaten = (date, id) => dtEditToma(date, id, (log, atoms) => {
+  const vis = dtVisAtoms(atoms, log), all = vis.every(([, i]) => (log.eat || {})[i]);
+  log.eat = {};
+  if (!all) vis.forEach(([, i]) => { log.eat[i] = true; });
+  delete log.skip;
+});
+const dtSkip = (date, id) => dtEditToma(date, id, (log) => {
+  if (log.skip) delete log.skip; else { log.skip = true; log.eat = {}; }
+});
 
 /* ---------- lista de la compra ---------- */
 const shopKey = (w) => `S${w}`;
@@ -1180,10 +1256,17 @@ function dtDayBlock(date) {
   if (!tomas.length && !dtHas(rec)) return null;
   const lines = [dateLabel(date), `Entreno: ${dtTrainLine(date)}`];
   tomas.forEach((t) => {
-    const items = dtVisible(t).map(([it, idx]) => dtItemText(it, t.log, idx, false)).join("; ");
-    const st = t.log.st, nota = t.log.nota ? `: ${t.log.nota}` : "";
-    if (st === "no") lines.push(`- ${t.label}: no la hice (tocaba ${items})`);
-    else lines.push(`- ${t.label} (${st === "ok" ? "tal cual" : st === "cambio" ? `con cambios${nota}` : t.log.nota ? `sin marcar, nota${nota}` : "sin marcar"}): ${items}`);
+    const vis = dtVisible(t), eat = t.log.eat || {}, st = t.log.st;
+    const name = ([it, i]) => dtItemText(it, t.log, i, false);
+    const nota = String(t.log.nota || "").trim();
+    if (st === "no") { lines.push(`- ${t.label}: no la hice (tocaba ${vis.map(name).join("; ")})`); return; }
+    if (!st) { lines.push(`- ${t.label} (sin marcar; tocaba ${vis.map(name).join("; ")})`); return; }
+    if (t.log.legacy) { lines.push(`- ${t.label} (con cambios${nota ? `: ${nota}` : ""}): ${vis.map(name).join("; ")}`); return; }
+    const si = vis.filter(([, i]) => eat[i]).map(name), no = vis.filter(([, i]) => !eat[i]).map(name);
+    let s = `- ${t.label} (${st === "ok" ? "tal cual" : "con cambios"}): ${si.length ? `tomé ${si.join("; ")}` : "no tomé nada de lo pautado"}`;
+    if (si.length && no.length) s += `. No tomé: ${no.join("; ")}`;
+    if (nota) s += `. Además o en su lugar: ${nota}`;
+    lines.push(s);
   });
   if (rec.extra) lines.push(`- Fuera del menú: ${rec.extra}`);
   if (rec.agua) lines.push(`- Agua: ${litros(rec.agua)} L`);
@@ -1483,37 +1566,47 @@ function goWeek(n) {
 function renderAll() { renderHeader(); renderWeek(); renderDay(false); renderProfile(); renderStats(); renderDataMeta(); renderFoodIfVisible(); }
 
 /* ================= Menú del día: tomas y hábitos (pestaña Menú) ================= */
+// Tomas abiertas a mano para cambiarlas aunque estén terminadas (se olvidan al cambiar de día)
+const dtOpen = new Set();
+let dtOpenDay = null;
 function dtTomaHTML(t, date) {
-  const st = t.log.st || null;
-  const vsel = t.log.var || "a";
-  // Marcada como tal cual o saltada: se pliega en una línea para que el día no se haga eterno
-  const folded = st === "ok" || st === "no";
-  const items = folded ? "" : dtVisible(t).map(([it, idx]) => {
+  if (dtOpenDay !== date) { dtOpen.clear(); dtOpenDay = date; }
+  const st = t.log.st || null, eat = t.log.eat || {};
+  const nota = String(t.log.nota || "");
+  const chip = st ? `<span class="tm-chip ${ST_CLS[st]}"><i></i>${ST_LABEL[st]}</span>` : "";
+  const head = `<div class="tm-head"><span class="s-kind">${esc(t.label)}</span>${chip}</div>`;
+  const li = (body) => `<li class="s s--toma${st ? " is-" + st : ""}" data-toma="${t.id}">${timeHTML({ h: fmtHM(t.min) })}<div class="s-body tm">${head}${body}</div></li>`;
+  // Terminada (todo tal cual o saltada): una línea de resumen que se puede volver a abrir
+  if ((st === "ok" || st === "no") && !dtOpen.has(t.id)) {
+    const sum = dtVisible(t).map(([it, i]) => dtItemText(it, t.log, i, false)).join(" · ");
+    return li(`<button type="button" class="tm-sum" data-toma-open="${t.id}"><span>${esc(sum)}</span><span class="tm-edit">Cambiar</span></button>`);
+  }
+  const rows = dtVisible(t).map(([it, i]) => {
+    const on = !!eat[i];
     if (it.opts) {
-      const chosen = (t.log.opt || {})[idx];
-      return `<li class="tm-it"><span class="tm-opts" role="group" aria-label="Elige una opción">${it.opts.map((o, k) =>
-        `<button type="button" class="tm-opt" data-toma-opt="${t.id}:${idx}:${k}" aria-pressed="${chosen === k}">${esc(o)}</button>`).join("")}</span></li>`;
+      const chosen = (t.log.opt || {})[i];
+      return `<li class="tm-row${on ? " on" : ""}"><button type="button" class="tm-box" role="checkbox" aria-checked="${on}" data-toma-eat="${t.id}:${i}" aria-label="${esc(it.opts.join(" o "))}">${CHECK}</button>` +
+        `<span class="tm-opts" role="group" aria-label="Elige una opción">${it.opts.map((o, k) =>
+          `<button type="button" class="tm-opt" data-toma-opt="${t.id}:${i}:${k}" aria-pressed="${chosen === k}">${esc(o)}</button>`).join("")}</span></li>`;
     }
-    return `<li class="tm-it${it.libre ? " is-libre" : ""}">${esc(it.text)}</li>`;
+    return `<li class="tm-row${on ? " on" : ""}${it.libre ? " is-libre" : ""}"><button type="button" class="tm-check" role="checkbox" aria-checked="${on}" data-toma-eat="${t.id}:${i}">` +
+      `<span class="tm-box" aria-hidden="true">${CHECK}</span><span>${esc(it.text)}</span></button></li>`;
   }).join("");
-  const summary = folded ? `<p class="tm-sum">${esc(dtVisible(t).map(([it, idx]) => dtItemText(it, t.log, idx, false)).join(" · "))}</p>` : "";
-  const variants = !folded && t.items.some((it) => it.variant)
+  const vsel = t.log.var || "a";
+  const variants = t.items.some((it) => it.variant)
     ? `<div class="seg tm-var" role="group" aria-label="Opción de ${esc(t.label)}">${["a", "b"].map((v) =>
         `<button type="button" data-toma-var="${t.id}:${v}" aria-pressed="${vsel === v}">Opción ${v}</button>`).join("")}</div>`
     : "";
-  const alts = !folded && t.id === "desayuno" && !t.log.items ? dtBreakfastAlts(date) : [];
+  const alts = t.id === "desayuno" && !t.log.items ? dtBreakfastAlts(date) : [];
   const altHTML = alts.length
     ? `<div class="tm-alt"><span class="eyebrow">Otro desayuno</span>${alts.map((a) =>
         `<button type="button" class="tm-opt" data-toma-alt="${a.dow}" aria-pressed="${t.log.alt === a.dow}">${esc(a.label)}</button>`).join("")}</div>`
     : "";
-  const acts = ["ok", "cambio", "no"].map((s) =>
-    `<button type="button" class="tm-st ${ST_CLS[s]}" data-toma-st="${t.id}:${s}" aria-pressed="${st === s}" aria-label="${ST_LABEL[s]}"><i></i>${ST_BTN[s]}</button>`).join("");
-  const nota = st === "cambio" || t.log.nota
-    ? `<input class="tm-nota" type="text" data-toma-nota="${t.id}" value="${esc(t.log.nota || "")}" placeholder="¿Qué cambiaste?" aria-label="Qué cambiaste en ${esc(t.label)}" autocomplete="off">`
-    : "";
-  return `<li class="s s--toma${st ? " is-" + st : ""}" data-toma="${t.id}">${timeHTML({ h: fmtHM(t.min) })}` +
-    `<div class="s-body tm"><div class="s-kind">${esc(t.label)}</div>${folded ? summary : `<ul class="tm-items">${items}</ul>`}${variants}${altHTML}` +
-    `<div class="tm-acts" role="group" aria-label="Cómo fue: ${esc(t.label)}">${acts}</div>${nota}</div></li>`;
+  return li(`${variants}<ul class="tm-rows">${rows}</ul>${altHTML}` +
+    `<textarea class="tm-nota" rows="1" data-toma-nota="${t.id}" placeholder="Escribe lo que has comido o cambiado…" aria-label="Qué has comido o cambiado en ${esc(t.label)}">${esc(nota)}</textarea>` +
+    `<div class="tm-acts2"><button type="button" class="tm-all" data-toma-all="${t.id}" aria-pressed="${st === "ok"}">${CHECK}Todo tal cual</button>` +
+    `<button type="button" class="tm-skip" data-toma-skip="${t.id}" aria-pressed="${st === "no"}">Me la salté</button>` +
+    (dtOpen.has(t.id) && (st === "ok" || st === "no") ? `<button type="button" class="link" data-toma-close="${t.id}">Plegar</button>` : "") + `</div>`);
 }
 
 function tomasHTML(date) {
@@ -1534,6 +1627,7 @@ function renderMenuDay() {
     ? bl.map((b) => `<span class="k-${KIND_LABEL[b.k] ? b.k : "other"}"><i></i>${esc(b.title || KIND_LABEL[b.k] || "Sesión")}${b.h && /\d/.test(b.h) ? ` · ${esc(b.h)}` : ""}</span>`).join("")
     : '<span class="k-rest"><i></i>Descanso</span>');
   $("mnTomas").innerHTML = tomasHTML(sel);
+  document.querySelectorAll("#mnTomas .tm-nota").forEach(autoGrow);
   renderHabits();
 }
 const rerenderDay = () => renderMenuDay();
@@ -1560,43 +1654,36 @@ function renderHabits() {
 }
 
 /* ---------- eventos ---------- */
+const SUP_NAME = { creatina: "la creatina", magnesio: "el magnesio", whey: "el whey" };
+function afterToma(auto) {
+  rerenderDay();
+  if (auto.length) toast(`También he marcado ${auto.map((k) => SUP_NAME[k]).join(" y ")}`);
+}
 $("mnTomas").addEventListener("click", (e) => {
-  const st = e.target.closest("[data-toma-st]");
-  if (st) {
-    const [id, s] = st.dataset.tomaSt.split(":");
-    const auto = dtSetSt(sel, id, s);
-    rerenderDay();
-    if (s === "cambio" && dtRec(sel).tomas?.[id]?.st === "cambio") {
-      const inp = document.querySelector(`[data-toma-nota="${id}"]`);
-      if (inp) inp.focus();
-    }
-    if (auto.length) toast(`También he marcado ${auto.map((k) => SUPS.find((x) => x[0] === k)[1].toLowerCase()).join(" y ")}`);
+  const q = (attr) => e.target.closest(`[${attr}]`);
+  let el;
+  if ((el = q("data-toma-eat"))) { const [id, i] = el.dataset.tomaEat.split(":"); afterToma(dtToggleEat(sel, id, +i)); return; }
+  if ((el = q("data-toma-opt"))) { const [id, i, k] = el.dataset.tomaOpt.split(":"); afterToma(dtPickOpt(sel, id, +i, +k)); return; }
+  if ((el = q("data-toma-all"))) { const id = el.dataset.tomaAll; dtOpen.delete(id); afterToma(dtAllEaten(sel, id)); return; }
+  if ((el = q("data-toma-skip"))) { const id = el.dataset.tomaSkip; dtOpen.delete(id); afterToma(dtSkip(sel, id)); return; }
+  if ((el = q("data-toma-open"))) { dtOpen.add(el.dataset.tomaOpen); rerenderDay(); return; }
+  if ((el = q("data-toma-close"))) { dtOpen.delete(el.dataset.tomaClose); rerenderDay(); return; }
+  if ((el = q("data-toma-var"))) {
+    const [id, v] = el.dataset.tomaVar.split(":");
+    afterToma(dtEditToma(sel, id, (log) => { log.var = v; }));
     return;
   }
-  const op = e.target.closest("[data-toma-opt]");
-  if (op) {
-    const [id, idx, k] = op.dataset.tomaOpt.split(":");
-    dtSave(sel, (r) => { const t = dtTomaLog(r, id); t.opt = t.opt || {}; if (t.opt[idx] === +k) delete t.opt[idx]; else t.opt[idx] = +k; });
-    rerenderDay();
-    return;
-  }
-  const v = e.target.closest("[data-toma-var]");
-  if (v) {
-    const [id, val] = v.dataset.tomaVar.split(":");
-    dtSave(sel, (r) => { dtTomaLog(r, id).var = val; });
-    rerenderDay();
-    return;
-  }
-  const a = e.target.closest("[data-toma-alt]");
-  if (a) {
-    dtSave(sel, (r) => { const t = dtTomaLog(r, "desayuno"); if (t.alt === a.dataset.tomaAlt) delete t.alt; else t.alt = a.dataset.tomaAlt; t.opt = {}; });
+  if ((el = q("data-toma-alt"))) {
+    const dow = el.dataset.tomaAlt;
+    dtEditToma(sel, "desayuno", (log) => { if (log.alt === dow) delete log.alt; else log.alt = dow; log.opt = {}; log.eat = {}; delete log.items; });
     rerenderDay();
   }
 });
 $("mnTomas").addEventListener("change", (e) => {
   const n = e.target.closest("[data-toma-nota]");
-  if (n) dtSave(sel, (r) => { dtTomaLog(r, n.dataset.tomaNota).nota = n.value.trim(); });
+  if (n) { dtEditToma(sel, n.dataset.tomaNota, (log) => { log.nota = n.value.trim(); }); rerenderDay(); }
 });
+$("mnTomas").addEventListener("input", (e) => { if (e.target.matches(".tm-nota")) autoGrow(e.target); });
 $("agua").addEventListener("click", (e) => {
   const b = e.target.closest("[data-agua]");
   if (!b) return;
