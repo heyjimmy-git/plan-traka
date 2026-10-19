@@ -97,3 +97,15 @@
 .mn-dows label::before { display: none; }
 .mn-hdet summary { cursor: pointer; padding-block: 4px; }
 .mn-hours { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-block: 10px 6px; }
+
+/* Día de comidas en Menú */
+.fd-day { text-align: center; line-height: 1.25; }
+.fd-day strong { font-weight: 700; }
+.fd-day .sub { display: block; font-size: 13px; color: var(--ink-3); }
+.fd-train { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.fd-train .eyebrow { width: 100%; }
+.fd-train span:not(.eyebrow) { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); background: var(--ground); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; }
+.fd-train i { width: 8px; height: 8px; border-radius: 2px; background: var(--c); flex: none; }
+.mn-wbar { margin-block: -2px 2px; }
+.mn-day.is-sel .mn-d { background: var(--ink); color: var(--on-ink); border-radius: 10px; padding-block: 5px; }
+.mn-day.is-sel .mn-d b { color: inherit; opacity: .7; }

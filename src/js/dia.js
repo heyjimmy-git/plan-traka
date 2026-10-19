@@ -1,4 +1,4 @@
-/* ================= Tu día: comidas y entreno en una sola línea ================= */
+/* ================= Menú del día: tomas y hábitos (pestaña Menú) ================= */
 function dtTomaHTML(t, date) {
   const st = t.log.st || null;
   const vsel = t.log.var || "a";
@@ -32,20 +32,27 @@ function dtTomaHTML(t, date) {
     `<div class="tm-acts" role="group" aria-label="Cómo fue: ${esc(t.label)}">${acts}</div>${nota}</div></li>`;
 }
 
-function dayTimelineHTML(date) {
-  const rows = [];
-  const timed = new Map(dtSessions(date).map((s) => [s.i, s.start]));
-  blocksFor(date).forEach((b, i) => {
-    let key;
-    if (timed.has(i)) key = timed.get(i);
-    else if (/seguido/i.test(b.h || "") && rows.length) key = rows[rows.length - 1].key + 0.01;
-    else key = -10 + i * 0.01; // flexibles y descanso, arriba
-    rows.push({ key, html: sessionHTML(b, i) });
-  });
-  dtTomas(date).forEach((t) => rows.push({ key: t.min - 0.001, html: dtTomaHTML(t, date) }));
-  if (!rows.length) return `<li class="s-empty">Sin sesiones este día.</li>`;
-  return rows.sort((a, b) => a.key - b.key).map((r) => r.html).join("");
+function tomasHTML(date) {
+  const tomas = dtTomas(date).sort((a, b) => a.min - b.min);
+  if (tomas.length) return tomas.map((t) => dtTomaHTML(t, date)).join("");
+  return `<li class="s-empty">${date < DIET.desde ? `La dieta empieza el ${sxDate(DIET.desde, false)}.` : "Sin menú este día."}</li>`;
 }
+
+function renderMenuDay() {
+  const d = selDay(), diff = dayDiff(todayISO, sel);
+  const rel = diff === 0 ? "Hoy" : diff === 1 ? "Mañana" : diff === -1 ? "Ayer" : diff > 1 ? `En ${diff} días` : `Hace ${-diff} días`;
+  $("mdDay").innerHTML = `<strong>${esc(dateLabel(sel))}</strong><span class="sub">${rel} · S${d.w}${diff !== 0 && IDX.has(todayISO) ? ' · <button type="button" class="link" id="mdToday">Volver a hoy</button>' : ""}</span>`;
+  $("mdPrev").disabled = IDX.get(sel) === 0;
+  $("mdNext").disabled = IDX.get(sel) === DAYS.length - 1;
+  // El entreno solo como contexto: explica por qué el pre-entreno o la cena cambian de hora
+  const bl = blocksFor(sel).filter((b) => b.k !== "rest");
+  $("mdTrain").innerHTML = `<span class="eyebrow">Entreno del día</span>` + (bl.length
+    ? bl.map((b) => `<span class="k-${KIND_LABEL[b.k] ? b.k : "other"}"><i></i>${esc(b.title || KIND_LABEL[b.k] || "Sesión")}${b.h && /\d/.test(b.h) ? ` · ${esc(b.h)}` : ""}</span>`).join("")
+    : '<span class="k-rest"><i></i>Descanso</span>');
+  $("mnTomas").innerHTML = tomasHTML(sel);
+  renderHabits();
+}
+const rerenderDay = () => renderMenuDay();
 
 /* ---------- hábitos del día ---------- */
 function renderHabits() {
@@ -67,10 +74,9 @@ function renderHabits() {
   const ref = dtRef(sel);
   $("dayKcalHint").textContent = ref && ref.kcal ? `Kcal del día (el menú ronda las ${kcalFmt(ref.kcal)})` : "Kcal del día que te diga la IA";
 }
-function rerenderDay() { renderDay(false); renderStrip(); }
 
 /* ---------- eventos ---------- */
-$("sessions").addEventListener("click", (e) => {
+$("mnTomas").addEventListener("click", (e) => {
   const st = e.target.closest("[data-toma-st]");
   if (st) {
     const [id, s] = st.dataset.tomaSt.split(":");
@@ -103,7 +109,7 @@ $("sessions").addEventListener("click", (e) => {
     rerenderDay();
   }
 });
-$("sessions").addEventListener("change", (e) => {
+$("mnTomas").addEventListener("change", (e) => {
   const n = e.target.closest("[data-toma-nota]");
   if (n) dtSave(sel, (r) => { dtTomaLog(r, n.dataset.tomaNota).nota = n.value.trim(); });
 });
@@ -129,3 +135,17 @@ $("dayKcal").addEventListener("change", (e) => {
   dtSave(sel, (r) => { r.kcal = n; });
 });
 $("dayAI").addEventListener("click", () => shareText(dtEatenPrompt([sel]), false, "Copiado para la IA"));
+$("mdPrev").addEventListener("click", () => shiftDay(-1));
+$("mdNext").addEventListener("click", () => shiftDay(1));
+$("mdDay").addEventListener("click", (e) => { if (e.target.closest("#mdToday")) go(todayISO); });
+let mdTx = null, mdTy = null;
+$("mdCard").addEventListener("touchstart", (e) => {
+  if (e.target.closest("textarea, input, button")) { mdTx = null; return; }
+  mdTx = e.touches[0].clientX; mdTy = e.touches[0].clientY;
+}, { passive: true });
+$("mdCard").addEventListener("touchend", (e) => {
+  if (mdTx === null) return;
+  const dx = e.changedTouches[0].clientX - mdTx, dy = e.changedTouches[0].clientY - mdTy;
+  mdTx = null;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) shiftDay(dx < 0 ? 1 : -1);
+}, { passive: true });

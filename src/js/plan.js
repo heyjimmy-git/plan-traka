@@ -88,12 +88,12 @@ function renderDay(animate) {
   const ph = phaseOf(d.w);
   $("dayWeek").textContent = ph ? `S${d.w} de ${PLAN_WEEKS} · ${ph.name}` : "Día de la carrera";
   $("backToday").hidden = diff === 0 || !IDX.has(todayISO);
+  const blocks = blocksFor(sel);
   const list = $("sessions");
-  list.innerHTML = dayTimelineHTML(sel);
+  list.innerHTML = blocks.length ? blocks.map(sessionHTML).join("") : `<li class="s-empty">Sin sesiones este día.</li>`;
   $("edited").hidden = !cambios[sel];
   if (animate) { list.classList.remove("anim"); void list.offsetWidth; list.classList.add("anim"); }
   renderLog();
-  renderHabits();
 }
 
 function renderLog() {

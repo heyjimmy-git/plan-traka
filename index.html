@@ -587,6 +587,18 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
 .mn-dows label::before { display: none; }
 .mn-hdet summary { cursor: pointer; padding-block: 4px; }
 .mn-hours { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-block: 10px 6px; }
+
+/* Día de comidas en Menú */
+.fd-day { text-align: center; line-height: 1.25; }
+.fd-day strong { font-weight: 700; }
+.fd-day .sub { display: block; font-size: 13px; color: var(--ink-3); }
+.fd-train { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.fd-train .eyebrow { width: 100%; }
+.fd-train span:not(.eyebrow) { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); background: var(--ground); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; }
+.fd-train i { width: 8px; height: 8px; border-radius: 2px; background: var(--c); flex: none; }
+.mn-wbar { margin-block: -2px 2px; }
+.mn-day.is-sel .mn-d { background: var(--ink); color: var(--on-ink); border-radius: 10px; padding-block: 5px; }
+.mn-day.is-sel .mn-d b { color: inherit; opacity: .7; }
 </style>
 </head>
 <body>
@@ -622,21 +634,9 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
       <button type="button" class="add" id="addSession"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 2v10M2 7h10"/></svg>Añadir sesión</button>
       <span class="edited" id="edited" hidden>Día editado · <button type="button" class="link" id="restore">Volver al plan</button></span>
     </div>
-    <div class="hb" id="habits" hidden>
-      <div class="log-row"><span class="log-lbl">Agua</span><span class="log-val" id="aguaVal"></span></div>
-      <div class="hb-water" id="agua" role="group" aria-label="Vasos de agua de 250 ml"></div>
-      <div class="hb-chips" id="sups" role="group" aria-label="Suplementos y pasos"></div>
-      <label class="eyebrow" for="extraFood">Fuera del menú</label>
-      <textarea class="notes" id="extraFood" rows="1" placeholder="Picoteo, bebidas, algo que no estaba…"></textarea>
-      <div class="hb-kcal">
-        <input type="number" id="dayKcal" inputmode="numeric" min="0" max="20000" step="10" placeholder="kcal" aria-label="Kilocalorías estimadas del día">
-        <span class="hint" id="dayKcalHint">Kcal del día que te diga la IA</span>
-        <button type="button" class="btn ghost hb-ai" id="dayAI">Pasar el día a la IA</button>
-      </div>
-    </div>
     <div class="log">
       <div class="log-row">
-        <span class="log-lbl">Entreno, ¿hecho?</span>
+        <span class="log-lbl">¿Hecho?</span>
         <div class="seg" role="group" aria-label="Sesión hecha" id="seg">
           <button type="button" id="hSi" data-v="Sí" aria-pressed="false">Sí</button>
           <button type="button" id="hParcial" data-v="Parcial" aria-pressed="false">Parcial</button>
@@ -700,7 +700,7 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
 
   <footer>
     <span>Fuente: Plan_Entrenamiento_La_Traka_100km.xlsx</span>
-    <span>Desliza el día a los lados para cambiar · toca el lápiz para editar una sesión · marca cada comida al hacerla</span>
+    <span>Desliza el día a los lados para cambiar · toca el lápiz para editar una sesión</span>
   </footer>
   </div>
 
@@ -709,11 +709,33 @@ dialog.sheet::backdrop { background: rgb(10 12 14 / .5); }
       <div class="fd-head"><span class="eyebrow" id="mnSub"></span><h1 class="sx-title">Menú</h1></div>
       <p class="mn-notice" id="mnNotice" hidden>El menú era para octubre y noviembre. Si la nutricionista te da uno nuevo, cámbialo en <b>Editar el menú</b>.</p>
       <div class="week-bar">
+        <button type="button" class="nav-btn" id="mdPrev" aria-label="Día anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
+        <div class="fd-day" id="mdDay"></div>
+        <button type="button" class="nav-btn" id="mdNext" aria-label="Día siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4 6 6-6 6"/></svg></button>
+      </div>
+      <section class="day md" id="mdCard" aria-label="Comidas del día">
+        <div class="fd-train" id="mdTrain"></div>
+        <ul class="sessions" id="mnTomas" aria-live="polite"></ul>
+        <div class="hb" id="habits" hidden>
+          <div class="log-row"><span class="log-lbl">Agua</span><span class="log-val" id="aguaVal"></span></div>
+          <div class="hb-water" id="agua" role="group" aria-label="Vasos de agua de 250 ml"></div>
+          <div class="hb-chips" id="sups" role="group" aria-label="Suplementos y pasos"></div>
+          <label class="eyebrow" for="extraFood">Fuera del menú</label>
+          <textarea class="notes" id="extraFood" rows="1" placeholder="Picoteo, bebidas, algo que no estaba…"></textarea>
+          <div class="hb-kcal">
+            <input type="number" id="dayKcal" inputmode="numeric" min="0" max="20000" step="10" placeholder="kcal" aria-label="Kilocalorías estimadas del día">
+            <span class="hint" id="dayKcalHint">Kcal del día que te diga la IA</span>
+            <button type="button" class="btn ghost hb-ai" id="dayAI">Pasar el día a la IA</button>
+          </div>
+        </div>
+      </section>
+      <section class="sx-sec"><header><h2>La semana</h2><p>Toca un día para ver y marcar sus comidas arriba.</p></header>
+      <div class="week-bar mn-wbar">
         <button type="button" class="nav-btn" id="mnPrev" aria-label="Semana anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
         <div class="week-title" id="mnWeek"></div>
         <button type="button" class="nav-btn" id="mnNext" aria-label="Semana siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4 6 6-6 6"/></svg></button>
       </div>
-      <section class="sx-sec"><header><h2>La semana</h2><p>Toca un día para abrirlo en Hoy y marcar las comidas.</p></header><div class="sx-card"><div class="mn-days" id="mnDays"></div></div></section>
+      <div class="sx-card"><div class="mn-days" id="mnDays"></div></div></section>
       <section class="sx-sec"><header><h2>Lista de la compra</h2><p id="mnShopSub"></p></header>
         <div class="sx-card">
           <div class="mn-shop" id="mnShop"></div>
@@ -1323,12 +1345,12 @@ function renderDay(animate) {
   const ph = phaseOf(d.w);
   $("dayWeek").textContent = ph ? `S${d.w} de ${PLAN_WEEKS} · ${ph.name}` : "Día de la carrera";
   $("backToday").hidden = diff === 0 || !IDX.has(todayISO);
+  const blocks = blocksFor(sel);
   const list = $("sessions");
-  list.innerHTML = dayTimelineHTML(sel);
+  list.innerHTML = blocks.length ? blocks.map(sessionHTML).join("") : `<li class="s-empty">Sin sesiones este día.</li>`;
   $("edited").hidden = !cambios[sel];
   if (animate) { list.classList.remove("anim"); void list.offsetWidth; list.classList.add("anim"); }
   renderLog();
-  renderHabits();
 }
 
 function renderLog() {
@@ -1460,7 +1482,7 @@ function goWeek(n) {
 }
 function renderAll() { renderHeader(); renderWeek(); renderDay(false); renderProfile(); renderStats(); renderDataMeta(); renderFoodIfVisible(); }
 
-/* ================= Tu día: comidas y entreno en una sola línea ================= */
+/* ================= Menú del día: tomas y hábitos (pestaña Menú) ================= */
 function dtTomaHTML(t, date) {
   const st = t.log.st || null;
   const vsel = t.log.var || "a";
@@ -1494,20 +1516,27 @@ function dtTomaHTML(t, date) {
     `<div class="tm-acts" role="group" aria-label="Cómo fue: ${esc(t.label)}">${acts}</div>${nota}</div></li>`;
 }
 
-function dayTimelineHTML(date) {
-  const rows = [];
-  const timed = new Map(dtSessions(date).map((s) => [s.i, s.start]));
-  blocksFor(date).forEach((b, i) => {
-    let key;
-    if (timed.has(i)) key = timed.get(i);
-    else if (/seguido/i.test(b.h || "") && rows.length) key = rows[rows.length - 1].key + 0.01;
-    else key = -10 + i * 0.01; // flexibles y descanso, arriba
-    rows.push({ key, html: sessionHTML(b, i) });
-  });
-  dtTomas(date).forEach((t) => rows.push({ key: t.min - 0.001, html: dtTomaHTML(t, date) }));
-  if (!rows.length) return `<li class="s-empty">Sin sesiones este día.</li>`;
-  return rows.sort((a, b) => a.key - b.key).map((r) => r.html).join("");
+function tomasHTML(date) {
+  const tomas = dtTomas(date).sort((a, b) => a.min - b.min);
+  if (tomas.length) return tomas.map((t) => dtTomaHTML(t, date)).join("");
+  return `<li class="s-empty">${date < DIET.desde ? `La dieta empieza el ${sxDate(DIET.desde, false)}.` : "Sin menú este día."}</li>`;
 }
+
+function renderMenuDay() {
+  const d = selDay(), diff = dayDiff(todayISO, sel);
+  const rel = diff === 0 ? "Hoy" : diff === 1 ? "Mañana" : diff === -1 ? "Ayer" : diff > 1 ? `En ${diff} días` : `Hace ${-diff} días`;
+  $("mdDay").innerHTML = `<strong>${esc(dateLabel(sel))}</strong><span class="sub">${rel} · S${d.w}${diff !== 0 && IDX.has(todayISO) ? ' · <button type="button" class="link" id="mdToday">Volver a hoy</button>' : ""}</span>`;
+  $("mdPrev").disabled = IDX.get(sel) === 0;
+  $("mdNext").disabled = IDX.get(sel) === DAYS.length - 1;
+  // El entreno solo como contexto: explica por qué el pre-entreno o la cena cambian de hora
+  const bl = blocksFor(sel).filter((b) => b.k !== "rest");
+  $("mdTrain").innerHTML = `<span class="eyebrow">Entreno del día</span>` + (bl.length
+    ? bl.map((b) => `<span class="k-${KIND_LABEL[b.k] ? b.k : "other"}"><i></i>${esc(b.title || KIND_LABEL[b.k] || "Sesión")}${b.h && /\d/.test(b.h) ? ` · ${esc(b.h)}` : ""}</span>`).join("")
+    : '<span class="k-rest"><i></i>Descanso</span>');
+  $("mnTomas").innerHTML = tomasHTML(sel);
+  renderHabits();
+}
+const rerenderDay = () => renderMenuDay();
 
 /* ---------- hábitos del día ---------- */
 function renderHabits() {
@@ -1529,10 +1558,9 @@ function renderHabits() {
   const ref = dtRef(sel);
   $("dayKcalHint").textContent = ref && ref.kcal ? `Kcal del día (el menú ronda las ${kcalFmt(ref.kcal)})` : "Kcal del día que te diga la IA";
 }
-function rerenderDay() { renderDay(false); renderStrip(); }
 
 /* ---------- eventos ---------- */
-$("sessions").addEventListener("click", (e) => {
+$("mnTomas").addEventListener("click", (e) => {
   const st = e.target.closest("[data-toma-st]");
   if (st) {
     const [id, s] = st.dataset.tomaSt.split(":");
@@ -1565,7 +1593,7 @@ $("sessions").addEventListener("click", (e) => {
     rerenderDay();
   }
 });
-$("sessions").addEventListener("change", (e) => {
+$("mnTomas").addEventListener("change", (e) => {
   const n = e.target.closest("[data-toma-nota]");
   if (n) dtSave(sel, (r) => { dtTomaLog(r, n.dataset.tomaNota).nota = n.value.trim(); });
 });
@@ -1591,21 +1619,36 @@ $("dayKcal").addEventListener("change", (e) => {
   dtSave(sel, (r) => { r.kcal = n; });
 });
 $("dayAI").addEventListener("click", () => shareText(dtEatenPrompt([sel]), false, "Copiado para la IA"));
+$("mdPrev").addEventListener("click", () => shiftDay(-1));
+$("mdNext").addEventListener("click", () => shiftDay(1));
+$("mdDay").addEventListener("click", (e) => { if (e.target.closest("#mdToday")) go(todayISO); });
+let mdTx = null, mdTy = null;
+$("mdCard").addEventListener("touchstart", (e) => {
+  if (e.target.closest("textarea, input, button")) { mdTx = null; return; }
+  mdTx = e.touches[0].clientX; mdTy = e.touches[0].clientY;
+}, { passive: true });
+$("mdCard").addEventListener("touchend", (e) => {
+  if (mdTx === null) return;
+  const dx = e.changedTouches[0].clientX - mdTx, dy = e.changedTouches[0].clientY - mdTy;
+  mdTx = null;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) shiftDay(dx < 0 ? 1 : -1);
+}, { passive: true });
 /* ================= Pestaña Menú ================= */
 let menuWeek = null;
+let menuSel = null;
 const renderFoodIfVisible = () => { if (!$("viewFood").hidden) renderMenu(); };
 const weekDays = (w) => DAYS.filter((d) => d.w === w);
 const menuDateOf = (w) => { const ds = weekDays(w); return (ds.find((d) => d.date >= DIET.desde) || ds[ds.length - 1]).date; };
 
 function renderMenu() {
-  if (menuWeek == null) menuWeek = selDay().w;
+  if (menuWeek == null || menuSel !== sel) { menuWeek = selDay().w; menuSel = sel; }
   const w = menuWeek, wk = WEEKS[w - 1], ph = phaseOf(w);
   $("mnSub").textContent = DIET.fuente;
   $("mnWeek").innerHTML = `<strong>${w > PLAN_WEEKS ? "Día de la carrera" : `Semana ${w}`}</strong> · ${fmtRange(wk.ini, wk.fin)}<span class="sub">${ph ? esc(ph.name) : "La Traka"}</span>`;
   $("mnPrev").disabled = w <= 1;
   $("mnNext").disabled = w >= WEEKS.length;
   $("mnNotice").hidden = !(todayISO > DIET.hasta && !(menus.versiones || []).some((v) => v.desde > DIET.hasta));
-  renderMenuDays(w); renderShop(w); renderRef(w);
+  renderMenuDay(); renderMenuDays(w); renderShop(w); renderRef(w);
 }
 
 function renderMenuDays(w) {
@@ -1630,7 +1673,7 @@ function renderMenuDays(w) {
     const rec = dtRec(d.date), ref = dtRef(d.date);
     const kc = rec.kcal ? `${kcalFmt(rec.kcal)} kcal` : ref && ref.kcal ? `≈${kcalFmt(ref.kcal)} kcal` : "";
     const dots = tomas.map((t) => `<i class="${t.log.st ? ST_CLS[t.log.st] : "sx-none"}" title="${esc(t.label)}: ${t.log.st ? ST_LABEL[t.log.st] : "sin marcar"}"></i>`).join("");
-    return `<button type="button" class="mn-day${d.date === todayISO ? " is-today" : ""}" data-mn-day="${d.date}" aria-label="${esc(dateLabel(d.date))}: ${marked} de ${tomas.length} tomas marcadas">${head}` +
+    return `<button type="button" class="mn-day${d.date === todayISO ? " is-today" : ""}${d.date === sel ? " is-sel" : ""}" data-mn-day="${d.date}" aria-label="${esc(dateLabel(d.date))}: ${marked} de ${tomas.length} tomas marcadas">${head}` +
       `<span class="mn-txt"><span class="mn-l1">${esc([main(comida), main(cena)].filter(Boolean).join(" · "))}</span><span class="mn-l2">${marked}/${tomas.length} marcadas${kc ? " · " + kc : ""}</span></span>` +
       `<span class="mn-dots" aria-hidden="true">${dots}</span></button>`;
   }).join("");
@@ -1745,7 +1788,7 @@ $("mnEdForm").addEventListener("submit", (e) => {
   menus.horas = horas;
   persist();
   mnDlg.close();
-  renderMenu(); rerenderDay();
+  renderMenu();
   toast(changed ? `Menú del ${dow.toLowerCase()} guardado desde el ${sxDate(desde, false)}` : "Horas guardadas");
 });
 $("mnEdCancel").addEventListener("click", () => mnDlg.close());
@@ -1757,7 +1800,7 @@ $("mnEdReset").addEventListener("click", () => {
   menus.versiones = [];
   persist();
   mnDlg.close();
-  renderMenu(); rerenderDay();
+  renderMenu();
   toast("Vuelves al menú de la nutricionista");
 });
 
@@ -1766,7 +1809,7 @@ $("mnPrev").addEventListener("click", () => { menuWeek = Math.max(1, menuWeek - 
 $("mnNext").addEventListener("click", () => { menuWeek = Math.min(WEEKS.length, menuWeek + 1); renderMenu(); });
 $("mnDays").addEventListener("click", (e) => {
   const b = e.target.closest("[data-mn-day]");
-  if (b) { sxShow("hoy"); go(b.dataset.mnDay, false); }
+  if (b) { go(b.dataset.mnDay, false); window.scrollTo(0, 0); }
 });
 $("mnShop").addEventListener("change", (e) => {
   const c = e.target.closest("[data-shop]");

@@ -1,18 +1,19 @@
 /* ================= Pestaña Menú ================= */
 let menuWeek = null;
+let menuSel = null;
 const renderFoodIfVisible = () => { if (!$("viewFood").hidden) renderMenu(); };
 const weekDays = (w) => DAYS.filter((d) => d.w === w);
 const menuDateOf = (w) => { const ds = weekDays(w); return (ds.find((d) => d.date >= DIET.desde) || ds[ds.length - 1]).date; };
 
 function renderMenu() {
-  if (menuWeek == null) menuWeek = selDay().w;
+  if (menuWeek == null || menuSel !== sel) { menuWeek = selDay().w; menuSel = sel; }
   const w = menuWeek, wk = WEEKS[w - 1], ph = phaseOf(w);
   $("mnSub").textContent = DIET.fuente;
   $("mnWeek").innerHTML = `<strong>${w > PLAN_WEEKS ? "Día de la carrera" : `Semana ${w}`}</strong> · ${fmtRange(wk.ini, wk.fin)}<span class="sub">${ph ? esc(ph.name) : "La Traka"}</span>`;
   $("mnPrev").disabled = w <= 1;
   $("mnNext").disabled = w >= WEEKS.length;
   $("mnNotice").hidden = !(todayISO > DIET.hasta && !(menus.versiones || []).some((v) => v.desde > DIET.hasta));
-  renderMenuDays(w); renderShop(w); renderRef(w);
+  renderMenuDay(); renderMenuDays(w); renderShop(w); renderRef(w);
 }
 
 function renderMenuDays(w) {
@@ -37,7 +38,7 @@ function renderMenuDays(w) {
     const rec = dtRec(d.date), ref = dtRef(d.date);
     const kc = rec.kcal ? `${kcalFmt(rec.kcal)} kcal` : ref && ref.kcal ? `≈${kcalFmt(ref.kcal)} kcal` : "";
     const dots = tomas.map((t) => `<i class="${t.log.st ? ST_CLS[t.log.st] : "sx-none"}" title="${esc(t.label)}: ${t.log.st ? ST_LABEL[t.log.st] : "sin marcar"}"></i>`).join("");
-    return `<button type="button" class="mn-day${d.date === todayISO ? " is-today" : ""}" data-mn-day="${d.date}" aria-label="${esc(dateLabel(d.date))}: ${marked} de ${tomas.length} tomas marcadas">${head}` +
+    return `<button type="button" class="mn-day${d.date === todayISO ? " is-today" : ""}${d.date === sel ? " is-sel" : ""}" data-mn-day="${d.date}" aria-label="${esc(dateLabel(d.date))}: ${marked} de ${tomas.length} tomas marcadas">${head}` +
       `<span class="mn-txt"><span class="mn-l1">${esc([main(comida), main(cena)].filter(Boolean).join(" · "))}</span><span class="mn-l2">${marked}/${tomas.length} marcadas${kc ? " · " + kc : ""}</span></span>` +
       `<span class="mn-dots" aria-hidden="true">${dots}</span></button>`;
   }).join("");
@@ -152,7 +153,7 @@ $("mnEdForm").addEventListener("submit", (e) => {
   menus.horas = horas;
   persist();
   mnDlg.close();
-  renderMenu(); rerenderDay();
+  renderMenu();
   toast(changed ? `Menú del ${dow.toLowerCase()} guardado desde el ${sxDate(desde, false)}` : "Horas guardadas");
 });
 $("mnEdCancel").addEventListener("click", () => mnDlg.close());
@@ -164,7 +165,7 @@ $("mnEdReset").addEventListener("click", () => {
   menus.versiones = [];
   persist();
   mnDlg.close();
-  renderMenu(); rerenderDay();
+  renderMenu();
   toast("Vuelves al menú de la nutricionista");
 });
 
@@ -173,7 +174,7 @@ $("mnPrev").addEventListener("click", () => { menuWeek = Math.max(1, menuWeek - 
 $("mnNext").addEventListener("click", () => { menuWeek = Math.min(WEEKS.length, menuWeek + 1); renderMenu(); });
 $("mnDays").addEventListener("click", (e) => {
   const b = e.target.closest("[data-mn-day]");
-  if (b) { sxShow("hoy"); go(b.dataset.mnDay, false); }
+  if (b) { go(b.dataset.mnDay, false); window.scrollTo(0, 0); }
 });
 $("mnShop").addEventListener("change", (e) => {
   const c = e.target.closest("[data-shop]");

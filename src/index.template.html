@@ -52,21 +52,9 @@
       <button type="button" class="add" id="addSession"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 2v10M2 7h10"/></svg>Añadir sesión</button>
       <span class="edited" id="edited" hidden>Día editado · <button type="button" class="link" id="restore">Volver al plan</button></span>
     </div>
-    <div class="hb" id="habits" hidden>
-      <div class="log-row"><span class="log-lbl">Agua</span><span class="log-val" id="aguaVal"></span></div>
-      <div class="hb-water" id="agua" role="group" aria-label="Vasos de agua de 250 ml"></div>
-      <div class="hb-chips" id="sups" role="group" aria-label="Suplementos y pasos"></div>
-      <label class="eyebrow" for="extraFood">Fuera del menú</label>
-      <textarea class="notes" id="extraFood" rows="1" placeholder="Picoteo, bebidas, algo que no estaba…"></textarea>
-      <div class="hb-kcal">
-        <input type="number" id="dayKcal" inputmode="numeric" min="0" max="20000" step="10" placeholder="kcal" aria-label="Kilocalorías estimadas del día">
-        <span class="hint" id="dayKcalHint">Kcal del día que te diga la IA</span>
-        <button type="button" class="btn ghost hb-ai" id="dayAI">Pasar el día a la IA</button>
-      </div>
-    </div>
     <div class="log">
       <div class="log-row">
-        <span class="log-lbl">Entreno, ¿hecho?</span>
+        <span class="log-lbl">¿Hecho?</span>
         <div class="seg" role="group" aria-label="Sesión hecha" id="seg">
           <button type="button" id="hSi" data-v="Sí" aria-pressed="false">Sí</button>
           <button type="button" id="hParcial" data-v="Parcial" aria-pressed="false">Parcial</button>
@@ -130,7 +118,7 @@
 
   <footer>
     <span>Fuente: Plan_Entrenamiento_La_Traka_100km.xlsx</span>
-    <span>Desliza el día a los lados para cambiar · toca el lápiz para editar una sesión · marca cada comida al hacerla</span>
+    <span>Desliza el día a los lados para cambiar · toca el lápiz para editar una sesión</span>
   </footer>
   </div>
 
@@ -139,11 +127,33 @@
       <div class="fd-head"><span class="eyebrow" id="mnSub"></span><h1 class="sx-title">Menú</h1></div>
       <p class="mn-notice" id="mnNotice" hidden>El menú era para octubre y noviembre. Si la nutricionista te da uno nuevo, cámbialo en <b>Editar el menú</b>.</p>
       <div class="week-bar">
+        <button type="button" class="nav-btn" id="mdPrev" aria-label="Día anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
+        <div class="fd-day" id="mdDay"></div>
+        <button type="button" class="nav-btn" id="mdNext" aria-label="Día siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4 6 6-6 6"/></svg></button>
+      </div>
+      <section class="day md" id="mdCard" aria-label="Comidas del día">
+        <div class="fd-train" id="mdTrain"></div>
+        <ul class="sessions" id="mnTomas" aria-live="polite"></ul>
+        <div class="hb" id="habits" hidden>
+          <div class="log-row"><span class="log-lbl">Agua</span><span class="log-val" id="aguaVal"></span></div>
+          <div class="hb-water" id="agua" role="group" aria-label="Vasos de agua de 250 ml"></div>
+          <div class="hb-chips" id="sups" role="group" aria-label="Suplementos y pasos"></div>
+          <label class="eyebrow" for="extraFood">Fuera del menú</label>
+          <textarea class="notes" id="extraFood" rows="1" placeholder="Picoteo, bebidas, algo que no estaba…"></textarea>
+          <div class="hb-kcal">
+            <input type="number" id="dayKcal" inputmode="numeric" min="0" max="20000" step="10" placeholder="kcal" aria-label="Kilocalorías estimadas del día">
+            <span class="hint" id="dayKcalHint">Kcal del día que te diga la IA</span>
+            <button type="button" class="btn ghost hb-ai" id="dayAI">Pasar el día a la IA</button>
+          </div>
+        </div>
+      </section>
+      <section class="sx-sec"><header><h2>La semana</h2><p>Toca un día para ver y marcar sus comidas arriba.</p></header>
+      <div class="week-bar mn-wbar">
         <button type="button" class="nav-btn" id="mnPrev" aria-label="Semana anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
         <div class="week-title" id="mnWeek"></div>
         <button type="button" class="nav-btn" id="mnNext" aria-label="Semana siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4 6 6-6 6"/></svg></button>
       </div>
-      <section class="sx-sec"><header><h2>La semana</h2><p>Toca un día para abrirlo en Hoy y marcar las comidas.</p></header><div class="sx-card"><div class="mn-days" id="mnDays"></div></div></section>
+      <div class="sx-card"><div class="mn-days" id="mnDays"></div></div></section>
       <section class="sx-sec"><header><h2>Lista de la compra</h2><p id="mnShopSub"></p></header>
         <div class="sx-card">
           <div class="mn-shop" id="mnShop"></div>
